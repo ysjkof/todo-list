@@ -1,7 +1,8 @@
+import Router from './router/Router';
 import './styles/tailwind.css';
 
 function App() {
-  return <div>hello</div>;
+  return <Router />;
 }
 
 export default App;
