@@ -1,16 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from '../pages/Login';
-import SignUp from '../pages/SignUp';
+import Layout from '../components/Layout';
+import Auth from '../pages/Auth';
 import TodoList from '../pages/TodoList';
-
-const Auth = [<Login />, <SignUp />];
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<TodoList />} />
-        <Route path="auth" element={Auth} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<TodoList />} />
+        </Route>
+        <Route path="auth" element={<Auth />} />
+        <Route path="*" element={<p>없는 주소입니다.</p>} />
       </Routes>
     </BrowserRouter>
   );
