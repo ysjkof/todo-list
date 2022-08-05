@@ -12,10 +12,10 @@ export const handleInputChange = (
   ref: React.RefObject<HTMLInputElement>,
   type: 'email' | 'password',
   currentValue: boolean,
-  callback: (loginInput: LoginInput) => void
+  changeValidation: (loginInput: LoginInput) => void
 ) => {
   const isValid = checkValidation(ref.current?.value || '', REGEX[type]);
   if (isValid === currentValue) return;
 
-  callback(type);
+  changeValidation(type);
 };
