@@ -1,11 +1,13 @@
 import { Todo, TodoInput } from '../types/todos';
 import { getLocalToken } from '../utils/authUtils';
 
-interface TodoOutput {
-  todos?: Todo[];
+interface CoreOutput {
   message?: string;
-  token?: string;
   error?: unknown;
+}
+interface TodoOutput extends CoreOutput {
+  todos?: Todo[];
+  token?: string;
 }
 
 export const getTodosFetcher = async (): Promise<TodoOutput> => {
@@ -24,11 +26,9 @@ export const getTodosFetcher = async (): Promise<TodoOutput> => {
   }
 };
 
-interface CreateTodoOutput {
+interface CreateTodoOutput extends CoreOutput {
   todo?: Todo;
-  message?: string;
   token?: string;
-  error?: unknown;
 }
 
 export const createTodo = async (
@@ -48,5 +48,30 @@ export const createTodo = async (
     return { todo: result.data };
   } catch (error) {
     return { message: '에러 발생 :', error };
+  }
+};
+
+interface DeleteTodoInput {
+  id: number;
+}
+interface DeleteTodoOutput extends CoreOutput {
+  ok: boolean;
+}
+export const deleteTodoFetch = async ({
+  id,
+}: DeleteTodoInput): Promise<DeleteTodoOutput> => {
+  try {
+    const response = await fetch(`http://localhost:8080/todos/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getLocalToken() || '',
+      },
+    });
+    const result = await response.json();
+
+    return { ok: result.data === null && true };
+  } catch (error) {
+    return { ok: false, message: '에러 발생 :', error };
   }
 };
