@@ -18,8 +18,10 @@ export default function Layout() {
   };
 
   return (
-    <div>
-      <button onClick={invokeLogout}>Logout</button>
+    <div className="relative h-screen flex items-center justify-center">
+      <button className="absolute right-10 top-4" onClick={invokeLogout}>
+        Logout
+      </button>
       <Outlet />
     </div>
   );
