@@ -1,5 +1,5 @@
 import { REGEX } from '../constants/regex';
-import { LoginInput } from '../pages/Login';
+import { LoginInput } from '../types/authType';
 
 export const isPassedValidations = (inputs: boolean[]) =>
   inputs.every((value) => value);

@@ -1,18 +1,17 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginFetcher } from '../api/fetcher';
-import Button from '../components/Button';
-import ErrorMessage from '../components/ErrorMessage';
-import Form from '../components/Form';
-import FormTitle from '../components/FormTitle';
-import Input from '../components/Input';
-import { TOKEN_KEY } from '../constants/localStorageKeys';
+import { loginFetcher } from '../../api/fetcher';
+import Button from '../atom/Button';
+import ErrorMessage from '../atom/ErrorMessage';
+import Form from '../atom/Form';
+import FormTitle from '../atom/FormTitle';
+import Input from '../molecules/InputWithLabel';
+import { TOKEN_KEY } from '../../constants/localStorageKeys';
 import {
   handleInputChange,
   isPassedValidations,
-} from '../services/authServices';
-
-export type LoginInput = 'email' | 'password';
+} from '../../services/authServices';
+import { LoginInput } from '../../types/authType';
 
 export default function Login() {
   const navigation = useNavigate();

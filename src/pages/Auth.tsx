@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getLocalToken } from '../utils/authUtils';
-import Login from './Login';
-import SignUp from './SignUp';
+import Login from '../components/organisms/Login';
+import SignUp from '../components/organisms/SignUp';
 
 export default function Auth() {
   const navigation = useNavigate();
