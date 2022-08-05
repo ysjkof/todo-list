@@ -31,3 +31,27 @@ export const loginFetcher = async ({
     return { message: '에러 발생 :', error };
   }
 };
+
+interface SignUpFetcher extends LoginFetcher {}
+
+export const signUpFetcher = async ({ email, password }: SignUpFetcher) => {
+  try {
+    const response = await fetch('http://localhost:8080/users/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const result = await response.json();
+
+    console.log(result.message, result.details);
+
+    return {
+      message: result.message || result.details || '',
+      token: result?.token,
+    };
+  } catch (error) {
+    return { message: '에러 발생 :', error };
+  }
+};

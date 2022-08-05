@@ -2,6 +2,9 @@ import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginFetcher } from '../api/fetcher';
 import Button from '../components/Button';
+import ErrorMessage from '../components/ErrorMessage';
+import Form from '../components/Form';
+import FormTitle from '../components/FormTitle';
 import Input from '../components/Input';
 import { TOKEN_KEY } from '../constants/localStorageKeys';
 import {
@@ -46,10 +49,8 @@ export default function Login() {
   };
 
   return (
-    <form
-      className="flex flex-col border max-w-md items-center gap-4 p-10 mb-10"
-      onSubmit={handleSubmit}
-    >
+    <Form onSubmit={handleSubmit}>
+      <FormTitle textContent="로그인" />
       <Input
         label="이메일"
         type="text"
@@ -82,7 +83,7 @@ export default function Login() {
         textContent="로그인"
         disable={isPassedValidations(Object.values(validations))}
       />
-      {error && <div>{error}</div>}
-    </form>
+      {error && <ErrorMessage textContent={error} />}
+    </Form>
   );
 }

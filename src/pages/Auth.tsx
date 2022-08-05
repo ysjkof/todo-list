@@ -17,9 +17,9 @@ export default function Auth() {
   return getLocalToken() ? (
     <></>
   ) : (
-    <>
+    <div className="flex flex-col pt-10 h-full gap-16">
       <Login />
       <SignUp />
-    </>
+    </div>
   );
 }
