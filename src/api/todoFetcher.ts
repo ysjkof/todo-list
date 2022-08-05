@@ -31,6 +31,35 @@ interface CreateTodoOutput extends CoreOutput {
   token?: string;
 }
 
+interface GetTodoInput {
+  id: string;
+}
+interface GetTodoOutput extends CoreOutput {
+  todo?: Todo;
+}
+export const getTodoFetcher = async ({
+  id,
+}: GetTodoInput): Promise<GetTodoOutput> => {
+  try {
+    const response = await fetch(`http://localhost:8080/todos/${id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: getLocalToken() || '',
+      },
+    });
+    const result = await response.json();
+
+    return { todo: result.data };
+  } catch (error) {
+    return { message: '에러 발생 :', error };
+  }
+};
+
+interface CreateTodoOutput extends CoreOutput {
+  todo?: Todo;
+  token?: string;
+}
+
 export const createTodo = async (
   todoInput: TodoInput
 ): Promise<CreateTodoOutput> => {
@@ -52,7 +81,7 @@ export const createTodo = async (
 };
 
 interface DeleteTodoInput {
-  id: number;
+  id: string;
 }
 interface DeleteTodoOutput extends CoreOutput {
   ok: boolean;
