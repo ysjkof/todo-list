@@ -80,6 +80,34 @@ export const createTodo = async (
   }
 };
 
+interface UpdateTodoInput extends TodoInput {
+  id: string;
+}
+interface UpdateTodoOutput extends CoreOutput {
+  todo?: Todo;
+}
+export const updateTodoFetcher = async ({
+  id,
+  title,
+  content,
+}: UpdateTodoInput): Promise<UpdateTodoOutput> => {
+  try {
+    const response = await fetch(`http://localhost:8080/todos/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getLocalToken() || '',
+      },
+      body: JSON.stringify({ title, content }),
+    });
+    const result = await response.json();
+
+    return { todo: result.data };
+  } catch (error) {
+    return { message: '에러 발생 :', error };
+  }
+};
+
 interface DeleteTodoInput {
   id: string;
 }
