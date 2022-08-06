@@ -59,9 +59,9 @@ interface CreateTodoOutput extends CoreOutput {
   todo?: Todo;
   token?: string;
 }
-
+export interface CreateTodoInput extends TodoInput {}
 export const createTodo = async (
-  todoInput: TodoInput
+  todoInput: CreateTodoInput
 ): Promise<CreateTodoOutput> => {
   try {
     const response = await fetch('http://localhost:8080/todos', {
@@ -80,8 +80,8 @@ export const createTodo = async (
   }
 };
 
-interface UpdateTodoInput extends TodoInput {
-  id: string;
+export interface UpdateTodoInput extends TodoInput {
+  id?: string;
 }
 interface UpdateTodoOutput extends CoreOutput {
   todo?: Todo;

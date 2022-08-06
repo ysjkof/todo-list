@@ -9,6 +9,7 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<TodoList />} />
+          <Route path=":todoId" element={<TodoList />} />
         </Route>
         <Route path="auth" element={<Auth />} />
         <Route path="*" element={<p>없는 주소입니다.</p>} />

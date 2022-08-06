@@ -1,89 +1,167 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   createTodo,
+  CreateTodoInput,
   deleteTodoFetch,
   getTodoFetcher,
   getTodosFetcher,
+  updateTodoFetcher,
+  UpdateTodoInput,
 } from '../api/todoFetcher';
+import TodoForm from '../components/organisms/TodoForm';
 import { Todo } from '../types/todos';
+import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
 
 export default function TodoList() {
   const [todoData, setTodoData] = useState<Todo[]>([]);
   const [todo, setTodo] = useState<Todo | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [hasUpdateInput, setHasUpdateInput] = useState(false);
+  const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
+
+  const navigation = useNavigate();
 
   useEffect(() => {
     (async () => {
       const todos = await getTodosFetcher();
-      console.log('todos', todos);
       setTodoData(todos.todos || []);
     })();
   }, []);
 
-  const handleSubmit = (event: FormEvent) => {
+  const createSubmit = async (
+    event: FormEvent,
+    { title, content }: CreateTodoInput
+  ) => {
     event.preventDefault();
 
-    const title = inputRef.current?.value;
-    const content = textareaRef.current?.value;
-    if (!title || !content) return console.log('내용이 없어');
+    if (!title || !content) throw new Error('데이터를 입력해주세요');
 
-    createTodo({ content, title });
+    const createdTodo = await createTodo({ content, title });
+    if (createdTodo.todo) {
+      setTodoData((prevState) => [...prevState, createdTodo.todo!]);
+    }
+  };
+  const updateSubmit = async (
+    event: FormEvent,
+    { id, title, content }: UpdateTodoInput
+  ) => {
+    event.preventDefault();
+
+    if (!id || !title || !content) throw new Error('데이터를 입력해주세요');
+
+    const updatedTodo = await updateTodoFetcher({ id, content, title });
+    if (updatedTodo.todo) {
+      setTodoData((prevState) => {
+        const idx = prevState.findIndex((todo) => todo.id === id);
+        if (idx === -1)
+          throw new Error(
+            'Todo 수정 후 업데이트 중 기존 자료를 찾지 못했습니다'
+          );
+        return changeValueInArray(prevState, updatedTodo.todo!, idx);
+      });
+    }
+    setTodoToBeModified(null);
+    setHasUpdateInput(false);
   };
 
   const deleteTodo = async (todoId: string) => {
     const del = await deleteTodoFetch({ id: todoId });
     if (!del.ok) alert('todo 삭제에 실패했습니다');
+    if (todoId === todo?.id) setTodo(null);
+    if (todoId === todoToBeModified?.id) setTodoToBeModified(null);
+    if (hasUpdateInput) setHasUpdateInput(false);
+
+    setTodoData((prevState) => {
+      const idx = prevState.findIndex((todo) => todo.id === todoId);
+      if (idx === -1)
+        throw new Error('Todo 삭제 후 업데이트 중 기존 자료를 찾지 못했습니다');
+      return removeItemInArrayByIndex(idx, prevState);
+    });
   };
 
   const showTotoDetail = async (todoId: string) => {
+    navigation(`/${todoId}`);
+  };
+
+  const getTodo = async (todoId: string) => {
     const data = await getTodoFetcher({ id: todoId });
-    console.log('todo', data.todo);
     if (!data.todo) return alert('todo를 찾을 수 없습니다');
     setTodo(data.todo);
   };
 
+  const param = useParams();
+
+  useEffect(() => {
+    if (!param.todoId) {
+      todo && setTodo(null);
+      return;
+    }
+    getTodo(param.todoId);
+  }, [param]);
+
+  const toggleUpdateInput = (todo: Todo) => {
+    if (todo && todo.id !== todoToBeModified?.id) {
+      setTodoToBeModified(todo);
+      return setHasUpdateInput(true);
+    }
+    setHasUpdateInput((prevState) => {
+      if (prevState) {
+        setTodoToBeModified(null);
+      }
+      return !prevState;
+    });
+  };
+
   return (
     <div className="max-w-screen-md w-full relative flex flex-col gap-4">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center w-full px-20"
-      >
-        <label className="w-full">
-          제목
-          <input className="border w-full" type="text" ref={inputRef} />
-        </label>
-        <label className="w-full">
-          할일
-          <textarea className="border w-full" ref={textareaRef} />
-        </label>
-        <button className="bg-orange-400 text-white rounded-sm w-full">
-          저장
-        </button>
-      </form>
+      {hasUpdateInput ? (
+        <TodoForm
+          actionName="수정"
+          onSubmit={updateSubmit}
+          todoToBeModified={todoToBeModified}
+        />
+      ) : (
+        <TodoForm actionName="저장" onSubmit={createSubmit} />
+      )}
       <div className="flex border-red-400 border">
         <div className="w-full">
           <h2>목록</h2>
           {todoData.map((todo) => (
-            <div
-              key={todo.id}
-              className="flex justify-between py-0.5"
-              onClick={() => showTotoDetail(todo.id)}
-            >
-              {todo.title}
-
+            <div key={todo.id} className="flex py-0.5 justify-end gap-2">
+              <span className="w-full" onClick={() => showTotoDetail(todo.id)}>
+                {todo.title}
+              </span>
+              <button
+                onClick={() => toggleUpdateInput(todo)}
+                className="rounded-md whitespace-nowrap border px-4"
+              >
+                {hasUpdateInput && todoToBeModified?.id === todo.id
+                  ? '취소'
+                  : '수정'}
+              </button>
               <button
                 onClick={() => deleteTodo(todo.id)}
-                className="rounded-md border px-4"
+                className="rounded-md whitespace-nowrap border px-4"
               >
                 지우기
               </button>
             </div>
           ))}
         </div>
-        <div className="w-full">
+        <div className="w-full flex flex-col">
           <h2>상세</h2>
-          {todo && todo.content}
+          {todo && (
+            <>
+              <h3 className="font-semibold">제목: {todo.title}</h3>
+              <span className="text-gray-500 text-sm">
+                생성: {new Date(todo.createdAt).toLocaleString()}
+              </span>
+              <span className="text-gray-500 text-sm">
+                수정: {new Date(todo.updatedAt).toLocaleString()}
+              </span>
+              <p className="px-4 pt-1">{todo.content}</p>
+            </>
+          )}
         </div>
       </div>
     </div>
