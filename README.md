@@ -1,6 +1,21 @@
-# 생각해본점
+# 폴더구조
 
-api폴더에 auth, todoFetcher가 있었다. controller폴더로 이동하고 이름도 변경했다. controller는 endpoint가 있는 api를 의미한다?
+- controller
+  데이터 요청을 하기 위해 endpoint를 가지고 처리를 하는 곳. VIEW와 바로 연결된다.
+- services
+  특정 기능(auth, todo...)에 종속되는 로직을 모아놓음
+- utils
+  클린코드를 위해 선언한 간단한 함수나 특정 기능에 종속되지 않는 함수를 모음
+
+# 사용한 라이브러리
+
+- react(with Typescript)
+- react-router-dom
+- tailwindcss
+
+# 그외
+
+fetch와 React Query 코드를 비교하려고 fetch API로 기능 구현을 하고 리펙토링 후 React Query로 바꾸려 했지만 시간이 없어 React Query로 바꾸지 못했다.
 
 # 클라이언트 구현 과제 안내
 
