@@ -1,16 +1,17 @@
-import { Todo, TodoInput } from '../types/todos';
+import {
+  CreateTodoInputDto,
+  CreateTodoOutputDto,
+  DeleteTodoInputDto,
+  DeleteTodoOutputDto,
+  GetTodoInputDto,
+  GetTodoOutputDto,
+  TodoOutputDto,
+  UpdateTodoInputDto,
+  UpdateTodoOutputDto,
+} from '../types/todos';
 import { getLocalToken } from '../utils/authUtils';
 
-interface CoreOutput {
-  message?: string;
-  error?: unknown;
-}
-interface TodoOutput extends CoreOutput {
-  todos?: Todo[];
-  token?: string;
-}
-
-export const getTodosFetcher = async (): Promise<TodoOutput> => {
+export const getTodosFetcher = async (): Promise<TodoOutputDto> => {
   try {
     const response = await fetch('http://localhost:8080/todos', {
       method: 'GET',
@@ -26,20 +27,9 @@ export const getTodosFetcher = async (): Promise<TodoOutput> => {
   }
 };
 
-interface CreateTodoOutput extends CoreOutput {
-  todo?: Todo;
-  token?: string;
-}
-
-interface GetTodoInput {
-  id: string;
-}
-interface GetTodoOutput extends CoreOutput {
-  todo?: Todo;
-}
 export const getTodoFetcher = async ({
   id,
-}: GetTodoInput): Promise<GetTodoOutput> => {
+}: GetTodoInputDto): Promise<GetTodoOutputDto> => {
   try {
     const response = await fetch(`http://localhost:8080/todos/${id}`, {
       method: 'GET',
@@ -55,14 +45,9 @@ export const getTodoFetcher = async ({
   }
 };
 
-interface CreateTodoOutput extends CoreOutput {
-  todo?: Todo;
-  token?: string;
-}
-export interface CreateTodoInput extends TodoInput {}
 export const createTodo = async (
-  todoInput: CreateTodoInput
-): Promise<CreateTodoOutput> => {
+  todoInput: CreateTodoInputDto
+): Promise<CreateTodoOutputDto> => {
   try {
     const response = await fetch('http://localhost:8080/todos', {
       method: 'POST',
@@ -80,17 +65,11 @@ export const createTodo = async (
   }
 };
 
-export interface UpdateTodoInput extends TodoInput {
-  id?: string;
-}
-interface UpdateTodoOutput extends CoreOutput {
-  todo?: Todo;
-}
 export const updateTodoFetcher = async ({
   id,
   title,
   content,
-}: UpdateTodoInput): Promise<UpdateTodoOutput> => {
+}: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
   try {
     const response = await fetch(`http://localhost:8080/todos/${id}`, {
       method: 'PUT',
@@ -108,15 +87,9 @@ export const updateTodoFetcher = async ({
   }
 };
 
-interface DeleteTodoInput {
-  id: string;
-}
-interface DeleteTodoOutput extends CoreOutput {
-  ok: boolean;
-}
 export const deleteTodoFetch = async ({
   id,
-}: DeleteTodoInput): Promise<DeleteTodoOutput> => {
+}: DeleteTodoInputDto): Promise<DeleteTodoOutputDto> => {
   try {
     const response = await fetch(`http://localhost:8080/todos/${id}`, {
       method: 'DELETE',

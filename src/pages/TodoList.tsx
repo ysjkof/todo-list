@@ -1,16 +1,14 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   createTodo,
-  CreateTodoInput,
   deleteTodoFetch,
   getTodoFetcher,
   getTodosFetcher,
   updateTodoFetcher,
-  UpdateTodoInput,
 } from '../api/todoFetcher';
 import TodoForm from '../components/organisms/TodoForm';
-import { Todo } from '../types/todos';
+import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
 
 export default function TodoList() {
@@ -30,7 +28,7 @@ export default function TodoList() {
 
   const createSubmit = async (
     event: FormEvent,
-    { title, content }: CreateTodoInput
+    { title, content }: CreateTodoInputDto
   ) => {
     event.preventDefault();
 
@@ -43,7 +41,7 @@ export default function TodoList() {
   };
   const updateSubmit = async (
     event: FormEvent,
-    { id, title, content }: UpdateTodoInput
+    { id, title, content }: UpdateTodoInputDto
   ) => {
     event.preventDefault();
 

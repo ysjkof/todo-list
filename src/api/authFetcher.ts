@@ -1,16 +1,13 @@
-interface LoginFetcher {
-  email: string;
-  password: string;
-}
-interface LoginOutput {
-  message: string;
-  token?: string;
-  error?: unknown;
-}
+import {
+  LoginInputDto,
+  LoginOutputDto,
+  SignUpInputDto,
+} from '../types/authType';
+
 export const loginFetcher = async ({
   email,
   password,
-}: LoginFetcher): Promise<LoginOutput> => {
+}: LoginInputDto): Promise<LoginOutputDto> => {
   try {
     const response = await fetch('http://localhost:8080/users/login', {
       method: 'POST',
@@ -30,9 +27,7 @@ export const loginFetcher = async ({
   }
 };
 
-interface SignUpFetcher extends LoginFetcher {}
-
-export const signUpFetcher = async ({ email, password }: SignUpFetcher) => {
+export const signUpFetcher = async ({ email, password }: SignUpInputDto) => {
   try {
     const response = await fetch('http://localhost:8080/users/create', {
       method: 'POST',
