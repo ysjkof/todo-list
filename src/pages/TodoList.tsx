@@ -10,8 +10,9 @@ import {
 import TodoForm from '../components/organisms/TodoForm';
 import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
-import Button from '../components/atom/Button';
 import TodoTitleList from '../components/organisms/TodoTitleList';
+import TodoTitleContent from '../components/organisms/TodoTitleContent';
+import { toLocaleStringFromStringDate } from '../utils/todoUtils';
 
 export default function TodoList() {
   const [todoData, setTodoData] = useState<Todo[]>([]);
@@ -145,16 +146,12 @@ export default function TodoList() {
         <div className="w-full flex flex-col">
           <h2>상세</h2>
           {todo && (
-            <>
-              <h3 className="font-semibold">제목: {todo.title}</h3>
-              <span className="text-gray-500 text-sm">
-                생성: {new Date(todo.createdAt).toLocaleString()}
-              </span>
-              <span className="text-gray-500 text-sm">
-                수정: {new Date(todo.updatedAt).toLocaleString()}
-              </span>
-              <p className="px-4 pt-1">{todo.content}</p>
-            </>
+            <TodoTitleContent
+              createdAt={toLocaleStringFromStringDate(todo.createdAt)}
+              updatedAt={toLocaleStringFromStringDate(todo.updatedAt)}
+              title={todo.title}
+              content={todo.content}
+            />
           )}
         </div>
       </div>
