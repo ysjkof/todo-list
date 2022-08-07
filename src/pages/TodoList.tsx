@@ -85,7 +85,11 @@ export default function TodoList() {
 
   const getTodo = async (todoId: string) => {
     const data = await getTodoById({ id: todoId });
-    if (!data.todo) return alert('todo를 찾을 수 없습니다');
+    if (!data.todo) {
+      alert('todo를 찾을 수 없습니다');
+      navigation('/');
+      return;
+    }
     setTodo(data.todo);
   };
 
