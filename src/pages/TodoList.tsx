@@ -10,6 +10,7 @@ import {
 import TodoForm from '../components/organisms/TodoForm';
 import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
+import Button from '../components/atom/Button';
 
 export default function TodoList() {
   const [todoData, setTodoData] = useState<Todo[]>([]);
@@ -129,20 +130,12 @@ export default function TodoList() {
               <span className="w-full" onClick={() => showTotoDetail(todo.id)}>
                 {todo.title}
               </span>
-              <button
-                onClick={() => toggleUpdateInput(todo)}
-                className="rounded-md whitespace-nowrap border px-4"
-              >
+              <Button onClick={() => toggleUpdateInput(todo)}>
                 {hasUpdateInput && todoToBeModified?.id === todo.id
                   ? '취소'
                   : '수정'}
-              </button>
-              <button
-                onClick={() => deleteTodo(todo.id)}
-                className="rounded-md whitespace-nowrap border px-4"
-              >
-                지우기
-              </button>
+              </Button>
+              <Button onClick={() => deleteTodo(todo.id)}>지우기</Button>
             </div>
           ))}
         </div>

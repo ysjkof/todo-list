@@ -78,10 +78,9 @@ export default function Login() {
           )
         }
       />
-      <Button
-        textContent="로그인"
-        disable={isPassedValidations(Object.values(validations))}
-      />
+      <Button disable={!isPassedValidations(Object.values(validations))}>
+        로그인
+      </Button>
       {error && <ErrorMessage textContent={error} />}
     </Form>
   );

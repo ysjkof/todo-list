@@ -80,10 +80,9 @@ export default function SignUp() {
           )
         }
       />
-      <Button
-        textContent="회원가입"
-        disable={isPassedValidations(Object.values(validations))}
-      />
+      <Button disable={!isPassedValidations(Object.values(validations))}>
+        회원가입
+      </Button>
       {error && <ErrorMessage textContent={error} />}
     </Form>
   );
