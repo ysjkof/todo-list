@@ -11,6 +11,7 @@ import TodoForm from '../components/organisms/TodoForm';
 import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
 import Button from '../components/atom/Button';
+import TodoTitleList from '../components/organisms/TodoTitleList';
 
 export default function TodoList() {
   const [todoData, setTodoData] = useState<Todo[]>([]);
@@ -126,17 +127,15 @@ export default function TodoList() {
         <div className="w-full">
           <h2>목록</h2>
           {todoData.map((todo) => (
-            <div key={todo.id} className="flex py-0.5 justify-end gap-2">
-              <span className="w-full" onClick={() => showTotoDetail(todo.id)}>
-                {todo.title}
-              </span>
-              <Button onClick={() => toggleUpdateInput(todo)}>
-                {hasUpdateInput && todoToBeModified?.id === todo.id
-                  ? '취소'
-                  : '수정'}
-              </Button>
-              <Button onClick={() => deleteTodo(todo.id)}>지우기</Button>
-            </div>
+            <TodoTitleList
+              key={todo.id}
+              id={todo.id}
+              title={todo.title}
+              isModified={hasUpdateInput && todoToBeModified?.id === todo.id}
+              showTotoDetail={() => showTotoDetail(todo.id)}
+              toggleUpdateInput={() => toggleUpdateInput(todo)}
+              deleteTodo={() => deleteTodo(todo.id)}
+            />
           ))}
         </div>
         <div className="w-full flex flex-col">
