@@ -1,6 +1,9 @@
 import { FormEvent, useRef } from 'react';
-import { CreateTodoInput, UpdateTodoInput } from '../../api/todoFetcher';
-import { Todo } from '../../types/todos';
+import {
+  CreateTodoInputDto,
+  Todo,
+  UpdateTodoInputDto,
+} from '../../types/todos';
 import InputWithLabel from '../molecules/InputWithLabel';
 import TextareaWithLabel from '../molecules/TextareaWithLabel';
 
@@ -8,7 +11,7 @@ interface TodoFormProps {
   actionName: string;
   onSubmit: (
     event: FormEvent,
-    data: CreateTodoInput | UpdateTodoInput
+    data: CreateTodoInputDto | UpdateTodoInputDto
   ) => Promise<void>;
   todoToBeModified?: Todo | null;
 }
