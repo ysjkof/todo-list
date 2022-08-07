@@ -21,8 +21,6 @@ export const loginFetcher = async ({
     });
     const result = await response.json();
 
-    console.log(result.message, result.details);
-
     return {
       message: result.message || result.details || '',
       token: result?.token,
@@ -44,8 +42,6 @@ export const signUpFetcher = async ({ email, password }: SignUpFetcher) => {
       body: JSON.stringify({ email, password }),
     });
     const result = await response.json();
-
-    console.log(result.message, result.details);
 
     return {
       message: result.message || result.details || '',
