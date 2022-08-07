@@ -1,107 +1,47 @@
+import { fetcher } from '../api/fetcher';
 import {
   CreateTodoInputDto,
   CreateTodoOutputDto,
-  DeleteTodoInputDto,
-  DeleteTodoOutputDto,
-  GetTodoInputDto,
-  GetTodoOutputDto,
+  DeleteTodoByIdInputDto,
+  DeleteTodoByIdOutputDto,
+  GetTodoByIdInputDto,
+  GetTodoByIdOutputDto,
   TodoOutputDto,
   UpdateTodoInputDto,
   UpdateTodoOutputDto,
 } from '../types/todos';
-import { getLocalToken } from '../utils/authUtils';
 
-export const getTodosFetcher = async (): Promise<TodoOutputDto> => {
-  try {
-    const response = await fetch('http://localhost:8080/todos', {
-      method: 'GET',
-      headers: {
-        Authorization: getLocalToken() || '',
-      },
-    });
-    const result = await response.json();
-
-    return { todos: result.data };
-  } catch (error) {
-    return { message: '에러 발생 :', error };
-  }
+export const getTodos = async (): Promise<TodoOutputDto> => {
+  const result = await fetcher('todos', 'GET');
+  return { todos: result.data };
 };
 
-export const getTodoFetcher = async ({
+export const getTodoById = async ({
   id,
-}: GetTodoInputDto): Promise<GetTodoOutputDto> => {
-  try {
-    const response = await fetch(`http://localhost:8080/todos/${id}`, {
-      method: 'GET',
-      headers: {
-        Authorization: getLocalToken() || '',
-      },
-    });
-    const result = await response.json();
-
-    return { todo: result.data };
-  } catch (error) {
-    return { message: '에러 발생 :', error };
-  }
+}: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
+  const result = await fetcher(`todos/${id}`, 'GET');
+  return { todo: result.data };
 };
 
 export const createTodo = async (
   todoInput: CreateTodoInputDto
 ): Promise<CreateTodoOutputDto> => {
-  try {
-    const response = await fetch('http://localhost:8080/todos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: getLocalToken() || '',
-      },
-      body: JSON.stringify(todoInput),
-    });
-    const result = await response.json();
-
-    return { todo: result.data };
-  } catch (error) {
-    return { message: '에러 발생 :', error };
-  }
+  const result = await fetcher('todos', 'POST', todoInput);
+  return { todo: result.data };
 };
 
-export const updateTodoFetcher = async ({
+export const updateTodo = async ({
   id,
   title,
   content,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
-  try {
-    const response = await fetch(`http://localhost:8080/todos/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: getLocalToken() || '',
-      },
-      body: JSON.stringify({ title, content }),
-    });
-    const result = await response.json();
-
-    return { todo: result.data };
-  } catch (error) {
-    return { message: '에러 발생 :', error };
-  }
+  const result = await fetcher(`todos/${id}`, 'PUT', { title, content });
+  return { todo: result.data };
 };
 
-export const deleteTodoFetch = async ({
+export const deleteTodoById = async ({
   id,
-}: DeleteTodoInputDto): Promise<DeleteTodoOutputDto> => {
-  try {
-    const response = await fetch(`http://localhost:8080/todos/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: getLocalToken() || '',
-      },
-    });
-    const result = await response.json();
-
-    return { ok: result.data === null && true };
-  } catch (error) {
-    return { ok: false, message: '에러 발생 :', error };
-  }
+}: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
+  const result = await fetcher(`todos/${id}`, 'DELETE');
+  return { ok: result.data === null && true };
 };

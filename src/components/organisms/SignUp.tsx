@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signUpFetcher } from '../../controller/authController';
+import { signUpQuery } from '../../controller/authController';
 import Button from '../atom/Button';
 import ErrorMessage from '../atom/ErrorMessage';
 import Form from '../atom/Form';
@@ -11,7 +11,7 @@ import {
   handleInputChange,
   isPassedValidations,
 } from '../../services/authServices';
-import { LoginInput } from '../../types/authType';
+import { LoginInput } from '../../types/auth';
 
 export default function SignUp() {
   const navigation = useNavigate();
@@ -33,7 +33,7 @@ export default function SignUp() {
     event.preventDefault();
     if (!isPassedValidations(Object.values(validations))) return;
 
-    const response = await signUpFetcher({
+    const response = await signUpQuery({
       email: emailInput.current!.value,
       password: passwordInput.current!.value,
     });

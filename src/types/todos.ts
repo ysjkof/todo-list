@@ -23,10 +23,10 @@ export interface CreateTodoOutputDto extends CoreOutputDto {
   token?: string;
 }
 
-export interface GetTodoInputDto {
+export interface GetTodoByIdInputDto {
   id: string;
 }
-export interface GetTodoOutputDto extends CoreOutputDto {
+export interface GetTodoByIdOutputDto extends CoreOutputDto {
   todo?: Todo;
 }
 
@@ -37,9 +37,9 @@ export interface UpdateTodoOutputDto extends CoreOutputDto {
   todo?: Todo;
 }
 
-export interface DeleteTodoInputDto {
+export interface DeleteTodoByIdInputDto {
   id: string;
 }
-export interface DeleteTodoOutputDto extends CoreOutputDto {
+export interface DeleteTodoByIdOutputDto extends CoreOutputDto {
   ok: boolean;
 }

@@ -1,48 +1,22 @@
-import {
-  LoginInputDto,
-  LoginOutputDto,
-  SignUpInputDto,
-} from '../types/authType';
+import { fetcher } from '../api/fetcher';
+import { LoginInputDto, LoginOutputDto, SignUpInputDto } from '../types/auth';
 
-export const loginFetcher = async ({
+export const loginQuery = async ({
   email,
   password,
 }: LoginInputDto): Promise<LoginOutputDto> => {
-  try {
-    const response = await fetch('http://localhost:8080/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const result = await response.json();
+  const result = await fetcher('users/login', 'POST', { email, password });
 
-    return {
-      message: result.message || result.details || '',
-      token: result?.token,
-    };
-  } catch (error) {
-    return { message: '에러 발생 :', error };
-  }
+  return {
+    message: result?.message || result?.details || '',
+    token: result?.token,
+  };
 };
 
-export const signUpFetcher = async ({ email, password }: SignUpInputDto) => {
-  try {
-    const response = await fetch('http://localhost:8080/users/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const result = await response.json();
-
-    return {
-      message: result.message || result.details || '',
-      token: result?.token,
-    };
-  } catch (error) {
-    return { message: '에러 발생 :', error };
-  }
+export const signUpQuery = async ({ email, password }: SignUpInputDto) => {
+  const result = await fetcher('users/create', 'POST', { email, password });
+  return {
+    message: result?.message || result?.details || '',
+    token: result?.token,
+  };
 };

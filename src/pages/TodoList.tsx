@@ -2,10 +2,10 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   createTodo,
-  deleteTodoFetch,
-  getTodoFetcher,
-  getTodosFetcher,
-  updateTodoFetcher,
+  deleteTodoById,
+  getTodoById,
+  getTodos,
+  updateTodo,
 } from '../controller/todoController';
 import TodoForm from '../components/organisms/TodoForm';
 import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
@@ -21,7 +21,7 @@ export default function TodoList() {
 
   useEffect(() => {
     (async () => {
-      const todos = await getTodosFetcher();
+      const todos = await getTodos();
       setTodoData(todos.todos || []);
     })();
   }, []);
@@ -47,7 +47,7 @@ export default function TodoList() {
 
     if (!id || !title || !content) throw new Error('데이터를 입력해주세요');
 
-    const updatedTodo = await updateTodoFetcher({ id, content, title });
+    const updatedTodo = await updateTodo({ id, content, title });
     if (updatedTodo.todo) {
       setTodoData((prevState) => {
         const idx = prevState.findIndex((todo) => todo.id === id);
@@ -63,7 +63,7 @@ export default function TodoList() {
   };
 
   const deleteTodo = async (todoId: string) => {
-    const del = await deleteTodoFetch({ id: todoId });
+    const del = await deleteTodoById({ id: todoId });
     if (!del.ok) alert('todo 삭제에 실패했습니다');
     if (todoId === todo?.id) setTodo(null);
     if (todoId === todoToBeModified?.id) setTodoToBeModified(null);
@@ -82,7 +82,7 @@ export default function TodoList() {
   };
 
   const getTodo = async (todoId: string) => {
-    const data = await getTodoFetcher({ id: todoId });
+    const data = await getTodoById({ id: todoId });
     if (!data.todo) return alert('todo를 찾을 수 없습니다');
     setTodo(data.todo);
   };
