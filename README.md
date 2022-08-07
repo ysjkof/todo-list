@@ -1,3 +1,7 @@
+# 생각해본점
+
+api폴더에 auth, todoFetcher가 있었다. controller폴더로 이동하고 이름도 변경했다. controller는 endpoint가 있는 api를 의미한다?
+
 # 클라이언트 구현 과제 안내
 
 ## Assignment 1 - Login / SignUp

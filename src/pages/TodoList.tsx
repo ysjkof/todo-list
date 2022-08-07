@@ -6,7 +6,7 @@ import {
   getTodoFetcher,
   getTodosFetcher,
   updateTodoFetcher,
-} from '../controller/todoFetcher';
+} from '../controller/todoController';
 import TodoForm from '../components/organisms/TodoForm';
 import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';

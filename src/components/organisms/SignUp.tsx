@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signUpFetcher } from '../../controller/authFetcher';
+import { signUpFetcher } from '../../controller/authController';
 import Button from '../atom/Button';
 import ErrorMessage from '../atom/ErrorMessage';
 import Form from '../atom/Form';
