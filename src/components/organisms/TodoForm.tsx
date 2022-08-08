@@ -12,7 +12,7 @@ interface TodoFormProps {
   onSubmit: (
     event: FormEvent,
     data: CreateTodoInputDto | UpdateTodoInputDto
-  ) => Promise<void>;
+  ) => void;
   todoToBeModified?: Todo | null;
 }
 export default function TodoForm({
