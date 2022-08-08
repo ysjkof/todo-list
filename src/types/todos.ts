@@ -10,9 +10,8 @@ export interface Todo {
 
 export type TodoInput = Pick<Todo, 'title' | 'content'>;
 
-export interface TodoOutputDto extends CoreOutputDto {
+export interface TodosOutputDto extends CoreOutputDto {
   todos?: Todo[];
-  token?: string;
 }
 
 // CRUD DTO
@@ -20,7 +19,6 @@ export interface CreateTodoInputDto extends TodoInput {}
 
 export interface CreateTodoOutputDto extends CoreOutputDto {
   todo?: Todo;
-  token?: string;
 }
 
 export interface GetTodoByIdInputDto {

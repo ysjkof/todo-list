@@ -6,12 +6,12 @@ import {
   DeleteTodoByIdOutputDto,
   GetTodoByIdInputDto,
   GetTodoByIdOutputDto,
-  TodoOutputDto,
+  TodosOutputDto,
   UpdateTodoInputDto,
   UpdateTodoOutputDto,
 } from '../types/todos';
 
-export const getTodos = async (): Promise<TodoOutputDto> => {
+export const getTodos = async (): Promise<TodosOutputDto> => {
   const result = await fetcher('todos', 'GET');
   return { todos: result.data };
 };
@@ -19,6 +19,7 @@ export const getTodos = async (): Promise<TodoOutputDto> => {
 export const getTodoById = async ({
   id,
 }: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
+  if (!id) return { message: 'id를 전달하지 않았습니다.' };
   const result = await fetcher(`todos/${id}`, 'GET');
   return { todo: result.data };
 };
