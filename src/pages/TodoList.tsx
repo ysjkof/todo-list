@@ -8,19 +8,29 @@ import {
   updateTodo,
 } from '../controller/todoController';
 import TodoForm from '../components/organisms/TodoForm';
-import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
+import {
+  CreateTodoInputDto,
+  GetTodoByIdOutputDto,
+  Todo,
+  UpdateTodoInputDto,
+} from '../types/todos';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
 import TodoTitleList from '../components/organisms/TodoTitleList';
 import TodoTitleContent from '../components/organisms/TodoTitleContent';
 import { toLocaleStringFromStringDate } from '../utils/todoUtils';
+import { useQuery } from '@tanstack/react-query';
 
 export default function TodoList() {
   const [todoData, setTodoData] = useState<Todo[]>([]);
-  const [todo, setTodo] = useState<Todo | null>(null);
   const [hasUpdateInput, setHasUpdateInput] = useState(false);
   const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
 
   const navigation = useNavigate();
+  const param = useParams();
+
+  const { data } = useQuery<GetTodoByIdOutputDto>(['todo', param.todoId], () =>
+    getTodoById({ id: param.todoId! })
+  );
 
   useEffect(() => {
     (async () => {
@@ -68,7 +78,7 @@ export default function TodoList() {
   const deleteTodo = async (todoId: string) => {
     const del = await deleteTodoById({ id: todoId });
     if (!del.ok) alert('todo 삭제에 실패했습니다');
-    if (todoId === todo?.id) setTodo(null);
+    // if (todoId === todo?.todo?.id) setTodo(null);
     if (todoId === todoToBeModified?.id) setTodoToBeModified(null);
     if (hasUpdateInput) setHasUpdateInput(false);
 
@@ -83,26 +93,6 @@ export default function TodoList() {
   const showTotoDetail = async (todoId: string) => {
     navigation(`/${todoId}`);
   };
-
-  const getTodo = async (todoId: string) => {
-    const data = await getTodoById({ id: todoId });
-    if (!data.todo) {
-      alert('todo를 찾을 수 없습니다');
-      navigation('/');
-      return;
-    }
-    setTodo(data.todo);
-  };
-
-  const param = useParams();
-
-  useEffect(() => {
-    if (!param.todoId) {
-      todo && setTodo(null);
-      return;
-    }
-    getTodo(param.todoId);
-  }, [param]);
 
   const toggleUpdateInput = (todo: Todo) => {
     if (todo && todo.id !== todoToBeModified?.id) {
@@ -145,12 +135,12 @@ export default function TodoList() {
         </div>
         <div className="w-full flex flex-col">
           <h2>상세</h2>
-          {todo && (
+          {data && data.todo && (
             <TodoTitleContent
-              createdAt={toLocaleStringFromStringDate(todo.createdAt)}
-              updatedAt={toLocaleStringFromStringDate(todo.updatedAt)}
-              title={todo.title}
-              content={todo.content}
+              createdAt={toLocaleStringFromStringDate(data.todo.createdAt)}
+              updatedAt={toLocaleStringFromStringDate(data.todo.updatedAt)}
+              title={data.todo.title}
+              content={data.todo.content}
             />
           )}
         </div>
