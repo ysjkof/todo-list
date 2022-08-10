@@ -7,17 +7,16 @@ import { Todo } from '../../types/todoType';
 import InputWithLabel from '../molecules/InputWithLabel';
 import TextareaWithLabel from '../molecules/TextareaWithLabel';
 
+type SubmitCallbackInputs = UpdateTodoInputDto | CreateTodoInputDto;
+
 interface TodoFormProps {
   actionName: string;
-  onSubmit: (
-    event: FormEvent,
-    data: CreateTodoInputDto | UpdateTodoInputDto
-  ) => Promise<void>;
+  submitCallback: (inputs: SubmitCallbackInputs) => Promise<void>;
   todoToBeModified?: Todo | null;
 }
 export default function TodoForm({
   actionName,
-  onSubmit,
+  submitCallback,
   todoToBeModified,
 }: TodoFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,18 +32,21 @@ export default function TodoForm({
     }
   }
 
+  const invokeSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (!inputRef.current || !textareaRef.current)
+      return alert('제목과 내용을 입력하세요');
+
+    submitCallback({
+      ...(todoToBeModified && { id: todoToBeModified.id }),
+      title: inputRef.current.value,
+      content: textareaRef.current.value,
+    });
+  };
+
   return (
     <form
-      onSubmit={(event) => {
-        if (!inputRef.current || !textareaRef.current)
-          throw new Error('title이나 contents를 알 수 없습니다');
-
-        onSubmit(event, {
-          ...(todoToBeModified && { id: todoToBeModified.id }),
-          title: inputRef.current.value,
-          content: textareaRef.current.value,
-        });
-      }}
+      onSubmit={invokeSubmit}
       className="flex w-full flex-col items-center gap-1 px-20"
     >
       <InputWithLabel label="제목" type="text" ref={inputRef} />

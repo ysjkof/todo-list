@@ -1,7 +1,6 @@
-import { FormEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import TodoForm from '../components/organisms/TodoForm';
-import { CreateTodoInputDto, UpdateTodoInputDto } from '../types/dtos/todoDto';
 import TodoTitleList from '../components/organisms/TodoTitleList';
 import TodoContent from '../components/molecules/TodoContent';
 import { toLocaleStringFromStringDate } from '../utils/todoUtils';
@@ -23,22 +22,6 @@ export default function TodoList() {
     toggleUpdateInput,
   } = useTodo();
 
-  const invokeCreateSubmit = async (
-    event: FormEvent,
-    { title, content }: CreateTodoInputDto
-  ) => {
-    event.preventDefault();
-    createTodo({ title, content });
-  };
-
-  const invokeUpdateSubmit = async (
-    event: FormEvent,
-    { id, title, content }: UpdateTodoInputDto
-  ) => {
-    event.preventDefault();
-    updateTodo({ id, title, content });
-  };
-
   const showTotoDetail = async (todoId: string) => {
     navigation(`/${todoId}`);
   };
@@ -56,11 +39,11 @@ export default function TodoList() {
       {hasUpdateInput ? (
         <TodoForm
           actionName="수정"
-          onSubmit={invokeUpdateSubmit}
+          submitCallback={updateTodo}
           todoToBeModified={todoToBeModified}
         />
       ) : (
-        <TodoForm actionName="저장" onSubmit={invokeCreateSubmit} />
+        <TodoForm actionName="저장" submitCallback={createTodo} />
       )}
       <div className="flex border border-red-400">
         <div className="w-full">

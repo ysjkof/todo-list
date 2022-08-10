@@ -39,6 +39,7 @@ export const updateTodoMutation = async ({
   title,
   content,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
+  if (!id) throw new Error('updateTodoMutation : id를 입력하세요');
   const result = await fetcher<UpdateTodoOutputDto>(`todos/${id}`, 'PUT', {
     title,
     content,
