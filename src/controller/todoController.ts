@@ -11,23 +11,27 @@ import {
   UpdateTodoOutputDto,
 } from '../types/dtos/todoDto';
 
+export const createTodo = async (
+  createTodoInputDto: CreateTodoInputDto
+): Promise<CreateTodoOutputDto> => {
+  const result = await fetcher<CreateTodoOutputDto>(
+    'todos',
+    'POST',
+    createTodoInputDto
+  );
+  return result;
+};
+
 export const getTodos = async (): Promise<TodoOutputDto> => {
-  const result = await fetcher('todos', 'GET');
-  return { todos: result.data };
+  const result = await fetcher<TodoOutputDto>('todos', 'GET');
+  return result;
 };
 
 export const getTodoById = async ({
   id,
 }: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
-  const result = await fetcher(`todos/${id}`, 'GET');
-  return { todo: result.data };
-};
-
-export const createTodo = async (
-  createTodoInputDto: CreateTodoInputDto
-): Promise<CreateTodoOutputDto> => {
-  const result = await fetcher('todos', 'POST', createTodoInputDto);
-  return { todo: result.data };
+  const result = await fetcher<GetTodoByIdOutputDto>(`todos/${id}`, 'GET');
+  return result;
 };
 
 export const updateTodo = async ({
@@ -35,13 +39,19 @@ export const updateTodo = async ({
   title,
   content,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
-  const result = await fetcher(`todos/${id}`, 'PUT', { title, content });
-  return { todo: result.data };
+  const result = await fetcher<UpdateTodoOutputDto>(`todos/${id}`, 'PUT', {
+    title,
+    content,
+  });
+  return result;
 };
 
 export const deleteTodoById = async ({
   id,
 }: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
-  const result = await fetcher(`todos/${id}`, 'DELETE');
-  return { ok: result.data === null && true };
+  const result = await fetcher<DeleteTodoByIdOutputDto>(
+    `todos/${id}`,
+    'DELETE'
+  );
+  return result;
 };

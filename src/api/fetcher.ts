@@ -3,7 +3,11 @@ import { getLocalToken } from '../utils/authUtils';
 type Method = 'GET' | 'PUT' | 'POST' | 'DELETE';
 const BASE_URL = 'http://localhost:8080/';
 
-export const fetcher = async (endPoint: string, method: Method, body?: {}) => {
+export async function fetcher<T>(
+  endPoint: string,
+  method: Method,
+  body?: {}
+): Promise<T> {
   try {
     const option = {
       method,
@@ -14,7 +18,6 @@ export const fetcher = async (endPoint: string, method: Method, body?: {}) => {
       ...(body && { body: JSON.stringify(body) }),
     };
     const response = await fetch(`${BASE_URL}${endPoint}`, option);
-
     if (response.status) {
       console.log(`
         end point : ${endPoint}
@@ -25,9 +28,9 @@ export const fetcher = async (endPoint: string, method: Method, body?: {}) => {
 
     return await response.json();
   } catch (error) {
-    console.error(`
+    throw new Error(`
     에러가 발생한 End Point : 🎬 ${endPoint} 🔚
     에러 내용 : 🎬 ${error} 🔚
     `);
   }
-};
+}
