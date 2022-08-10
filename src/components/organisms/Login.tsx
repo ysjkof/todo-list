@@ -11,7 +11,7 @@ import {
   handleInputChange,
   isPassedValidations,
 } from '../../services/authServices';
-import { LoginInput } from '../../types/auth';
+import { LoginInputType } from '../../types/authType';
 
 export default function Login() {
   const navigation = useNavigate();
@@ -23,7 +23,7 @@ export default function Login() {
   });
   const [error, setError] = useState('');
 
-  const changeValidation = (loginInput: LoginInput) => {
+  const changeValidation = (loginInput: LoginInputType) => {
     setValidations((prevState) => {
       return { ...prevState, [loginInput]: !prevState[loginInput] };
     });

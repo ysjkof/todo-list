@@ -1,9 +1,9 @@
 import { FormEvent, useRef } from 'react';
 import {
   CreateTodoInputDto,
-  Todo,
   UpdateTodoInputDto,
-} from '../../types/todos';
+} from '../../types/dtos/todoDto';
+import { Todo } from '../../types/todoType';
 import InputWithLabel from '../molecules/InputWithLabel';
 import TextareaWithLabel from '../molecules/TextareaWithLabel';
 
@@ -42,11 +42,11 @@ export default function TodoForm({
           content: textareaRef.current!.value,
         })
       }
-      className="flex flex-col items-center w-full px-20 gap-1"
+      className="flex w-full flex-col items-center gap-1 px-20"
     >
       <InputWithLabel label="제목" type="text" ref={inputRef} />
-      <TextareaWithLabel label="할일" type="text" ref={textareaRef} />
-      <button className="bg-orange-400 text-white rounded-sm w-full">
+      <TextareaWithLabel label="할일" ref={textareaRef} />
+      <button className="w-full rounded-sm bg-orange-400 text-white">
         {actionName}
       </button>
     </form>

@@ -1,6 +1,3 @@
-export type LoginInput = 'email' | 'password';
-
-// CRUD DTO
 export interface LoginInputDto {
   email: string;
   password: string;

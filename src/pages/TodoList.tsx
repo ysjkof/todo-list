@@ -8,11 +8,12 @@ import {
   updateTodo,
 } from '../controller/todoController';
 import TodoForm from '../components/organisms/TodoForm';
-import { CreateTodoInputDto, Todo, UpdateTodoInputDto } from '../types/todos';
+import { CreateTodoInputDto, UpdateTodoInputDto } from '../types/dtos/todoDto';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
 import TodoTitleList from '../components/organisms/TodoTitleList';
 import TodoTitleContent from '../components/organisms/TodoTitleContent';
 import { toLocaleStringFromStringDate } from '../utils/todoUtils';
+import { Todo } from '../types/todoType';
 
 export default function TodoList() {
   const [todoData, setTodoData] = useState<Todo[]>([]);
@@ -118,7 +119,7 @@ export default function TodoList() {
   };
 
   return (
-    <div className="max-w-screen-md w-full relative flex flex-col gap-4">
+    <div className="relative flex w-full max-w-screen-md flex-col gap-4">
       {hasUpdateInput ? (
         <TodoForm
           actionName="수정"
@@ -128,7 +129,7 @@ export default function TodoList() {
       ) : (
         <TodoForm actionName="저장" onSubmit={createSubmit} />
       )}
-      <div className="flex border-red-400 border">
+      <div className="flex border border-red-400">
         <div className="w-full">
           <h2>목록</h2>
           {todoData.map((todo) => (
@@ -143,7 +144,7 @@ export default function TodoList() {
             />
           ))}
         </div>
-        <div className="w-full flex flex-col">
+        <div className="flex w-full flex-col">
           <h2>상세</h2>
           {todo && (
             <TodoTitleContent

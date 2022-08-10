@@ -1,5 +1,9 @@
 import { fetcher } from '../api/fetcher';
-import { LoginInputDto, LoginOutputDto, SignUpInputDto } from '../types/auth';
+import {
+  LoginInputDto,
+  LoginOutputDto,
+  SignUpInputDto,
+} from '../types/dtos/authDto';
 
 export const loginQuery = async ({
   email,

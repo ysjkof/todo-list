@@ -9,7 +9,7 @@ import {
   TodoOutputDto,
   UpdateTodoInputDto,
   UpdateTodoOutputDto,
-} from '../types/todos';
+} from '../types/dtos/todoDto';
 
 export const getTodos = async (): Promise<TodoOutputDto> => {
   const result = await fetcher('todos', 'GET');
@@ -24,9 +24,9 @@ export const getTodoById = async ({
 };
 
 export const createTodo = async (
-  todoInput: CreateTodoInputDto
+  createTodoInputDto: CreateTodoInputDto
 ): Promise<CreateTodoOutputDto> => {
-  const result = await fetcher('todos', 'POST', todoInput);
+  const result = await fetcher('todos', 'POST', createTodoInputDto);
   return { todo: result.data };
 };
 
