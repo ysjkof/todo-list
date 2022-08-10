@@ -38,7 +38,6 @@ export default function useTodo() {
     setTodoList((prevState) => [...prevState, newTodo]);
   };
   const createTodo = async ({ title, content }: CreateTodoInputDto) => {
-    // if (!title || !content) throw new Error('데이터를 입력해주세요');
     const createdTodo = await createTodoMutation({ content, title });
     if (!createdTodo.data) return alert('Todo 만들기를 실패했습니다');
     addToTodoList(createdTodo.data);
@@ -59,7 +58,6 @@ export default function useTodo() {
   };
 
   const updateTodo = async ({ id, title, content }: UpdateTodoInputDto) => {
-    // if (!id || !title || !content) throw new Error('데이터를 입력해주세요');
     const updatedTodo = await updateTodoMutation({ id, content, title });
     if (!updatedTodo.data) return alert('Todo 업데이트를 실패했습니다');
     updateToTodoList(updatedTodo.data);

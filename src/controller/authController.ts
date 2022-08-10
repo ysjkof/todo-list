@@ -6,7 +6,7 @@ import {
   SignUpOutputDto,
 } from '../types/dtos/authDto';
 
-export const loginQuery = async ({
+export const loginMutation = async ({
   email,
   password,
 }: LoginInputDto): Promise<LoginOutputDto> => {
@@ -21,7 +21,7 @@ export const loginQuery = async ({
   };
 };
 
-export const signUpQuery = async ({ email, password }: SignUpInputDto) => {
+export const signUpMutation = async ({ email, password }: SignUpInputDto) => {
   const result = await fetcher<SignUpOutputDto>('users/create', 'POST', {
     email,
     password,
