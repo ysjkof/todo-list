@@ -21,7 +21,10 @@ export const loginMutation = async ({
   };
 };
 
-export const signUpMutation = async ({ email, password }: SignUpInputDto) => {
+export const signUpMutation = async ({
+  email,
+  password,
+}: SignUpInputDto): Promise<SignUpOutputDto> => {
   const result = await fetcher<SignUpOutputDto>('users/create', 'POST', {
     email,
     password,
