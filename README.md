@@ -1,11 +1,23 @@
+# 고민한 점
+
+## login과 signUp의 로직이 거의 비슷한데 분리할 것인가?
+
+결론 : 분리.
+
+<img width="1320" alt="login-hook-vs-signup-hook" src="https://user-images.githubusercontent.com/77876601/183867732-d49950b2-4799-4b61-9fde-2d6fc227785a.png">
+
+위의 코드는 login과 signUp의 비지니스 로직을 분리한 리액트 훅이다.
+
+submitCallback의 response를 받은 함수와 그 다음 동작에 약간 차이가 있다.
+
 # 폴더구조
 
 - controller
-  데이터 요청을 하기 위해 endpoint를 가지고 처리를 하는 곳. VIEW와 바로 연결된다.
+  데이터 요청을 하기 위해 endpoint를 가지고 처리를 하는 곳. VIEW와 바로 연결됨
 - services
-  특정 기능(auth, todo...)에 종속되는 로직을 모아놓음
+  특정 기능(auth, todo)에 종속되는 로직을 모아놓음
 - utils
-  클린코드를 위해 선언한 간단한 함수나 특정 기능에 종속되지 않는 함수를 모음
+  특정 기능에 종속되지 않거나 1~2줄의 간단한 함수를 모음
 
 # 사용한 라이브러리
 
@@ -13,9 +25,41 @@
 - react-router-dom
 - tailwindcss
 
-# 그외
+# 날짜별 한 일
 
-fetch와 React Query 코드를 비교하려고 fetch API로 기능 구현을 하고 리펙토링 후 React Query로 바꾸려 했지만 시간이 없어 React Query로 바꾸지 못했다.
+## 2022. 08. 10.
+
+1. 타입 단언 제거
+2. 제네릭 추가
+3. type과 DTO 파일 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/27b5930f8f5c4eb57fdc94563b00c52459c1e1d3#)
+4. todo page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/e2f8c554678f6789b5f96efbb14b762440c6a5d9)
+
+- 분리 전
+<p align="center">
+  <img width="400" height="400" alt="todo-list-pre-seperate" src="https://user-images.githubusercontent.com/77876601/183827575-d52cc913-a456-4302-84ed-8bedda25bb58.png">
+</p>
+
+- 분리 후
+<p align="center">
+  <img alt="todo-list-only-view" width="400" height='400' src="https://user-images.githubusercontent.com/77876601/183827586-c1a06ea4-aeef-46b1-9b45-4fd80b986364.png">
+  <img alt="todo-list-hook" width="400" height='400' src="https://user-images.githubusercontent.com/77876601/183827596-f031d34b-82dc-4111-bbf2-9f1869d641ed.png">
+</p>
+
+1. todoForm 컴포넌트가 submit callback 함수를 받고 submit에서 사용하게 함(이전에는 submit함수를 받음) [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/67bd8e83fd4c8d95a4af3331803e17985a4e7c5e)
+2. login page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/5cb38300d18300db3ae1e038b8398a67175fd4c7)
+
+- 분리 전
+<p align="center">
+  <img alt="login-pre-seperate" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823549-4a6222d4-6625-4f08-96f9-40edec630eb8.png">
+</p>
+
+- 분리 후
+<p align="center">
+  <img alt="login-only-view" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823588-dfe562aa-a673-47ae-849e-3287bd9e759e.png">
+  <img alt="login-hook" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823599-f8b1d2c4-02d4-482b-8ec5-aac5d8c1fe11.png">
+</p>
+
+1. signUp page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/55613af6253fc3fd783754502ce241d2c0779271)
 
 # 클라이언트 구현 과제 안내
 
