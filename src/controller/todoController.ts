@@ -11,7 +11,7 @@ import {
   UpdateTodoOutputDto,
 } from '../types/dtos/todoDto';
 
-export const createTodo = async (
+export const createTodoMutation = async (
   createTodoInputDto: CreateTodoInputDto
 ): Promise<CreateTodoOutputDto> => {
   const result = await fetcher<CreateTodoOutputDto>(
@@ -34,7 +34,7 @@ export const getTodoById = async ({
   return result;
 };
 
-export const updateTodo = async ({
+export const updateTodoMutation = async ({
   id,
   title,
   content,
@@ -46,7 +46,7 @@ export const updateTodo = async ({
   return result;
 };
 
-export const deleteTodoById = async ({
+export const deleteTodoMutation = async ({
   id,
 }: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
   const result = await fetcher<DeleteTodoByIdOutputDto>(
