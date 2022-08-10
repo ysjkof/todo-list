@@ -39,9 +39,12 @@ export default function TodoList() {
     if (!title || !content) throw new Error('데이터를 입력해주세요');
 
     const createdTodo = await createTodo({ content, title });
-    if (createdTodo.todo) {
-      setTodoData((prevState) => [...prevState, createdTodo.todo!]);
-    }
+
+    if (!createdTodo.todo) return alert('Todo 등록을 실패했습니다');
+
+    setTodoData((prevState) =>
+      createdTodo.todo ? [...prevState, createdTodo.todo] : prevState
+    );
   };
   const updateSubmit = async (
     event: FormEvent,
@@ -52,16 +55,17 @@ export default function TodoList() {
     if (!id || !title || !content) throw new Error('데이터를 입력해주세요');
 
     const updatedTodo = await updateTodo({ id, content, title });
-    if (updatedTodo.todo) {
-      setTodoData((prevState) => {
-        const idx = prevState.findIndex((todo) => todo.id === id);
-        if (idx === -1)
-          throw new Error(
-            'Todo 수정 후 업데이트 중 기존 자료를 찾지 못했습니다'
-          );
-        return changeValueInArray(prevState, updatedTodo.todo!, idx);
-      });
-    }
+
+    setTodoData((prevState) => {
+      if (!updatedTodo.todo) return prevState;
+
+      const idx = prevState.findIndex((todo) => todo.id === id);
+      if (idx === -1)
+        throw new Error('Todo 수정 후 업데이트 중 기존 자료를 찾지 못했습니다');
+
+      return changeValueInArray(prevState, updatedTodo.todo, idx);
+    });
+
     setTodoToBeModified(null);
     setHasUpdateInput(false);
   };

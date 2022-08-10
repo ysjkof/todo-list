@@ -33,9 +33,12 @@ export default function SignUp() {
     event.preventDefault();
     if (!isPassedValidations(Object.values(validations))) return;
 
+    if (!emailInput.current || !passwordInput.current)
+      throw new Error('email이나 password를 알 수 없습니다');
+
     const response = await signUpQuery({
-      email: emailInput.current!.value,
-      password: passwordInput.current!.value,
+      email: emailInput.current.value,
+      password: passwordInput.current.value,
     });
 
     if (response.token) {

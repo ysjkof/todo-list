@@ -35,13 +35,16 @@ export default function TodoForm({
 
   return (
     <form
-      onSubmit={(event) =>
+      onSubmit={(event) => {
+        if (!inputRef.current || !textareaRef.current)
+          throw new Error('title이나 contents를 알 수 없습니다');
+
         onSubmit(event, {
           ...(todoToBeModified && { id: todoToBeModified.id }),
-          title: inputRef.current!.value,
-          content: textareaRef.current!.value,
-        })
-      }
+          title: inputRef.current.value,
+          content: textareaRef.current.value,
+        });
+      }}
       className="flex w-full flex-col items-center gap-1 px-20"
     >
       <InputWithLabel label="제목" type="text" ref={inputRef} />
