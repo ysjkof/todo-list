@@ -1,3 +1,20 @@
+프로젝트 실행 방법
+
+**사전작업**
+
+- 서버를 내려받고 리드미에 따라 서버를 실행한다
+  - [서버 레포지토리 링크](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
+
+**프로젝트 실행**
+
+- 프로젝트 경로 최상단에서 `npm install` 입력해 패키지 설치
+- 같은 경로에서 `npm run dev` 입력해 프로젝트 실행
+- 프로젝트가 실행되면 브라우저에서 `localhost:5173`으로 접속
+
+**프로젝트 실행시 에러가 생긴다면**
+
+- package-lock.json과 node_modules을 삭제 후 `npm install`를 다시 해본다
+
 # 고민한 점
 
 ## login과 signUp의 로직이 거의 비슷한데 분리할 것인가?
