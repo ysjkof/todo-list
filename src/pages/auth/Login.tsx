@@ -40,6 +40,7 @@ export default function Login() {
       email: emailInput.current.value,
       password: passwordInput.current.value,
     });
+    // console.log('response', response);
 
     if (response.token) {
       localStorage.setItem(TOKEN_KEY, response.token);
@@ -47,7 +48,7 @@ export default function Login() {
       return;
     }
 
-    setError(response.message);
+    if (response.message) setError(response.message);
   };
 
   return (

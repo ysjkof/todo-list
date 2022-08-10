@@ -20,7 +20,7 @@ export interface GetTodoByIdOutputDto extends CoreOutputDto {
 }
 
 export interface UpdateTodoInputDto extends CreateTodoInputDto {
-  id?: string;
+  id: string;
 }
 export interface UpdateTodoOutputDto extends CoreOutputDto {
   data?: Todo;
