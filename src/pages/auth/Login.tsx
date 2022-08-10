@@ -1,54 +1,29 @@
-import { FormEvent, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { loginQuery } from '../../controller/authController';
+import { FormEvent, useRef } from 'react';
 import Button from '../../components/atom/Button';
 import ErrorMessage from '../../components/atom/ErrorMessage';
 import Form from '../../components/atom/Form';
 import FormTitle from '../../components/atom/FormTitle';
 import Input from '../../components/molecules/InputWithLabel';
-import { TOKEN_KEY } from '../../constants/localStorageKeys';
 import {
   handleInputChange,
   isPassedValidations,
 } from '../../services/authServices';
-import { LoginInputType } from '../../types/authType';
+import useLogin from '../../hooks/useLogin';
 
 export default function Login() {
-  const navigation = useNavigate();
+  const { validations, error, changeValidation, submitCallback } = useLogin();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
-  const [validations, setValidations] = useState({
-    email: false,
-    password: false,
-  });
-  const [error, setError] = useState('');
 
-  const changeValidation = (loginInput: LoginInputType) => {
-    setValidations((prevState) => {
-      return { ...prevState, [loginInput]: !prevState[loginInput] };
-    });
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!isPassedValidations(Object.values(validations))) return;
-
     if (!emailInput.current || !passwordInput.current)
       throw new Error('email이나 password를 알 수 없습니다');
 
-    const response = await loginQuery({
+    submitCallback({
       email: emailInput.current.value,
       password: passwordInput.current.value,
     });
-    // console.log('response', response);
-
-    if (response.token) {
-      localStorage.setItem(TOKEN_KEY, response.token);
-      navigation('/');
-      return;
-    }
-
-    if (response.message) setError(response.message);
   };
 
   return (
