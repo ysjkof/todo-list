@@ -1,36 +1,34 @@
-import { CoreOutputDto } from '../common';
+import { CoreOutputDto } from './commonDto';
 import { Todo } from '../todoType';
 
 export interface TodoOutputDto extends CoreOutputDto {
-  todos?: Todo[];
-  token?: string;
+  data?: Todo[];
 }
 
 // CRUD DTO
 export interface CreateTodoInputDto extends Pick<Todo, 'title' | 'content'> {}
 
 export interface CreateTodoOutputDto extends CoreOutputDto {
-  todo?: Todo;
-  token?: string;
+  data?: Todo;
 }
 
 export interface GetTodoByIdInputDto {
   id: string;
 }
 export interface GetTodoByIdOutputDto extends CoreOutputDto {
-  todo?: Todo;
+  data?: Todo;
 }
 
 export interface UpdateTodoInputDto extends CreateTodoInputDto {
   id?: string;
 }
 export interface UpdateTodoOutputDto extends CoreOutputDto {
-  todo?: Todo;
+  data?: Todo;
 }
 
 export interface DeleteTodoByIdInputDto {
   id: string;
 }
 export interface DeleteTodoByIdOutputDto extends CoreOutputDto {
-  ok: boolean;
+  data?: string | null;
 }

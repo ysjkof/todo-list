@@ -1,12 +1,13 @@
+import { CoreOutputDto } from './commonDto';
+
 export interface LoginInputDto {
   email: string;
   password: string;
 }
 
-export interface LoginOutputDto {
-  message: string;
+export interface LoginOutputDto extends CoreOutputDto {
   token?: string;
-  error?: unknown;
 }
 
 export interface SignUpInputDto extends LoginInputDto {}
+export interface SignUpOutputDto extends LoginOutputDto {}
