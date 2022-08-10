@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getLocalToken } from '../utils/authUtils';
-import Login from '../components/organisms/Login';
-import SignUp from '../components/organisms/SignUp';
+import { getLocalToken } from '../../utils/authUtils';
+import Login from './Login';
+import SignUp from './SignUp';
 
 export default function Auth() {
   const navigation = useNavigate();
@@ -17,7 +17,7 @@ export default function Auth() {
   return getLocalToken() ? (
     <></>
   ) : (
-    <div className="flex flex-col pt-10 h-full gap-16">
+    <div className="flex h-full flex-col gap-16 pt-10">
       <Login />
       <SignUp />
     </div>

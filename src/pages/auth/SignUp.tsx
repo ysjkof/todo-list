@@ -1,11 +1,11 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginQuery } from '../../controller/authController';
-import Button from '../atom/Button';
-import ErrorMessage from '../atom/ErrorMessage';
-import Form from '../atom/Form';
-import FormTitle from '../atom/FormTitle';
-import Input from '../molecules/InputWithLabel';
+import { signUpQuery } from '../../controller/authController';
+import Button from '../../components/atom/Button';
+import ErrorMessage from '../../components/atom/ErrorMessage';
+import Form from '../../components/atom/Form';
+import FormTitle from '../../components/atom/FormTitle';
+import Input from '../../components/molecules/InputWithLabel';
 import { TOKEN_KEY } from '../../constants/localStorageKeys';
 import {
   handleInputChange,
@@ -13,7 +13,7 @@ import {
 } from '../../services/authServices';
 import { LoginInputType } from '../../types/authType';
 
-export default function Login() {
+export default function SignUp() {
   const navigation = useNavigate();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -36,14 +36,16 @@ export default function Login() {
     if (!emailInput.current || !passwordInput.current)
       throw new Error('email이나 password를 알 수 없습니다');
 
-    const response = await loginQuery({
+    const response = await signUpQuery({
       email: emailInput.current.value,
       password: passwordInput.current.value,
     });
 
     if (response.token) {
-      localStorage.setItem(TOKEN_KEY, response.token);
-      navigation('/');
+      if (confirm('회원가입을 성공했습니다. 바로 로그인 하시겠습니까?')) {
+        localStorage.setItem(TOKEN_KEY, response.token);
+        navigation('/');
+      }
       return;
     }
 
@@ -52,7 +54,7 @@ export default function Login() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormTitle textContent="로그인" />
+      <FormTitle textContent="회원가입" />
       <Input
         label="이메일"
         type="text"
@@ -82,7 +84,7 @@ export default function Login() {
         }
       />
       <Button disable={!isPassedValidations(Object.values(validations))}>
-        로그인
+        회원가입
       </Button>
       {error && <ErrorMessage textContent={error} />}
     </Form>

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout';
-import Auth from '../pages/Auth';
+import Auth from '../pages/auth';
 import TodoList from '../pages/TodoList';
 
 export default function Router() {
