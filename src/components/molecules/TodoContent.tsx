@@ -5,7 +5,7 @@ interface TodoTitleContentProps {
   content: string;
 }
 
-export default function TodoTitleContent({
+export default function TodoContent({
   createdAt,
   updatedAt,
   title,
@@ -14,8 +14,8 @@ export default function TodoTitleContent({
   return (
     <>
       <h3 className="font-semibold">제목: {title}</h3>
-      <span className="text-gray-500 text-sm">생성: {createdAt}</span>
-      <span className="text-gray-500 text-sm">수정: {updatedAt}</span>
+      <span className="text-sm text-gray-500">생성: {createdAt}</span>
+      <span className="text-sm text-gray-500">수정: {updatedAt}</span>
       <p className="px-4 pt-1">{content}</p>
     </>
   );

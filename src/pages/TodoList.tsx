@@ -11,7 +11,7 @@ import TodoForm from '../components/organisms/TodoForm';
 import { CreateTodoInputDto, UpdateTodoInputDto } from '../types/dtos/todoDto';
 import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
 import TodoTitleList from '../components/organisms/TodoTitleList';
-import TodoTitleContent from '../components/organisms/TodoTitleContent';
+import TodoContent from '../components/molecules/TodoContent';
 import { toLocaleStringFromStringDate } from '../utils/todoUtils';
 import { Todo } from '../types/todoType';
 
@@ -151,7 +151,7 @@ export default function TodoList() {
         <div className="flex w-full flex-col">
           <h2>상세</h2>
           {todo && (
-            <TodoTitleContent
+            <TodoContent
               createdAt={toLocaleStringFromStringDate(todo.createdAt)}
               updatedAt={toLocaleStringFromStringDate(todo.updatedAt)}
               title={todo.title}
