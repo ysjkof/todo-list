@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TOKEN_KEY } from '../constants/localStorageKeys';
-import { loginMutation } from '../controller/authController';
+import { loginMutation, signUpMutation } from '../controller/authController';
 import { isPassedValidations } from '../services/authServices';
 import { LoginInputType } from '../types/authType';
-import { LoginInputDto } from '../types/dtos/authDto';
+import { LoginInputDto, SignUpInputDto } from '../types/dtos/authDto';
 
-export default function useLogin() {
+export default function useAuth() {
   const navigation = useNavigate();
   const [validations, setValidations] = useState({
     email: false,
@@ -20,9 +20,16 @@ export default function useLogin() {
     });
   };
 
-  const submitCallback = async (loginInput: LoginInputDto) => {
+  async function submitCallback(
+    todo: 'login' | 'signUp',
+    input: LoginInputDto | SignUpInputDto
+  ) {
     if (!isPassedValidations(Object.values(validations))) return;
-    const response = await loginMutation(loginInput);
+
+    const response =
+      todo === 'login'
+        ? await loginMutation(input)
+        : await signUpMutation(input);
 
     if (response.token) {
       localStorage.setItem(TOKEN_KEY, response.token);
@@ -30,6 +37,6 @@ export default function useLogin() {
       return;
     }
     if (response.message) setError(response.message);
-  };
+  }
   return { validations, error, changeValidation, submitCallback };
 }

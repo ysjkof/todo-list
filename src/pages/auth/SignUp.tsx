@@ -8,19 +8,18 @@ import {
   handleInputChange,
   isPassedValidations,
 } from '../../services/authServices';
-import useSignUp from '../../hooks/useSignUp';
+import useAuth from '../../hooks/useAuth';
 
 export default function SignUp() {
-  const { validations, error, changeValidation, submitCallback } = useSignUp();
+  const { validations, error, changeValidation, submitCallback } = useAuth();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!emailInput.current || !passwordInput.current)
-      throw new Error('email이나 password를 알 수 없습니다');
+    if (!emailInput.current?.value || !passwordInput.current?.value) return;
 
-    submitCallback({
+    submitCallback('signUp', {
       email: emailInput.current.value,
       password: passwordInput.current.value,
     });
