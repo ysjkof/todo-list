@@ -1,6 +1,6 @@
-프로젝트 실행 방법
+# 프로젝트 실행 방법
 
-**사전작업**
+**서버 실행**
 
 - 서버를 내려받고 리드미에 따라 서버를 실행한다
   - [서버 레포지토리 링크](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
@@ -19,13 +19,18 @@
 
 ## login과 signUp의 로직이 거의 비슷한데 분리할 것인가?
 
-결론 : 분리.
+**고민한 이유** :
 
-<img width="1320" alt="login-hook-vs-signup-hook" src="https://user-images.githubusercontent.com/77876601/183867732-d49950b2-4799-4b61-9fde-2d6fc227785a.png">
+- response를 받은 뒤 로직에 약간의 차이가 있다
+- 코드가 2줄만 다르고 나머지는 중복이다(재사용성 고려)
+- 나중에 signUp이 커진다면 나누는 작업이 필요(확장시 비용고려)
 
-위의 코드는 login과 signUp의 비지니스 로직을 분리한 리액트 훅이다.
+**결론** :
 
-submitCallback의 response를 받은 함수와 그 다음 동작에 약간 차이가 있다.
+- 하나로 합친다
+- signUp이 커질 가능성이 낮다
+- signUp의 확장 비용이 부담될 정도라면 애초에 새로만들 확률이 높다
+- 그래서 재사용성있게 하나로 합치기로 결정
 
 # 폴더구조
 
@@ -43,6 +48,23 @@ submitCallback의 response를 받은 함수와 그 다음 동작에 약간 차�
 - tailwindcss
 
 # 날짜별 한 일
+
+## 2022. 08. 11.
+
+1. signUp이 데이터를 받은 후 로그인할지 확인하지 않고 바로 로그인하도록 함. 필요성이 매우 낮음.
+2. login과 signUp의 비지니스 로직을 하나의 훅으로 만듦
+
+아래 코드는 login과 signUp의 비지니스 로직을 분리한 커스텀 훅이다. submitCallback의 response를 받은 함수와 그 다음 동작에 약간 차이가 있다.
+
+<p align="center">
+  <img width="1320" alt="login hook vs signup hook" src="https://user-images.githubusercontent.com/77876601/183867732-d49950b2-4799-4b61-9fde-2d6fc227785a.png">
+</p>
+
+아래 코드는 login과 signUp이 공유하는 커스텀 훅이다.
+
+<p align="center">
+  <img alt='auth hook' width="500" alt="use-auth" src="https://user-images.githubusercontent.com/77876601/184080708-1f7d4d4d-3fe8-4530-9a19-247b3df1c64e.png">
+</p>
 
 ## 2022. 08. 10.
 
@@ -67,13 +89,13 @@ submitCallback의 response를 받은 함수와 그 다음 동작에 약간 차�
 
 - 분리 전
 <p align="center">
-  <img alt="login-pre-seperate" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823549-4a6222d4-6625-4f08-96f9-40edec630eb8.png">
+  <img alt="login pre seperate" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823549-4a6222d4-6625-4f08-96f9-40edec630eb8.png">
 </p>
 
 - 분리 후
 <p align="center">
-  <img alt="login-only-view" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823588-dfe562aa-a673-47ae-849e-3287bd9e759e.png">
-  <img alt="login-hook" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823599-f8b1d2c4-02d4-482b-8ec5-aac5d8c1fe11.png">
+  <img alt="login only view" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823588-dfe562aa-a673-47ae-849e-3287bd9e759e.png">
+  <img alt="login hook" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823599-f8b1d2c4-02d4-482b-8ec5-aac5d8c1fe11.png">
 </p>
 
 1. signUp page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/55613af6253fc3fd783754502ce241d2c0779271)
