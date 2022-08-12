@@ -1,3 +1,4 @@
+import FetchData from '../api/fetchData';
 import { fetcher } from '../api/fetcher';
 import {
   LoginInputDto,
@@ -6,18 +7,34 @@ import {
   SignUpOutputDto,
 } from '../types/dtos/authDto';
 
+interface UserFetchDataOutput {
+  token?: string;
+  details?: string;
+  message?: string;
+}
+
+const USER_URL = 'http://localhost:8080/users';
+const userRepository = new FetchData<UserFetchDataOutput>(USER_URL, fetcher);
+
 export const loginMutation = async ({
   email,
   password,
 }: LoginInputDto): Promise<LoginOutputDto> => {
-  const result = await fetcher<LoginOutputDto>('users/login', 'POST', {
-    email,
-    password,
-  });
+  const { token, details, message } = await userRepository.post<LoginInputDto>(
+    'login',
+    {
+      email,
+      password,
+    }
+  );
+
+  if (!token) {
+    return { ok: false, message: message || details || '' };
+  }
+
   return {
-    message: result?.message || result?.details || '',
-    token: result?.token,
-    error: result?.error,
+    ok: true,
+    token: token,
   };
 };
 
@@ -25,12 +42,20 @@ export const signUpMutation = async ({
   email,
   password,
 }: SignUpInputDto): Promise<SignUpOutputDto> => {
-  const result = await fetcher<SignUpOutputDto>('users/create', 'POST', {
-    email,
-    password,
-  });
+  const { token, details, message } = await userRepository.post<SignUpInputDto>(
+    'create',
+    {
+      email,
+      password,
+    }
+  );
+
+  if (!token) {
+    return { ok: false, message: message || details || '' };
+  }
+
   return {
-    message: result?.message || result?.details || '',
-    token: result?.token,
+    ok: true,
+    token: token,
   };
 };

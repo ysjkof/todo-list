@@ -1,3 +1,4 @@
+import FetchData from '../api/fetchData';
 import { fetcher } from '../api/fetcher';
 import {
   CreateTodoInputDto,
@@ -10,49 +11,93 @@ import {
   UpdateTodoInputDto,
   UpdateTodoOutputDto,
 } from '../types/dtos/todoDto';
+import { Todo } from '../types/todoType';
 
-export const createTodoMutation = async (
-  createTodoInputDto: CreateTodoInputDto
-): Promise<CreateTodoOutputDto> => {
-  const result = await fetcher<CreateTodoOutputDto>(
-    'todos',
-    'POST',
-    createTodoInputDto
-  );
-  return result;
+interface TodoFetchDataOutput {
+  data?: Todo | Todo[];
+  details?: string;
+  message?: string;
+}
+
+const TODO_URL = 'http://localhost:8080/todos';
+const todoRepository = new FetchData<TodoFetchDataOutput>(TODO_URL, fetcher);
+
+export const createTodoMutation = async ({
+  title,
+  content,
+}: CreateTodoInputDto): Promise<CreateTodoOutputDto> => {
+  const { data, details, message } =
+    await todoRepository.post<CreateTodoInputDto>('', {
+      title,
+      content,
+    });
+
+  if (!data || Array.isArray(data)) {
+    return { ok: false, message: message || details || '' };
+  }
+
+  return {
+    ok: true,
+    todo: data,
+  };
 };
 
 export const getTodos = async (): Promise<TodoOutputDto> => {
-  const result = await fetcher<TodoOutputDto>('todos', 'GET');
-  return result;
+  const { data, details, message } = await todoRepository.get();
+
+  if (!data || !Array.isArray(data)) {
+    return { ok: false, message: message || details || '' };
+  }
+
+  return {
+    ok: true,
+    todos: data,
+  };
 };
 
 export const getTodoById = async ({
   id,
 }: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
-  const result = await fetcher<GetTodoByIdOutputDto>(`todos/${id}`, 'GET');
-  return result;
+  const { data, details, message } = await todoRepository.getById(id);
+
+  if (!data || Array.isArray(data)) {
+    return { ok: false, message: message || details || '' };
+  }
+
+  return {
+    ok: true,
+    todo: data,
+  };
 };
 
 export const updateTodoMutation = async ({
-  id,
-  title,
   content,
+  title,
+  id,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
   if (!id) throw new Error('updateTodoMutation : id를 입력하세요');
-  const result = await fetcher<UpdateTodoOutputDto>(`todos/${id}`, 'PUT', {
-    title,
-    content,
-  });
-  return result;
+
+  const { data, details, message } =
+    await todoRepository.put<UpdateTodoInputDto>(id, { content, title });
+
+  if (!data || Array.isArray(data)) {
+    return { ok: false, message: message || details || '' };
+  }
+
+  return {
+    ok: true,
+    todo: data,
+  };
 };
 
 export const deleteTodoMutation = async ({
   id,
 }: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
-  const result = await fetcher<DeleteTodoByIdOutputDto>(
-    `todos/${id}`,
-    'DELETE'
-  );
-  return result;
+  const { data, details, message } = await todoRepository.delete(id);
+
+  if (data || details || message) {
+    return { ok: false };
+  }
+
+  return { ok: true };
 };
