@@ -13,12 +13,12 @@ export default function TodoList() {
     hasUpdateInput,
     todoToBeModified,
     todoList,
+    selectedTodo,
+    clearSelectedTodo,
     createTodo,
+    getTodo,
     updateTodo,
     deleteTodo,
-    todo,
-    getTodo,
-    clearTodo,
     toggleUpdateInput,
   } = useTodo();
 
@@ -28,10 +28,15 @@ export default function TodoList() {
 
   useEffect(() => {
     if (!param.todoId) {
-      clearTodo();
+      clearSelectedTodo();
       return;
     }
-    getTodo(param.todoId, () => navigation('/'));
+    getTodo({
+      id: param.todoId,
+      doWhenYouFail: () => {
+        navigation('/');
+      },
+    });
   }, [param]);
 
   return (
@@ -62,12 +67,12 @@ export default function TodoList() {
         </div>
         <div className="flex w-full flex-col">
           <h2>상세</h2>
-          {todo && (
+          {selectedTodo && (
             <TodoContent
-              createdAt={toLocaleStringFromStringDate(todo.createdAt)}
-              updatedAt={toLocaleStringFromStringDate(todo.updatedAt)}
-              title={todo.title}
-              content={todo.content}
+              createdAt={toLocaleStringFromStringDate(selectedTodo.createdAt)}
+              updatedAt={toLocaleStringFromStringDate(selectedTodo.updatedAt)}
+              title={selectedTodo.title}
+              content={selectedTodo.content}
             />
           )}
         </div>
