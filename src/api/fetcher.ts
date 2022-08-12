@@ -17,25 +17,22 @@ export async function fetcher<T>(
       ...(body && { body: JSON.stringify(body) }),
     };
 
-    // const consoleLogStatus = (status: number, statusText: string) => {
-    //   const splitedUrl = url.split('/');
-    //   console.log(`
-    //     end point : ${splitedUrl[splitedUrl.length - 1]}
-    //     status code : ${status}
-    //     statusText : ${statusText}
-    //   `);
-    // };
-
     const response = await fetch(url, option);
+
     if (response.status) {
       // 상태 처리
-      // consoleLogStatus(response.status, response.statusText);
     }
     const result = await response.json();
+
     return result;
   } catch (error) {
+    const getEndPoint = (thisUrl: string) => {
+      const splitedUrl = thisUrl.split('/');
+      return splitedUrl[splitedUrl.length - 1];
+    };
     throw new Error(`
-    에러가 발생한 End Point : 🎬 ${url} 🔚
+    fetch에 문제가 있습니다.
+    에러가 발생한 End Point : 🎬 ${getEndPoint(url)} 🔚
     에러 내용 : 🎬 ${error} 🔚
     `);
   }
