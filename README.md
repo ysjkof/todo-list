@@ -32,13 +32,84 @@
 - signUp의 확장 비용이 부담될 정도라면 애초에 새로만들 확률이 높다
 - 그래서 재사용성있게 하나로 합치기로 결정
 
-# 사용한 라이브러리
-
-- react(with Typescript)
-- react-router-dom
-- tailwindcss
-
 # 날짜별 한 일
+
+## 2022.08.12.
+
+1. 패치 모듈 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/340997bdcc33096024cd0b076584a7a29a855726)
+
+**각 도메인에 패치 모듈 적용시 차이점**
+
+```ts
+// user에 모듈 적용
+interface UserFetchResponse {
+  token?: string;
+  details?: string;
+  message?: string;
+}
+const USER_URL = 'http://localhost:8080/users';
+const userFetch = new FetchModule<UserFetchResponse>(USER_URL, fetcher);
+
+// todo에 모듈 적용
+interface TodoFetchResponse {
+  data?: Todo | Todo[];
+  details?: string;
+  message?: string;
+}
+const TODO_URL = 'http://localhost:8080/todos';
+const todoFetch = new FetchModule<TodoFetchResponse>(TODO_URL, fetcher);
+```
+
+**컨트롤러에서 패치 모듈 적용 전 후 차이**
+
+```ts
+// 적용 전 authController.ts의 일부
+const result = await fetcher<LoginOutputDto>('users/login', 'POST', {
+  email,
+  password,
+});
+
+// 적용 후 authController.ts의 일부
+const result = await userFetch.post<LoginInputDto>('login', {
+  email,
+  password,
+});
+```
+
+2. useTodo에서 동일 기능의 함수 하나로 합치고 todoServices로 분리함
+
+```ts
+// 수정전 useTodo.ts
+// todo의 id를 비교하는 동일 기능
+const isSelectedTodo = (id: string) => todo?.id === id;
+const isToBeModifiedTod = (id: string) => todoToBeModified?.id === id;
+
+// 수정 후 todoServices.ts
+export const isSameTodo = (
+  selectedTodoId: string | undefined,
+  toBoModifiedTodoId: string | undefined
+) => selectedTodoId && toBoModifiedTodoId;
+```
+
+3. todo의 알림 메시지 상수로함
+
+```ts
+// 수정 전 useTodo.ts
+if (!createdTodo.data) return alert('Todo 만들기를 실패했습니다');
+
+// 수정후 useTodo.ts
+if (!createdTodo.data) return alert(TODO_ALERTS.FAIL_CREATE);
+
+// 수정후 todoServices.ts
+// 한 곳에서 관리할 수 있게 변경
+export const TODO_ALERTS = {
+  NOT_FOUND: '서버에서 todo를 찾을 수 없습니다',
+  FAIL_CREATE: 'Todo 만들기를 실패했습니다',
+  NOT_FOUND_INDEX: '출력된 todo 목록에서 선택한 todo를 찾지 못했습니다',
+  FAIL_UPDATE: 'Todo 업데이트를 실패했습니다',
+  FAIL_DELETE: 'Todo 삭제를 실패했습니다',
+};
+```
 
 ## 2022. 08. 11.
 
@@ -138,7 +209,15 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 3. 로그아웃은 클라이언트 단에서 localStorage에 저장된 token을 삭제하는 방식으로 간단히 구현해주세요.
 
-# 폴더구조
+# 그외
+
+**사용한 라이브러리**
+
+- react(with Typescript)
+- react-router-dom
+- tailwindcss
+
+**폴더구조**
 
 - controller
   데이터 요청을 하기 위해 endpoint를 가지고 처리를 하는 곳. VIEW와 바로 연결됨
