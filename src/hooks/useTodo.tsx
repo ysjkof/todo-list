@@ -23,22 +23,22 @@ export default function useTodo() {
   const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
 
   const getTodo = async ({ id, doWhenYouFail }: GetTodo) => {
-    const data = await getTodoById({ id });
-    if (!data.data) {
+    const { todo } = await getTodoById({ id });
+    if (!todo) {
       alert(TODO_ALERTS.NOT_FOUND);
       doWhenYouFail();
       return;
     }
-    setSelectedTodo(data.data);
+    setSelectedTodo(todo);
   };
 
   const addToTodoList = (newTodo: Todo) => {
     setTodoList((prevState) => [...prevState, newTodo]);
   };
   const createTodo = async ({ title, content }: CreateTodoInputDto) => {
-    const createdTodo = await createTodoMutation({ content, title });
-    if (!createdTodo.data) return alert(TODO_ALERTS.FAIL_CREATE);
-    addToTodoList(createdTodo.data);
+    const { todo } = await createTodoMutation({ content, title });
+    if (!todo) return alert(TODO_ALERTS.FAIL_CREATE);
+    addToTodoList(todo);
   };
 
   const updateToTodoList = (updateTodo: Todo) => {
@@ -55,9 +55,13 @@ export default function useTodo() {
   };
 
   const updateTodo = async ({ id, title, content }: UpdateTodoInputDto) => {
-    const updatedTodo = await updateTodoMutation({ id, content, title });
-    if (!updatedTodo.data) return alert(TODO_ALERTS.FAIL_UPDATE);
-    updateToTodoList(updatedTodo.data);
+    const { todo } = await updateTodoMutation({
+      id,
+      content,
+      title,
+    });
+    if (!todo) return alert(TODO_ALERTS.FAIL_UPDATE);
+    updateToTodoList(todo);
   };
 
   const deleteTodoFromTodoList = async (id: string) => {
@@ -74,8 +78,8 @@ export default function useTodo() {
     }
   };
   const deleteTodo = async (id: string) => {
-    const result = await deleteTodoMutation({ id });
-    if (result.data) alert(TODO_ALERTS.FAIL_DELETE);
+    const { ok } = await deleteTodoMutation({ id });
+    if (!ok) alert(TODO_ALERTS.FAIL_DELETE);
     deleteTodoFromTodoList(id);
   };
 
@@ -97,8 +101,8 @@ export default function useTodo() {
   };
 
   const getTodoAll = async () => {
-    const todos = await getTodos();
-    setTodoList(todos.data || []);
+    const { todos } = await getTodos();
+    setTodoList(todos || []);
   };
 
   useEffect(() => {
