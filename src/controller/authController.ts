@@ -1,4 +1,4 @@
-import FetchData from '../api/fetchData';
+import FetchModule from '../api/fetchModule';
 import { fetcher } from '../api/fetcher';
 import {
   LoginInputDto,
@@ -7,20 +7,20 @@ import {
   SignUpOutputDto,
 } from '../types/dtos/authDto';
 
-interface UserFetchDataOutput {
+interface UserFetchResponse {
   token?: string;
   details?: string;
   message?: string;
 }
 
 const USER_URL = 'http://localhost:8080/users';
-const userRepository = new FetchData<UserFetchDataOutput>(USER_URL, fetcher);
+const userFetch = new FetchModule<UserFetchResponse>(USER_URL, fetcher);
 
 export const loginMutation = async ({
   email,
   password,
 }: LoginInputDto): Promise<LoginOutputDto> => {
-  const { token, details, message } = await userRepository.post<LoginInputDto>(
+  const { token, details, message } = await userFetch.post<LoginInputDto>(
     'login',
     {
       email,
@@ -42,7 +42,7 @@ export const signUpMutation = async ({
   email,
   password,
 }: SignUpInputDto): Promise<SignUpOutputDto> => {
-  const { token, details, message } = await userRepository.post<SignUpInputDto>(
+  const { token, details, message } = await userFetch.post<SignUpInputDto>(
     'create',
     {
       email,

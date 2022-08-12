@@ -3,7 +3,7 @@ import { fetcher } from './fetcher';
 type FetchInstanceType = typeof fetcher;
 type Id = string | number;
 
-class FetchData<T> {
+class FetchModule<T> {
   constructor(
     private readonly baseUrl: string,
     private readonly fetchInstance: FetchInstanceType
@@ -52,4 +52,4 @@ class FetchData<T> {
   }
 }
 
-export default FetchData;
+export default FetchModule;
