@@ -1,4 +1,4 @@
-import { getLocalToken } from '../utils/authUtils';
+import { getUserToken } from '../services/authServices';
 
 type Method = 'GET' | 'PUT' | 'POST' | 'DELETE';
 const BASE_URL = 'http://localhost:8080/';
@@ -13,7 +13,7 @@ export async function fetcher<T>(
       method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: getLocalToken() || '',
+        Authorization: getUserToken() || '',
       },
       ...(body && { body: JSON.stringify(body) }),
     };

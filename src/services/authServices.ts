@@ -1,3 +1,4 @@
+import { TOKEN_KEY } from '../constants/localStorageKeys';
 import { REGEX } from '../constants/regex';
 import { LoginInputType } from '../types/authType';
 
@@ -19,3 +20,8 @@ export const handleInputChange = (
 
   changeValidation(type);
 };
+
+export const getUserToken = () => localStorage.getItem(TOKEN_KEY);
+export const removeUserToken = () => localStorage.removeItem(TOKEN_KEY);
+export const setUserToken = (token: string) =>
+  localStorage.setItem(TOKEN_KEY, token);

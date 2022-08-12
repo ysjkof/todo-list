@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TOKEN_KEY } from '../constants/localStorageKeys';
 import { loginMutation, signUpMutation } from '../controller/authController';
-import { isPassedValidations } from '../services/authServices';
+import { isPassedValidations, setUserToken } from '../services/authServices';
 import { LoginInputType } from '../types/authType';
 import { LoginInputDto, SignUpInputDto } from '../types/dtos/authDto';
 
@@ -26,17 +25,17 @@ export default function useAuth() {
   ) {
     if (!isPassedValidations(Object.values(validations))) return;
 
-    const response =
+    const { token, message } =
       todo === 'login'
         ? await loginMutation(input)
         : await signUpMutation(input);
 
-    if (response.token) {
-      localStorage.setItem(TOKEN_KEY, response.token);
+    if (token) {
+      setUserToken(token);
       navigation('/');
       return;
     }
-    if (response.message) setError(response.message);
+    if (message) setError(message);
   }
   return { validations, error, changeValidation, submitCallback };
 }

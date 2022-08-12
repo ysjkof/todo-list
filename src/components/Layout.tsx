@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { getLocalToken, removeLocalToken } from '../utils/authUtils';
+import { getUserToken, removeUserToken } from '../services/authServices';
 
 export default function Layout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(getLocalToken());
+  const [isLoggedIn, setIsLoggedIn] = useState(getUserToken());
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -13,12 +13,12 @@ export default function Layout() {
   }, [isLoggedIn]);
 
   const invokeLogout = () => {
-    removeLocalToken();
+    removeUserToken();
     setIsLoggedIn(null);
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center">
+    <div className="relative flex h-screen items-center justify-center">
       <button className="absolute right-10 top-4" onClick={invokeLogout}>
         Logout
       </button>
