@@ -1,5 +1,4 @@
 export interface CoreOutputDto {
+  ok: boolean;
   message?: string;
-  details?: string;
-  error?: unknown;
 }
