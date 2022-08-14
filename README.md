@@ -2,12 +2,11 @@
 
 **서버 실행**
 
-- 서버를 내려받고 리드미에 따라 서버를 실행한다
-  - [서버 레포지토리 링크](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
+- 이 보관소의 backend폴더에서 README.md에 따라 서버를 실행한다. [원본 서버 보관소](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
 
 **프로젝트 실행**
 
-- 프로젝트 경로 최상단에서 `npm install` 입력해 패키지 설치
+- 이 보관소의 frontend폴더에서 `npm install` 입력해 패키지 설치
 - 같은 경로에서 `npm run dev` 입력해 프로젝트 실행
 - 프로젝트가 실행되면 브라우저에서 `localhost:5173`으로 접속
 
