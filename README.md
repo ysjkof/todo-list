@@ -113,16 +113,15 @@ export const TODO_ALERTS = {
 
 ## 2022. 08. 11.
 
-1. signUp이 데이터를 받은 후 로그인할지 확인하지 않고 바로 로그인하도록 함. 필요성이 매우 낮음.
-2. login과 signUp의 비지니스 로직을 하나의 훅으로 만듦
+1. login과 signUp의 비지니스 로직을 하나의 훅으로 만듦
 
-아래 코드는 login과 signUp의 비지니스 로직을 분리한 커스텀 훅이다. submitCallback의 response를 받은 함수와 그 다음 동작에 약간 차이가 있다.
+- 변경 전 : login과 signUp 각자의 훅
 
 <p align="center">
   <img width="1320" alt="login hook vs signup hook" src="https://user-images.githubusercontent.com/77876601/183867732-d49950b2-4799-4b61-9fde-2d6fc227785a.png">
 </p>
 
-아래 코드는 login과 signUp이 공유하는 커스텀 훅이다.
+- 변경 후 : signUp이 응답을 받은 후 바로 로그인하도록 함. confirm의 필요성이 매우 낮아서 제거.
 
 <p align="center">
   <img alt='auth hook' width="500" alt="use-auth" src="https://user-images.githubusercontent.com/77876601/184080708-1f7d4d4d-3fe8-4530-9a19-247b3df1c64e.png">
@@ -146,8 +145,8 @@ export const TODO_ALERTS = {
   <img alt="todo-list-hook" width="400" height='400' src="https://user-images.githubusercontent.com/77876601/183827596-f031d34b-82dc-4111-bbf2-9f1869d641ed.png">
 </p>
 
-1. todoForm 컴포넌트가 submit callback 함수를 받고 submit에서 사용하게 함(이전에는 submit함수를 받음) [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/67bd8e83fd4c8d95a4af3331803e17985a4e7c5e)
-2. login page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/5cb38300d18300db3ae1e038b8398a67175fd4c7)
+5. todoForm 컴포넌트가 submit callback 함수를 받고 submit에서 사용하게 함(이전에는 submit함수를 받음) [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/67bd8e83fd4c8d95a4af3331803e17985a4e7c5e)
+6. login page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/5cb38300d18300db3ae1e038b8398a67175fd4c7)
 
 - 분리 전
 <p align="center">
@@ -160,7 +159,7 @@ export const TODO_ALERTS = {
   <img alt="login hook" width="400" height='400'src="https://user-images.githubusercontent.com/77876601/183823599-f8b1d2c4-02d4-482b-8ec5-aac5d8c1fe11.png">
 </p>
 
-1. signUp page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/55613af6253fc3fd783754502ce241d2c0779271)
+7. signUp page의 뷰와 서비스 로직 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/55613af6253fc3fd783754502ce241d2c0779271)
 
 # 클라이언트 구현 과제 안내
 
