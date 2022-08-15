@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../App';
 import { loginMutation, signUpMutation } from '../controller/authController';
 import { isPassedValidations, setUserToken } from '../services/authServices';
 import { LoginInputType } from '../types/authType';
 import { LoginInputDto, SignUpInputDto } from '../types/dtos/authDto';
 
 export default function useAuth() {
-  const navigation = useNavigate();
+  const { changeLoggedIn } = useContext(AuthContext);
   const [validations, setValidations] = useState({
     email: false,
     password: false,
@@ -32,7 +32,7 @@ export default function useAuth() {
 
     if (token) {
       setUserToken(token);
-      navigation('/');
+      changeLoggedIn(true);
       return;
     }
     if (message) setError(message);
