@@ -33,6 +33,92 @@
 
 # 날짜별 한 일
 
+## 2022.08.15.
+
+1.  루트 보호 방법 변경 useEffect -> ProtectRoute 컴포넌트 사용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/b0eb7f7785f8056fd704fb520a224958b5bfb693)
+
+**변경 이유**
+
+- view 컴포넌트와 라우팅의 관심사 분리로 응집도를 높일 수 있다
+- useEffect는 일단 그 페이지에 들어간다
+- useEffect는 그 페이지가 보이게 된다
+
+**view 컴포넌트의 변경 전후**
+
+```tsx
+// layout 컴포넌트와 auth 페이지에서 같은 방식으로 썼다
+
+// 변경 전
+export default function Layout() {
+  useEffect(() => {
+    if (isLoggedIn) return;
+    alert('로그인이 유효하지 않습니다. 로그인 페이지로 이동합니다.');
+    navigation('/auth');
+  }, [isLoggedIn]);
+  return ...
+}
+
+// 변경 후에는 useEffect 부분이 제거됨
+```
+
+**Router의 변경 전후**
+
+```tsx
+// 변경 전
+<Routes>
+  <Route path="/" element={<Layout />}>
+    <Route index element={<TodoList />} />
+    <Route path=":todoId" element={<TodoList />} />
+  </Route>
+  <Route path="auth" element={<Auth />} />
+  <Route path="*" element={<p>없는 주소입니다.</p>} />
+</Routes>;
+
+// 변경 후
+// ProtectRoute 컴포넌트 추가
+function ProtectRoute({
+  isPass,
+  children,
+  goWhenFail,
+  alarm,
+}: ProtectRouteProps) {
+  const handleFailPass = () => {
+    if (alarm) {
+      alert(`이동할 수 없는 주소(URL)입니다. ${alarm}`);
+    }
+    return Navigate({ to: goWhenFail });
+  };
+  return isPass ? <>{children}</> : handleFailPass();
+}
+
+// ...
+// ProtectRoute 컴포넌트 보호할 컴포넌트에 적용
+<Routes>
+  <Route
+    path="/"
+    element={
+      <ProtectRoute
+        isPass={isLoggedIn}
+        goWhenFail={'/auth'}
+        alarm="로그인해주세요" // 알림이 필요할 경우 alarm props 전달
+      >
+        <Layout />
+      </ProtectRoute>
+    }
+  >
+    <Route index element={<TodoList />} />
+  </Route>
+  <Route
+    path="auth"
+    element={
+      <ProtectRoute isPass={!isLoggedIn} goWhenFail={'/'}>
+        <Auth />
+      </ProtectRoute>
+    }
+  />
+</Routes>;
+```
+
 ## 2022.08.12.
 
 1. 패치 모듈 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/340997bdcc33096024cd0b076584a7a29a855726)
