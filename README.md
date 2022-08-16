@@ -59,6 +59,10 @@ export default function Layout() {
 }
 
 // 변경 후에는 useEffect 부분이 제거됨
+export default function Layout() {
+
+  return ...
+}
 ```
 
 **Router의 변경 전후**
