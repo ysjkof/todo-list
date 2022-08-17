@@ -33,9 +33,39 @@
 
 # 날짜별 한 일
 
+## 2022.08.17.
+
+1.  React-Query 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/e6f8aebcfe4c419f929cb1e403eb3153e8d34675)
+2.  대대적인 UI 개선
+
+    - TodoList UI변경 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/497e127b336390f78ab057820c1dc06f28d95f1d#diff-75482d2416fccd183f614663c892064345c993152bba383a06e284f9409de0f9)
+
+    <p align="center">
+    <img width="300" alt="todo create" src="https://user-images.githubusercontent.com/77876601/185116358-5a75d77f-35ba-462d-99fa-6f8f442731d5.png">
+    <img width="300" alt="todo edit" src="https://user-images.githubusercontent.com/77876601/185116362-cc6d00f0-6813-4cad-8c39-413acc4ea1cb.png">
+    <img width="300" alt="todo detail" src="https://user-images.githubusercontent.com/77876601/185116373-685f2cd6-070e-4e78-b3af-c20d958a82f4.png">
+    </p>
+
+    - 브라우저 alert api -> 커스텀 Toast 컴포넌트 구현 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/44a3b16bef8496bffc988058fb80654d1a425ad3)
+
+    <p align='center'><img alt='toast component'  width='440' src='https://user-images.githubusercontent.com/77876601/185116271-95606a09-c310-43ba-897b-0f012d2da9d8.gif'></p>
+
+    - Layout 컴포넌트에서 GlobalNavigationBar 분리
+
+    - auth 페이지를 login과 signUp 페이지로 분리 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/c9aba2d3404aa0350c10c9be5079aed8e4e8e7f2)
+
+      - 분리전
+
+      <p align="center"><img width="440" alt="previous auth page" src="https://user-images.githubusercontent.com/77876601/185120037-6ea9065a-f700-43ad-a67c-46f6d9dba485.png"></p>
+
+      - 분리후
+
+      <p align="center"><img width="440" alt="login page" src="https://user-images.githubusercontent.com/77876601/185116380-4f31cefd-94ab-406a-8b39-d19e8aca63c4.png"></p>
+
 ## 2022.08.15.
 
-1.  루트 보호 방법 변경 useEffect -> ProtectRoute 컴포넌트 사용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/b0eb7f7785f8056fd704fb520a224958b5bfb693)
+1. 로그인 상태 관리(useContext) 추가
+2. 루트 보호 방법 변경 useEffect -> ProtectRoute 컴포넌트 사용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/b0eb7f7785f8056fd704fb520a224958b5bfb693)
 
 **변경 이유**
 
