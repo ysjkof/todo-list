@@ -118,6 +118,10 @@ export default function useTodo() {
     // if (!ok) alert(TODO_ALERTS.FAIL_DELETE);
   };
 
+  const showTodoDetail = async (todoId: string) => {
+    changeModeToView();
+    navigation(`/${todoId}`);
+  };
   const toggleEditOrView = (todo: Todo) => {
     if (mode !== 'edit') {
       changeModeToEdit();
@@ -151,6 +155,7 @@ export default function useTodo() {
     createTodo,
     updateTodo,
     deleteTodo,
+    showTodoDetail,
     toggleEditOrView,
     toggleCreateOrView,
   };

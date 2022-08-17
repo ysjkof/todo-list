@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import TodoForm from '../components/organisms/TodoForm';
 import TodoTitleList from '../components/organisms/TodoTitleList';
 import TodoContent from '../components/molecules/TodoContent';
@@ -7,7 +6,6 @@ import useTodo from '../hooks/useTodo';
 import Button from '../components/atom/Button';
 
 export default function TodoList() {
-  const navigation = useNavigate();
   const {
     todoToBeModified,
     mode,
@@ -16,13 +14,10 @@ export default function TodoList() {
     createTodo,
     updateTodo,
     deleteTodo,
+    showTodoDetail,
     toggleEditOrView,
     toggleCreateOrView,
   } = useTodo();
-
-  const showTotoDetail = async (todoId: string) => {
-    navigation(`/${todoId}`);
-  };
 
   return (
     <div className="relative flex h-full w-full flex-col overflow-hidden p-2">
@@ -43,7 +38,7 @@ export default function TodoList() {
               title={todo.title}
               isSelect={todo.id === selectedTodo?.todo?.id}
               isModified={todoToBeModified?.id === todo.id}
-              showTotoDetail={() => showTotoDetail(todo.id)}
+              showTotoDetail={() => showTodoDetail(todo.id)}
               toggleUpdateInput={() => toggleEditOrView(todo)}
               deleteTodo={() => deleteTodo(todo.id)}
             />
