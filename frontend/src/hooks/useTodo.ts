@@ -21,28 +21,36 @@ import { removeItemInArrayByIndex } from '../utils/utils';
 type ModeType = 'view' | 'edit' | 'create';
 
 export default function useTodo() {
-  const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
-  const [mode, setMode] = useState<ModeType>('view');
-
-  const toggleCreateOrView = () => {
-    mode !== 'create' ? setMode('create') : setMode('view');
-  };
   const param = useParams();
   const navigation = useNavigate();
 
+  const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
+  const [mode, setMode] = useState<ModeType>('view');
+
+  const changeModeToView = () => setMode('view');
+  const changeModeToCreate = () => setMode('create');
+  const changeModeToEdit = () => setMode('edit');
+
+  const toggleCreateOrView = () => {
+    mode !== 'create' ? changeModeToCreate() : changeModeToView();
+  };
+
+  const { data: todoList } = useQuery(['todos'], () => getTodos());
   const { data: selectedTodo } = useQuery(
     ['todo', param.todoId],
     () => getTodoById({ id: param.todoId! }),
     { enabled: !!param.todoId }
   );
-
   const useCreateTodoMutation = useMutation(createTodoMutation);
+  const updateToTodoList = useMutation(updateTodoMutation);
+  const deleteFromTodoList = useMutation(deleteTodoMutation);
+
   const createTodo = async ({ title, content }: CreateTodoInputDto) => {
     useCreateTodoMutation.mutate(
       { title, content },
       {
         onSuccess: (data) => {
-          setMode('view');
+          changeModeToView();
           data.todo?.id && navigation(`/${data.todo.id}`);
           queryClient.setQueryData<TodosOutputDto>(['todos'], (prevData) => {
             if (!prevData?.todos || !data.todo) return;
@@ -54,14 +62,13 @@ export default function useTodo() {
     // if (!todo) return alert(TODO_ALERTS.FAIL_CREATE);
   };
 
-  const updateToTodoList = useMutation(updateTodoMutation);
   const updateTodo = async ({ id, title, content }: UpdateTodoInputDto) => {
     updateToTodoList.mutate(
       { id, title, content },
       {
         onSuccess: (data, variables) => {
           setTodoToBeModified(null);
-          setMode('view');
+          changeModeToView();
           data.todo?.id && navigation(`/${data.todo.id}`);
 
           queryClient.setQueryData(['todo', variables.id], { ...data });
@@ -80,7 +87,6 @@ export default function useTodo() {
     );
   };
 
-  const deleteFromTodoList = useMutation(deleteTodoMutation);
   const deleteTodo = async (id: string) => {
     deleteFromTodoList.mutate(
       { id },
@@ -92,7 +98,7 @@ export default function useTodo() {
 
           if (variables.id === todoToBeModified?.id) setTodoToBeModified(null);
 
-          setMode('view');
+          changeModeToView();
           queryClient.setQueryData(['todo', variables.id], null);
           queryClient.setQueryData<TodosOutputDto>(['todos'], (prevData) => {
             if (!prevData?.todos) return;
@@ -114,7 +120,7 @@ export default function useTodo() {
 
   const toggleEditOrView = (todo: Todo) => {
     if (mode !== 'edit') {
-      setMode('edit');
+      changeModeToEdit();
       setTodoToBeModified((prevTodo) => {
         return isSameTodo(todo?.id, todoToBeModified?.id) ? prevTodo : todo;
       });
@@ -126,15 +132,13 @@ export default function useTodo() {
     }
 
     setTodoToBeModified(null);
-    setMode('view');
+    changeModeToView();
   };
-
-  const { data: todoList } = useQuery(['todos'], () => getTodos());
 
   useEffect(() => {
     if (todoToBeModified) {
       setTodoToBeModified(null);
-      setMode('view');
+      changeModeToView();
       return;
     }
   }, [param]);
@@ -143,10 +147,10 @@ export default function useTodo() {
     todoToBeModified,
     mode,
     todoList,
+    selectedTodo,
     createTodo,
     updateTodo,
     deleteTodo,
-    selectedTodo,
     toggleEditOrView,
     toggleCreateOrView,
   };
