@@ -9,6 +9,7 @@ import {
   isPassedValidations,
 } from '../../services/authServices';
 import useAuth from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export default function SignUp() {
   const { validations, error, changeValidation, submitCallback } = useAuth();
@@ -60,6 +61,12 @@ export default function SignUp() {
         회원가입
       </Button>
       {error && <ErrorMessage textContent={error} />}
+      <Link
+        className="absolute right-10 bottom-4 text-xs text-blue-500 hover:font-bold"
+        to="/auth/login"
+      >
+        로그인
+      </Link>
     </Form>
   );
 }

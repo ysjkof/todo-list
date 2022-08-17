@@ -3,15 +3,15 @@ import { Navigate } from 'react-router-dom';
 
 interface ProtectRouteProps {
   isPass: boolean;
-  children: ReactNode;
   goWhenFail: string;
+  children?: ReactNode;
   alarm?: string;
 }
 
 export default function ProtectRoute({
   isPass,
-  children,
   goWhenFail,
+  children,
   alarm,
 }: ProtectRouteProps) {
   const handleFailPass = () => {

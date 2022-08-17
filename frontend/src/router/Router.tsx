@@ -2,7 +2,8 @@ import { useContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthContext } from '../App';
 import Layout from '../components/Layout';
-import Auth from '../pages/auth';
+import Login from '../pages/auth/Login';
+import SignUp from '../pages/auth/SignUp';
 import TodoList from '../pages/TodoList';
 import ProtectRoute from './ProtectRoute';
 
@@ -18,24 +19,47 @@ export default function Router() {
             element={
               <ProtectRoute
                 isPass={isLoggedIn}
-                goWhenFail={'/auth'}
+                goWhenFail={'/auth/login'}
                 alarm="로그인해주세요"
               >
                 <TodoList />
               </ProtectRoute>
             }
           />
-          <Route path=":todoId" element={<TodoList />} />
           <Route
-            path="auth"
+            path=":todoId"
             element={
-              <ProtectRoute isPass={!isLoggedIn} goWhenFail={'/'}>
-                <Auth />
+              <ProtectRoute
+                isPass={isLoggedIn}
+                goWhenFail={'/auth/login'}
+                alarm="로그인해주세요"
+              >
+                <TodoList />
               </ProtectRoute>
             }
           />
+          <Route
+            path="auth"
+            element={<ProtectRoute isPass={false} goWhenFail="/auth/login" />}
+          />
+          <Route
+            path="auth/login"
+            element={
+              <ProtectRoute isPass={!isLoggedIn} goWhenFail="/">
+                <Login />
+              </ProtectRoute>
+            }
+          />
+          <Route
+            path="auth/create"
+            element={
+              <ProtectRoute isPass={!isLoggedIn} goWhenFail="/">
+                <SignUp />
+              </ProtectRoute>
+            }
+          />
+          <Route path="*" element={<p>없는 주소입니다.</p>} />
         </Route>
-        <Route path="*" element={<p>없는 주소입니다.</p>} />
       </Routes>
     </BrowserRouter>
   );

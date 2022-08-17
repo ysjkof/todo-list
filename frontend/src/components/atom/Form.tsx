@@ -7,7 +7,7 @@ interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
 export default function Form({ children, ...rest }: FormProps) {
   return (
     <form
-      className="mx-auto relative flex flex-col border max-w-md items-center gap-4 p-10"
+      className="relative mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 border p-10"
       {...rest}
     >
       {children}
