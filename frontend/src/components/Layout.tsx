@@ -1,28 +1,7 @@
 import { useContext, useEffect } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { AuthContext, ToastContext } from '../App';
-import { removeUserToken } from '../services/authServices';
-import Button from './atom/Button';
-
-function GlobalNavigationBar() {
-  const { changeLoggedIn } = useContext(AuthContext);
-
-  const invokeLogout = () => {
-    removeUserToken();
-    changeLoggedIn(false);
-  };
-  return (
-    <div
-      className="flex w-full max-w-screen-md items-center justify-between border-b bg-white px-2 text-lg"
-      style={{ height: 40 }}
-    >
-      <Link to="/">Home</Link>
-      <Button className="" onClick={invokeLogout}>
-        Logout
-      </Button>
-    </div>
-  );
-}
+import { Outlet, useLocation } from 'react-router-dom';
+import { ToastContext } from '../App';
+import GlobalNavigationBar from './organisms/GlobalNavigationBar';
 
 export default function Layout() {
   const { message, setMessage, Toast } = useContext(ToastContext);
@@ -46,7 +25,7 @@ export default function Layout() {
       <GlobalNavigationBar />
       <div
         style={{ height: 'calc(100% - 40px)' }}
-        className="w-full max-w-screen-md bg-white"
+        className="flex w-full max-w-screen-md items-center justify-center overflow-scroll bg-white"
       >
         <Outlet />
       </div>
