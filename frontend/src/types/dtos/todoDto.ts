@@ -1,7 +1,7 @@
 import { CoreOutputDto } from './commonDto';
 import { Todo } from '../todoType';
 
-export interface TodoOutputDto extends CoreOutputDto {
+export interface TodosOutputDto extends CoreOutputDto {
   todos?: Todo[];
 }
 
