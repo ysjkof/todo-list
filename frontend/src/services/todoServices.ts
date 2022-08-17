@@ -1,7 +1,7 @@
 export const isSameTodo = (
   selectedTodoId: string | undefined,
   toBoModifiedTodoId: string | undefined
-) => selectedTodoId && toBoModifiedTodoId;
+) => !!(selectedTodoId && toBoModifiedTodoId);
 
 export const TODO_ALERTS = {
   NOT_FOUND: '서버에서 todo를 찾을 수 없습니다',

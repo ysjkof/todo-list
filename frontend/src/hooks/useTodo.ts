@@ -18,9 +18,15 @@ import {
 import { Todo } from '../types/todoType';
 import { removeItemInArrayByIndex } from '../utils/utils';
 
+type ModeType = 'view' | 'edit' | 'create';
+
 export default function useTodo() {
-  const [hasUpdateInput, setHasUpdateInput] = useState(false);
   const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
+  const [mode, setMode] = useState<ModeType>('view');
+
+  const toggleCreateOrView = () => {
+    mode !== 'create' ? setMode('create') : setMode('view');
+  };
   const param = useParams();
   const navigation = useNavigate();
 
@@ -36,6 +42,8 @@ export default function useTodo() {
       { title, content },
       {
         onSuccess: (data) => {
+          setMode('view');
+          data.todo?.id && navigation(`/${data.todo.id}`);
           queryClient.setQueryData<TodosOutputDto>(['todos'], (prevData) => {
             if (!prevData?.todos || !data.todo) return;
             return { ...prevData, todos: [...prevData.todos, data.todo] };
@@ -53,7 +61,8 @@ export default function useTodo() {
       {
         onSuccess: (data, variables) => {
           setTodoToBeModified(null);
-          setHasUpdateInput(false);
+          setMode('view');
+          data.todo?.id && navigation(`/${data.todo.id}`);
 
           queryClient.setQueryData(['todo', variables.id], { ...data });
           queryClient.setQueryData<TodosOutputDto>(['todos'], (todosData) => {
@@ -82,8 +91,8 @@ export default function useTodo() {
           }
 
           if (variables.id === todoToBeModified?.id) setTodoToBeModified(null);
-          if (hasUpdateInput) setHasUpdateInput(false);
 
+          setMode('view');
           queryClient.setQueryData(['todo', variables.id], null);
           queryClient.setQueryData<TodosOutputDto>(['todos'], (prevData) => {
             if (!prevData?.todos) return;
@@ -103,17 +112,21 @@ export default function useTodo() {
     // if (!ok) alert(TODO_ALERTS.FAIL_DELETE);
   };
 
-  const toggleUpdateInput = (todo: Todo) => {
-    if (!isSameTodo(todo?.id, todoToBeModified?.id)) {
-      setTodoToBeModified(todo);
-      return setHasUpdateInput(true);
+  const toggleEditOrView = (todo: Todo) => {
+    if (mode !== 'edit') {
+      setMode('edit');
+      setTodoToBeModified((prevTodo) => {
+        return isSameTodo(todo?.id, todoToBeModified?.id) ? prevTodo : todo;
+      });
+      return;
     }
-    setHasUpdateInput((prevState) => {
-      if (prevState) {
-        setTodoToBeModified(null);
-      }
-      return !prevState;
-    });
+
+    if (todo.id !== todoToBeModified?.id) {
+      return setTodoToBeModified(todo);
+    }
+
+    setTodoToBeModified(null);
+    setMode('view');
   };
 
   const { data: todoList } = useQuery(['todos'], () => getTodos());
@@ -121,18 +134,20 @@ export default function useTodo() {
   useEffect(() => {
     if (todoToBeModified) {
       setTodoToBeModified(null);
+      setMode('view');
       return;
     }
   }, [param]);
 
   return {
-    hasUpdateInput,
     todoToBeModified,
+    mode,
     todoList,
     createTodo,
     updateTodo,
     deleteTodo,
     selectedTodo,
-    toggleUpdateInput,
+    toggleEditOrView,
+    toggleCreateOrView,
   };
 }

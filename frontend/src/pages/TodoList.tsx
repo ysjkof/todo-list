@@ -4,18 +4,20 @@ import TodoTitleList from '../components/organisms/TodoTitleList';
 import TodoContent from '../components/molecules/TodoContent';
 import { toLocaleStringFromStringDate } from '../utils/todoUtils';
 import useTodo from '../hooks/useTodo';
+import Button from '../components/atom/Button';
 
 export default function TodoList() {
   const navigation = useNavigate();
   const {
-    hasUpdateInput,
     todoToBeModified,
+    mode,
     todoList,
     selectedTodo,
     createTodo,
     updateTodo,
     deleteTodo,
-    toggleUpdateInput,
+    toggleEditOrView,
+    toggleCreateOrView,
   } = useTodo();
 
   const showTotoDetail = async (todoId: string) => {
@@ -23,34 +25,32 @@ export default function TodoList() {
   };
 
   return (
-    <div className="relative flex w-full max-w-screen-md flex-col gap-4">
-      {hasUpdateInput ? (
-        <TodoForm
-          actionName="수정"
-          submitCallback={updateTodo}
-          todoToBeModified={todoToBeModified}
-        />
-      ) : (
-        <TodoForm actionName="저장" submitCallback={createTodo} />
-      )}
-      <div className="flex border border-red-400">
-        <div className="w-full">
-          <h2>목록</h2>
+    <div className="relative flex h-full w-full flex-col overflow-hidden p-2">
+      <div className="flex h-8 justify-end pb-1">
+        <Button onClick={toggleCreateOrView} width="lg">
+          {mode === 'create' ? '취소' : '새로 만들기'}
+        </Button>
+      </div>
+      <div
+        className="grid grid-cols-[40%,_1fr] divide-x border"
+        style={{ height: 'calc(100% - 2rem)' }}
+      >
+        <div className="w-full overflow-y-scroll pb-4">
           {todoList?.todos?.map((todo) => (
             <TodoTitleList
               key={todo.id}
               id={todo.id}
               title={todo.title}
-              isModified={hasUpdateInput && todoToBeModified?.id === todo.id}
+              isSelect={todo.id === selectedTodo?.todo?.id}
+              isModified={todoToBeModified?.id === todo.id}
               showTotoDetail={() => showTotoDetail(todo.id)}
-              toggleUpdateInput={() => toggleUpdateInput(todo)}
+              toggleUpdateInput={() => toggleEditOrView(todo)}
               deleteTodo={() => deleteTodo(todo.id)}
             />
           ))}
         </div>
-        <div className="flex w-full flex-col">
-          <h2>상세</h2>
-          {selectedTodo && selectedTodo.todo && (
+        <div className="flex flex-col justify-between overflow-hidden">
+          {mode === 'view' && selectedTodo?.todo && (
             <TodoContent
               createdAt={toLocaleStringFromStringDate(
                 selectedTodo.todo.createdAt
@@ -61,6 +61,16 @@ export default function TodoList() {
               title={selectedTodo.todo.title}
               content={selectedTodo.todo.content}
             />
+          )}
+          {mode === 'edit' && (
+            <TodoForm
+              actionName="수정"
+              submitCallback={updateTodo}
+              todoToBeModified={todoToBeModified}
+            />
+          )}
+          {mode === 'create' && (
+            <TodoForm actionName="저장" submitCallback={createTodo} />
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { AuthContext, queryClient } from '../App';
 import { loginMutation, signUpMutation } from '../controller/authController';
 import { isPassedValidations, setUserToken } from '../services/authServices';
-import { LoginInputType } from '../types/authType';
+import { LoginInputType, SignUpInputType } from '../types/authType';
 import {
   LoginInputDto,
   LoginOutputDto,
@@ -19,19 +19,19 @@ export default function useAuth() {
   });
   const [error, setError] = useState('');
 
-  const changeValidation = (loginInput: LoginInputType) => {
+  const changeValidation = (input: LoginInputType | SignUpInputType) => {
     setValidations((prevState) => {
-      return { ...prevState, [loginInput]: !prevState[loginInput] };
+      return { ...prevState, [input]: !prevState[input] };
     });
   };
 
   function onSuccess(data: LoginOutputDto | SignUpOutputDto) {
-    queryClient.clear();
     if (data.ok && data.token) {
       setUserToken(data.token);
       changeLoggedIn(true);
       return;
     }
+    queryClient.clear();
   }
 
   const useLoginMutation = useMutation(loginMutation);

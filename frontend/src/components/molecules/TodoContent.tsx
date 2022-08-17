@@ -12,11 +12,18 @@ export default function TodoContent({
   content,
 }: TodoTitleContentProps) {
   return (
-    <>
-      <h3 className="font-semibold">제목: {title}</h3>
-      <span className="text-sm text-gray-500">생성: {createdAt}</span>
-      <span className="text-sm text-gray-500">수정: {updatedAt}</span>
-      <p className="px-4 pt-1">{content}</p>
-    </>
+    <div className="flex h-full w-full flex-col p-2">
+      <h3 className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-extrabold">
+        {title}
+      </h3>
+      <span className="text-xs text-gray-500">생성: {createdAt}</span>
+      <span className="text-xs text-gray-500">수정: {updatedAt}</span>
+      <p
+        className="overflow-y-scroll p-2"
+        style={{ height: 'calc(100% - 4rem)' }}
+      >
+        {content}
+      </p>
+    </div>
   );
 }

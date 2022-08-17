@@ -1,11 +1,10 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import {
   CreateTodoInputDto,
   UpdateTodoInputDto,
 } from '../../types/dtos/todoDto';
 import { Todo } from '../../types/todoType';
-import InputWithLabel from '../molecules/InputWithLabel';
-import TextareaWithLabel from '../molecules/TextareaWithLabel';
+import Button from '../atom/Button';
 
 type SubmitCallbackInputs = UpdateTodoInputDto | CreateTodoInputDto;
 
@@ -34,8 +33,8 @@ export default function TodoForm({
 
   const invokeSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!inputRef.current || !textareaRef.current)
-      return alert('제목과 내용을 입력하세요');
+    if (!inputRef.current?.value || !textareaRef.current?.value)
+      throw new Error('제목과 내용을 입력하세요');
 
     submitCallback({
       ...(todoToBeModified && { id: todoToBeModified.id }),
@@ -44,16 +43,34 @@ export default function TodoForm({
     });
   };
 
+  useEffect(() => {
+    if (todoToBeModified && inputRef.current && textareaRef.current) {
+      inputRef.current.value = todoToBeModified.title;
+      textareaRef.current.value = todoToBeModified.content;
+    }
+  }, []);
+
   return (
     <form
       onSubmit={invokeSubmit}
-      className="flex w-full flex-col items-center gap-1 px-20"
+      className="flex h-full w-full flex-col gap-1 p-2"
     >
-      <InputWithLabel label="제목" type="text" ref={inputRef} />
-      <TextareaWithLabel label="할일" ref={textareaRef} />
-      <button className="w-full rounded-sm bg-orange-400 text-white">
-        {actionName}
-      </button>
+      <input
+        name="title"
+        type="text"
+        ref={inputRef}
+        className="overflow-hidden text-ellipsis whitespace-nowrap border px-2 text-xl font-extrabold"
+        placeholder="제목"
+        autoFocus
+      />
+      <textarea
+        name="content"
+        ref={textareaRef}
+        className="overflow-y-scroll border p-2"
+        style={{ height: 'calc(100% - 4rem)' }}
+        placeholder="내용"
+      />
+      <Button>{actionName}</Button>
     </form>
   );
 }
