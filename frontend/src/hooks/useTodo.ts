@@ -1,4 +1,7 @@
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { queryClient } from '../App';
 import {
   createTodoMutation,
   deleteTodoMutation,
@@ -6,85 +9,98 @@ import {
   getTodos,
   updateTodoMutation,
 } from '../controller/todoController';
-import { isSameTodo, TODO_ALERTS } from '../services/todoServices';
-import { CreateTodoInputDto, UpdateTodoInputDto } from '../types/dtos/todoDto';
+import { isSameTodo } from '../services/todoServices';
+import {
+  CreateTodoInputDto,
+  TodosOutputDto,
+  UpdateTodoInputDto,
+} from '../types/dtos/todoDto';
 import { Todo } from '../types/todoType';
-import { changeValueInArray, removeItemInArrayByIndex } from '../utils/utils';
-
-interface GetTodo {
-  id: string;
-  doWhenYouFail: () => void;
-}
+import { removeItemInArrayByIndex } from '../utils/utils';
 
 export default function useTodo() {
-  const [todoList, setTodoList] = useState<Todo[]>([]);
-  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const [hasUpdateInput, setHasUpdateInput] = useState(false);
   const [todoToBeModified, setTodoToBeModified] = useState<Todo | null>(null);
+  const param = useParams();
+  const navigation = useNavigate();
 
-  const getTodo = async ({ id, doWhenYouFail }: GetTodo) => {
-    const { todo } = await getTodoById({ id });
-    if (!todo) {
-      alert(TODO_ALERTS.NOT_FOUND);
-      doWhenYouFail();
-      return;
-    }
-    setSelectedTodo(todo);
-  };
+  const { data: selectedTodo } = useQuery(
+    ['todo', param.todoId],
+    () => getTodoById({ id: param.todoId! }),
+    { enabled: !!param.todoId }
+  );
 
-  const addToTodoList = (newTodo: Todo) => {
-    setTodoList((prevState) => [...prevState, newTodo]);
-  };
+  const useCreateTodoMutation = useMutation(createTodoMutation);
   const createTodo = async ({ title, content }: CreateTodoInputDto) => {
-    const { todo } = await createTodoMutation({ content, title });
-    if (!todo) return alert(TODO_ALERTS.FAIL_CREATE);
-    addToTodoList(todo);
+    useCreateTodoMutation.mutate(
+      { title, content },
+      {
+        onSuccess: (data) => {
+          queryClient.setQueryData<TodosOutputDto>(['todos'], (prevData) => {
+            if (!prevData?.todos || !data.todo) return;
+            return { ...prevData, todos: [...prevData.todos, data.todo] };
+          });
+        },
+      }
+    );
+    // if (!todo) return alert(TODO_ALERTS.FAIL_CREATE);
   };
 
-  const updateToTodoList = (updateTodo: Todo) => {
-    setTodoList((prevState) => {
-      const idx = prevState.findIndex((todo) => todo.id === updateTodo.id);
-      if (idx === -1) throw new Error(TODO_ALERTS.NOT_FOUND_INDEX);
-
-      return changeValueInArray(prevState, updateTodo, idx);
-    });
-
-    setSelectedTodo(updateTodo);
-    setTodoToBeModified(null);
-    setHasUpdateInput(false);
-  };
-
+  const updateToTodoList = useMutation(updateTodoMutation);
   const updateTodo = async ({ id, title, content }: UpdateTodoInputDto) => {
-    const { todo } = await updateTodoMutation({
-      id,
-      content,
-      title,
-    });
-    if (!todo) return alert(TODO_ALERTS.FAIL_UPDATE);
-    updateToTodoList(todo);
+    updateToTodoList.mutate(
+      { id, title, content },
+      {
+        onSuccess: (data, variables) => {
+          setTodoToBeModified(null);
+          setHasUpdateInput(false);
+
+          queryClient.setQueryData(['todo', variables.id], { ...data });
+          queryClient.setQueryData<TodosOutputDto>(['todos'], (todosData) => {
+            if (!todosData?.todos) return;
+            let todos = todosData.todos;
+            if (data.todo) {
+              todos = todosData.todos.map((todo) =>
+                todo.id === data.todo?.id ? data.todo : todo
+              );
+            }
+            return { ...todosData, todos };
+          });
+        },
+      }
+    );
   };
 
-  const deleteTodoFromTodoList = async (id: string) => {
-    setTodoList((prevState) => {
-      const idx = prevState.findIndex((todo) => todo.id === id);
-      if (idx === -1) throw new Error(TODO_ALERTS.NOT_FOUND_INDEX);
-      return removeItemInArrayByIndex(idx, prevState);
-    });
-
-    if (isSameTodo(id, selectedTodo?.id)) setSelectedTodo(null);
-    if (isSameTodo(id, todoToBeModified?.id)) {
-      setTodoToBeModified(null);
-      setHasUpdateInput(false);
-    }
-  };
+  const deleteFromTodoList = useMutation(deleteTodoMutation);
   const deleteTodo = async (id: string) => {
-    const { ok } = await deleteTodoMutation({ id });
-    if (!ok) alert(TODO_ALERTS.FAIL_DELETE);
-    deleteTodoFromTodoList(id);
-  };
+    deleteFromTodoList.mutate(
+      { id },
+      {
+        onSuccess: (_, variables) => {
+          if (param.todoId === id) {
+            navigation('/');
+          }
 
-  const clearSelectedTodo = () => {
-    selectedTodo && setSelectedTodo(null);
+          if (variables.id === todoToBeModified?.id) setTodoToBeModified(null);
+          if (hasUpdateInput) setHasUpdateInput(false);
+
+          queryClient.setQueryData(['todo', variables.id], null);
+          queryClient.setQueryData<TodosOutputDto>(['todos'], (prevData) => {
+            if (!prevData?.todos) return;
+            const idx = prevData.todos.findIndex((todo) => todo.id === id);
+
+            if (idx === -1)
+              throw Error('삭제할 Todo의 index를 찾을 수 없습니다');
+
+            return {
+              ...prevData,
+              todos: removeItemInArrayByIndex(idx, prevData.todos),
+            };
+          });
+        },
+      }
+    );
+    // if (!ok) alert(TODO_ALERTS.FAIL_DELETE);
   };
 
   const toggleUpdateInput = (todo: Todo) => {
@@ -100,14 +116,14 @@ export default function useTodo() {
     });
   };
 
-  const getTodoAll = async () => {
-    const { todos } = await getTodos();
-    setTodoList(todos || []);
-  };
+  const { data: todoList } = useQuery(['todos'], () => getTodos());
 
   useEffect(() => {
-    getTodoAll();
-  }, []);
+    if (todoToBeModified) {
+      setTodoToBeModified(null);
+      return;
+    }
+  }, [param]);
 
   return {
     hasUpdateInput,
@@ -117,8 +133,6 @@ export default function useTodo() {
     updateTodo,
     deleteTodo,
     selectedTodo,
-    getTodo,
-    clearSelectedTodo,
     toggleUpdateInput,
   };
 }

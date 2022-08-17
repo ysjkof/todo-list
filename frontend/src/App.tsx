@@ -9,7 +9,7 @@ export const AuthContext = createContext({
   isLoggedIn: false,
   changeLoggedIn: (value: boolean) => {},
 });
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getUserToken());

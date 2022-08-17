@@ -7,7 +7,7 @@ import {
   DeleteTodoByIdOutputDto,
   GetTodoByIdInputDto,
   GetTodoByIdOutputDto,
-  TodoOutputDto,
+  TodosOutputDto,
   UpdateTodoInputDto,
   UpdateTodoOutputDto,
 } from '../types/dtos/todoDto';
@@ -44,7 +44,7 @@ export const createTodoMutation = async ({
   };
 };
 
-export const getTodos = async (): Promise<TodoOutputDto> => {
+export const getTodos = async (): Promise<TodosOutputDto> => {
   const { data, details, message } = await todoFetch.get();
 
   if (!data || !Array.isArray(data)) {
