@@ -1,9 +1,10 @@
-import { ReactNode, useContext } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthContext } from '../App';
 import Layout from '../components/Layout';
 import Auth from '../pages/auth';
 import TodoList from '../pages/TodoList';
+import ProtectRoute from './ProtectRoute';
 
 export default function Router() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -11,53 +12,31 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectRoute
-              isPass={isLoggedIn}
-              goWhenFail={'/auth'}
-              alarm="로그인해주세요"
-            >
-              <Layout />
-            </ProtectRoute>
-          }
-        >
-          <Route index element={<TodoList />} />
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={
+              <ProtectRoute
+                isPass={isLoggedIn}
+                goWhenFail={'/auth'}
+                alarm="로그인해주세요"
+              >
+                <TodoList />
+              </ProtectRoute>
+            }
+          />
           <Route path=":todoId" element={<TodoList />} />
+          <Route
+            path="auth"
+            element={
+              <ProtectRoute isPass={!isLoggedIn} goWhenFail={'/'}>
+                <Auth />
+              </ProtectRoute>
+            }
+          />
         </Route>
-        <Route
-          path="auth"
-          element={
-            <ProtectRoute isPass={!isLoggedIn} goWhenFail={'/'}>
-              <Auth />
-            </ProtectRoute>
-          }
-        />
         <Route path="*" element={<p>없는 주소입니다.</p>} />
       </Routes>
     </BrowserRouter>
   );
-}
-
-interface ProtectRouteProps {
-  isPass: boolean;
-  children: ReactNode;
-  goWhenFail: string;
-  alarm?: string;
-}
-
-function ProtectRoute({
-  isPass,
-  children,
-  goWhenFail,
-  alarm,
-}: ProtectRouteProps) {
-  const handleFailPass = () => {
-    if (alarm) {
-      alert(`이동할 수 없는 주소(URL)입니다. ${alarm}`);
-    }
-    return Navigate({ to: goWhenFail });
-  };
-  return isPass ? <>{children}</> : handleFailPass();
 }

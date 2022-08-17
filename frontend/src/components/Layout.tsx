@@ -1,6 +1,6 @@
-import { useContext } from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import { AuthContext } from '../App';
+import { useContext, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { AuthContext, ToastContext } from '../App';
 import { removeUserToken } from '../services/authServices';
 import Button from './atom/Button';
 
@@ -25,8 +25,24 @@ function GlobalNavigationBar() {
 }
 
 export default function Layout() {
+  const { message, setMessage, Toast } = useContext(ToastContext);
+  const location = useLocation();
+  const state = location.state as { alarm: string };
+
+  useEffect(() => {
+    if (!message) return;
+    setTimeout(() => setMessage(''), 3000);
+  }, [message]);
+
+  useEffect(() => {
+    if (state?.alarm) {
+      setMessage(state.alarm);
+    }
+  }, [state]);
+
   return (
     <div className="relative flex h-screen flex-col items-center justify-center bg-gray-100">
+      {message && <Toast message={message} />}
       <GlobalNavigationBar />
       <div
         style={{ height: 'calc(100% - 40px)' }}

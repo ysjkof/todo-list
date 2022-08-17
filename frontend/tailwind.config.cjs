@@ -2,7 +2,15 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        fadeout: {
+          '0%, 50%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+      },
+      animation: { fadeout: 'fadeout 3s linear 1' },
+    },
   },
   plugins: [],
 };
