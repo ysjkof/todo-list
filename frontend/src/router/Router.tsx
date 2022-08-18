@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthContext } from '../App';
 import Layout from '../components/Layout';
 import Login from '../pages/auth/Login';
 import SignUp from '../pages/auth/SignUp';
 import TodoList from '../pages/TodoList';
+import { AuthContext } from '../store';
 import ProtectRoute from './ProtectRoute';
 
 export default function Router() {

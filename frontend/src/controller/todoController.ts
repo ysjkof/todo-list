@@ -12,6 +12,7 @@ import {
   UpdateTodoOutputDto,
 } from '../types/dtos/todoDto';
 import { Todo } from '../types/todoType';
+import { createError } from '../utils/utils';
 
 interface TodoFetchResponse {
   data?: Todo | Todo[];
@@ -26,33 +27,28 @@ const createTodoMutation = async ({
   title,
   content,
 }: CreateTodoInputDto): Promise<CreateTodoOutputDto> => {
-  const { data, details, message } = await todoFetch.post<CreateTodoInputDto>(
-    '',
-    {
-      title,
-      content,
-    }
-  );
+  const { data, details } = await todoFetch.post<CreateTodoInputDto>('', {
+    title,
+    content,
+  });
 
-  if (!data || Array.isArray(data)) {
-    throw new Error('createTodo에 실패했습니다. : ' + details);
+  if (details || !data || Array.isArray(data)) {
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todo: data,
   };
 };
 
 const getTodos = async (): Promise<TodosOutputDto> => {
-  const { data, details, message } = await todoFetch.get();
+  const { data, details } = await todoFetch.get();
 
-  if (!data || !Array.isArray(data)) {
-    throw new Error('getTodos에 실패했습니다. : ' + details);
+  if (details || !data || !Array.isArray(data)) {
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todos: data,
   };
 };
@@ -60,14 +56,13 @@ const getTodos = async (): Promise<TodosOutputDto> => {
 const getTodoById = async ({
   id,
 }: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
-  const { data, details, message } = await todoFetch.getById(id);
+  const { data, details } = await todoFetch.getById(id);
 
-  if (!data || Array.isArray(data)) {
-    throw new Error('getTodoById에 실패했습니다. : ' + details);
+  if (details || !data || Array.isArray(data)) {
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todo: data,
   };
 };
@@ -77,19 +72,18 @@ const updateTodoMutation = async ({
   title,
   id,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
-  if (!id) throw new Error('updateTodoMutation : id를 입력하세요');
+  if (!id) throw createError('잘못된 접근입니다. Todo Id가 없습니다');
 
-  const { data, details, message } = await todoFetch.put<UpdateTodoInputDto>(
-    id,
-    { content, title }
-  );
+  const { data, details } = await todoFetch.put<UpdateTodoInputDto>(id, {
+    content,
+    title,
+  });
 
-  if (details || !data || Array.isArray(data)) {
-    throw new Error('update에 실패했습니다. : ' + details);
+  if (details || Array.isArray(data) || !data) {
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todo: data,
   };
 };
@@ -97,13 +91,13 @@ const updateTodoMutation = async ({
 const deleteTodoMutation = async ({
   id,
 }: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
-  const { data, details, message } = await todoFetch.delete(id);
+  const { details } = await todoFetch.delete(id);
 
-  if (data || details || message) {
-    throw new Error('delete에 실패했습니다. : ' + details);
+  if (details) {
+    throw createError(details);
   }
 
-  return { ok: true };
+  return {};
 };
 
 export default {

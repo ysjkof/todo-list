@@ -6,6 +6,7 @@ import {
   SignUpInputDto,
   SignUpOutputDto,
 } from '../types/dtos/authDto';
+import { createError } from '../utils/utils';
 
 interface UserFetchResponse {
   token?: string;
@@ -20,20 +21,16 @@ const loginMutation = async ({
   email,
   password,
 }: LoginInputDto): Promise<LoginOutputDto> => {
-  const { details, token, message } = await userFetch.post<LoginInputDto>(
-    'login',
-    {
-      email,
-      password,
-    }
-  );
+  const { details, token } = await userFetch.post<LoginInputDto>('login', {
+    email,
+    password,
+  });
 
   if (!token) {
-    throw new Error('token이 없습니다. : ' + details);
+    throw createError(details);
   }
 
   return {
-    ok: true,
     token: token,
   };
 };
@@ -42,20 +39,16 @@ const signUpMutation = async ({
   email,
   password,
 }: SignUpInputDto): Promise<SignUpOutputDto> => {
-  const { token, details, message } = await userFetch.post<SignUpInputDto>(
-    'create',
-    {
-      email,
-      password,
-    }
-  );
+  const { token, details } = await userFetch.post<SignUpInputDto>('create', {
+    email,
+    password,
+  });
 
   if (!token) {
-    throw new Error('token이 없습니다. : ' + details);
+    throw createError(details);
   }
 
   return {
-    ok: true,
     token: token,
   };
 };

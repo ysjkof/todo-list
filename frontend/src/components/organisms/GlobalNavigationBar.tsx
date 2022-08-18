@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../App';
 import { removeUserToken } from '../../services/authServices';
+import { AuthContext } from '../../store';
 import Button from '../atom/Button';
 
 export default function GlobalNavigationBar() {
-  const { changeLoggedIn, isLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn, isLoggedIn } = useContext(AuthContext);
 
   const invokeLogout = () => {
     removeUserToken();
-    changeLoggedIn(false);
+    setIsLoggedIn(false);
   };
   if (!isLoggedIn) return <></>;
   return (
