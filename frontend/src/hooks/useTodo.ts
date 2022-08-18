@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { queryClient } from '../App';
 import todoController from '../controller/todoController';
 import { isSameTodo } from '../services/todoServices';
+import { queryClient } from '../store';
 import {
   CreateTodoInputDto,
   TodosOutputDto,
@@ -55,7 +55,6 @@ export default function useTodo() {
         },
       }
     );
-    // if (!todo) return alert(TODO_ALERTS.FAIL_CREATE);
   };
 
   const updateTodo = async ({ id, title, content }: UpdateTodoInputDto) => {
@@ -111,7 +110,6 @@ export default function useTodo() {
         },
       }
     );
-    // if (!ok) alert(TODO_ALERTS.FAIL_DELETE);
   };
 
   const showTodoDetail = async (todoId: string) => {
