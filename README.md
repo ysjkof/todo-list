@@ -366,8 +366,36 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 # 그외
 
-**사용한 라이브러리**
+## 사용한 라이브러리
 
-- react(with Typescript)
-- react-router-dom
-- tailwindcss
+### vite.js
+
+프로젝트 빌더 [https://vitejs-kr.github.io/](https://vitejs-kr.github.io/)
+
+- 기존에 설정이 편해서 CRA(Create React App) 사용
+- 프로젝트 수정한 게 갱신되지 않아 프로젝트 재시작을 자주하게 됨
+  - 이때 2~3초 걸리는 게 낭비가 크다고 느낌
+- vite.js라는 걸 알게됨
+- [왜 vite를 사용해야 하는지](https://vitejs-kr.github.io/guide/why.html)를 읽어보니 ES Modules과 Go로 작성된 Esbuild를 사용해 빠르다고함.
+- 일단 한 번 사용해봄
+  - CRA와 사용방법이 같아서 신경 쓸 게 없다
+  - 설치 속도가 빠르다!
+    - CRA는 다운받고 설치할 때 터미널이 많이 올라가고 시간이 걸리는데 vite는 그런거 없다.
+  - 프로젝트 시작하는 속도가 분명히 느껴질만큼 빠르다!
+  - 프로젝트 수정 갱신되는 게 분명히 느껴질만큼 빠르다!
+
+### TailwindCSS
+
+css 도구
+
+마크업 하는 속도가 빠릅니다. 왜냐하면,
+
+- 클래스 이름을 생각하지 않아도 되고,
+- css 파일에 따로 이동하지 않아도 되고,
+- html에 스타일을 바로 입력하면 되기 때문입니다.
+
+물론 컴포넌트로 분리할때는 이름을 지어야겠지만 그 전 단계까지 빠르게 마크업을 할 수 있기 때문에 사용했습니다.
+
+### tanstack/react-query
+
+서버 상태 관리
