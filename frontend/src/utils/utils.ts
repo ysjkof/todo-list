@@ -13,20 +13,6 @@ export const getEndPoint = (thisUrl: string) => {
   return splitedUrl[splitedUrl.length - 1];
 };
 
-export const createError = ({
-  filename,
-  error,
-  endpoint,
-  message,
-}: {
-  filename: string;
-  error?: unknown;
-  endpoint?: string;
-  message?: string;
-}) => {
-  return new Error(`
-  파일 : 🗂 ${filename} 🔚 URL 끝점 : 🛣 ${endpoint} 🔚
-  알림 : 😱 ${message} 🔚
-  에러 : 🚨 ${error} 🔚
-  `);
+export const createError = (error: string | undefined) => {
+  return new Error(error);
 };

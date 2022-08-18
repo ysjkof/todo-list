@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
-import { AuthContext, queryClient } from '../App';
 import authController from '../controller/authController';
 import { isPassedValidations, setUserToken } from '../services/authServices';
+import { AuthContext, queryClient } from '../store';
 import { LoginInputType, SignUpInputType } from '../types/authType';
 import {
   LoginInputDto,
@@ -12,7 +12,7 @@ import {
 } from '../types/dtos/authDto';
 
 export default function useAuth() {
-  const { changeLoggedIn } = useContext(AuthContext);
+  const authState = useContext(AuthContext);
   const [validations, setValidations] = useState({
     email: false,
     password: false,
@@ -26,9 +26,9 @@ export default function useAuth() {
   };
 
   function onSuccess(data: LoginOutputDto | SignUpOutputDto) {
-    if (data.ok && data.token) {
+    if (data.token) {
       setUserToken(data.token);
-      changeLoggedIn(true);
+      authState.setIsLoggedIn(true);
       return;
     }
     queryClient.clear();

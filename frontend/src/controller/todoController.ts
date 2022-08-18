@@ -19,7 +19,7 @@ interface TodoFetchResponse {
   details?: string;
   message?: string;
 }
-const filename = 'todoController.ts';
+
 const TODO_URL = 'http://localhost:8080/todos';
 const todoFetch = new FetchModule<TodoFetchResponse>(TODO_URL, fetcher);
 
@@ -33,15 +33,10 @@ const createTodoMutation = async ({
   });
 
   if (details || !data || Array.isArray(data)) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'createTodo에 실패했습니다',
-    });
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todo: data,
   };
 };
@@ -50,15 +45,10 @@ const getTodos = async (): Promise<TodosOutputDto> => {
   const { data, details } = await todoFetch.get();
 
   if (details || !data || !Array.isArray(data)) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'getTodos에 실패했습니다',
-    });
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todos: data,
   };
 };
@@ -69,15 +59,10 @@ const getTodoById = async ({
   const { data, details } = await todoFetch.getById(id);
 
   if (details || !data || Array.isArray(data)) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'getTodoById에 실패했습니다',
-    });
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todo: data,
   };
 };
@@ -87,27 +72,18 @@ const updateTodoMutation = async ({
   title,
   id,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
-  if (!id)
-    throw createError({
-      filename,
-      message: 'updateTodoMutation : id를 입력하세요',
-    });
+  if (!id) throw createError('잘못된 접근입니다. Todo Id가 없습니다');
 
   const { data, details } = await todoFetch.put<UpdateTodoInputDto>(id, {
     content,
     title,
   });
 
-  if (details || Array.isArray(data)) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'update에 실패했습니다',
-    });
+  if (details || Array.isArray(data) || !data) {
+    throw createError(details);
   }
 
   return {
-    ok: true,
     todo: data,
   };
 };
@@ -118,14 +94,10 @@ const deleteTodoMutation = async ({
   const { details } = await todoFetch.delete(id);
 
   if (details) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'delete에 실패했습니다',
-    });
+    throw createError(details);
   }
 
-  return { ok: true };
+  return {};
 };
 
 export default {

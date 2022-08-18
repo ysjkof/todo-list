@@ -14,7 +14,6 @@ interface UserFetchResponse {
   message?: string;
 }
 
-const filename = 'authController.ts';
 const USER_URL = 'http://localhost:8080/users';
 const userFetch = new FetchModule<UserFetchResponse>(USER_URL, fetcher);
 
@@ -28,15 +27,10 @@ const loginMutation = async ({
   });
 
   if (!token) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'token이 없습니다',
-    });
+    throw createError(details);
   }
 
   return {
-    ok: true,
     token: token,
   };
 };
@@ -51,15 +45,10 @@ const signUpMutation = async ({
   });
 
   if (!token) {
-    throw createError({
-      filename,
-      error: details,
-      message: 'token이 없습니다',
-    });
+    throw createError(details);
   }
 
   return {
-    ok: true,
     token: token,
   };
 };
