@@ -16,11 +16,11 @@ interface UserFetchResponse {
 const USER_URL = 'http://localhost:8080/users';
 const userFetch = new FetchModule<UserFetchResponse>(USER_URL, fetcher);
 
-export const loginMutation = async ({
+const loginMutation = async ({
   email,
   password,
 }: LoginInputDto): Promise<LoginOutputDto> => {
-  const { token, details, message } = await userFetch.post<LoginInputDto>(
+  const { details, token, message } = await userFetch.post<LoginInputDto>(
     'login',
     {
       email,
@@ -29,7 +29,7 @@ export const loginMutation = async ({
   );
 
   if (!token) {
-    return { ok: false, message: message || details || '' };
+    throw new Error('token이 없습니다. : ' + details);
   }
 
   return {
@@ -38,7 +38,7 @@ export const loginMutation = async ({
   };
 };
 
-export const signUpMutation = async ({
+const signUpMutation = async ({
   email,
   password,
 }: SignUpInputDto): Promise<SignUpOutputDto> => {
@@ -51,11 +51,16 @@ export const signUpMutation = async ({
   );
 
   if (!token) {
-    return { ok: false, message: message || details || '' };
+    throw new Error('token이 없습니다. : ' + details);
   }
 
   return {
     ok: true,
     token: token,
   };
+};
+
+export default {
+  loginMutation,
+  signUpMutation,
 };

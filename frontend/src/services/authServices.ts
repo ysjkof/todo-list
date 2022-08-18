@@ -13,12 +13,12 @@ export const handleInputChange = (
   ref: React.RefObject<HTMLInputElement>,
   type: 'email' | 'password',
   currentValue: boolean,
-  changeValidation: (loginInput: LoginInputType) => void
+  onPassValidation: (loginInput: LoginInputType) => void
 ) => {
   const isValid = checkValidation(ref.current?.value || '', REGEX[type]);
   if (isValid === currentValue) return;
 
-  changeValidation(type);
+  onPassValidation(type);
 };
 
 export const getUserToken = () => localStorage.getItem(TOKEN_KEY);

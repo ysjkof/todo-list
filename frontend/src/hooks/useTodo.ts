@@ -2,13 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { queryClient } from '../App';
-import {
-  createTodoMutation,
-  deleteTodoMutation,
-  getTodoById,
-  getTodos,
-  updateTodoMutation,
-} from '../controller/todoController';
+import todoController from '../controller/todoController';
 import { isSameTodo } from '../services/todoServices';
 import {
   CreateTodoInputDto,
@@ -35,15 +29,17 @@ export default function useTodo() {
     mode !== 'create' ? changeModeToCreate() : changeModeToView();
   };
 
-  const { data: todoList } = useQuery(['todos'], () => getTodos());
+  const { data: todoList } = useQuery(['todos'], () =>
+    todoController.getTodos()
+  );
   const { data: selectedTodo } = useQuery(
     ['todo', param.todoId],
-    () => getTodoById({ id: param.todoId! }),
+    () => todoController.getTodoById({ id: param.todoId! }),
     { enabled: !!param.todoId }
   );
-  const useCreateTodoMutation = useMutation(createTodoMutation);
-  const updateToTodoList = useMutation(updateTodoMutation);
-  const deleteFromTodoList = useMutation(deleteTodoMutation);
+  const useCreateTodoMutation = useMutation(todoController.createTodoMutation);
+  const updateToTodoList = useMutation(todoController.updateTodoMutation);
+  const deleteFromTodoList = useMutation(todoController.deleteTodoMutation);
 
   const createTodo = async ({ title, content }: CreateTodoInputDto) => {
     useCreateTodoMutation.mutate(

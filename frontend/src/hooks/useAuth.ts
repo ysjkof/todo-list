@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
 import { AuthContext, queryClient } from '../App';
-import { loginMutation, signUpMutation } from '../controller/authController';
+import authController from '../controller/authController';
 import { isPassedValidations, setUserToken } from '../services/authServices';
 import { LoginInputType, SignUpInputType } from '../types/authType';
 import {
@@ -34,8 +34,8 @@ export default function useAuth() {
     queryClient.clear();
   }
 
-  const useLoginMutation = useMutation(loginMutation);
-  const useSignupMutation = useMutation(signUpMutation);
+  const useLoginMutation = useMutation(authController.loginMutation);
+  const useSignupMutation = useMutation(authController.signUpMutation);
 
   async function submitCallback(
     todo: 'login' | 'signUp',

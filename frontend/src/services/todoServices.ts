@@ -10,3 +10,6 @@ export const TODO_ALERTS = {
   FAIL_UPDATE: 'Todo 업데이트를 실패했습니다',
   FAIL_DELETE: 'Todo 삭제를 실패했습니다',
 };
+
+export const toLocaleStringFromStringDate = (stringDate: string) =>
+  new Date(stringDate).toLocaleString();

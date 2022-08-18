@@ -22,7 +22,7 @@ interface TodoFetchResponse {
 const TODO_URL = 'http://localhost:8080/todos';
 const todoFetch = new FetchModule<TodoFetchResponse>(TODO_URL, fetcher);
 
-export const createTodoMutation = async ({
+const createTodoMutation = async ({
   title,
   content,
 }: CreateTodoInputDto): Promise<CreateTodoOutputDto> => {
@@ -35,7 +35,7 @@ export const createTodoMutation = async ({
   );
 
   if (!data || Array.isArray(data)) {
-    return { ok: false, message: message || details || '' };
+    throw new Error('createTodo에 실패했습니다. : ' + details);
   }
 
   return {
@@ -44,11 +44,11 @@ export const createTodoMutation = async ({
   };
 };
 
-export const getTodos = async (): Promise<TodosOutputDto> => {
+const getTodos = async (): Promise<TodosOutputDto> => {
   const { data, details, message } = await todoFetch.get();
 
   if (!data || !Array.isArray(data)) {
-    return { ok: false, message: message || details || '' };
+    throw new Error('getTodos에 실패했습니다. : ' + details);
   }
 
   return {
@@ -57,13 +57,13 @@ export const getTodos = async (): Promise<TodosOutputDto> => {
   };
 };
 
-export const getTodoById = async ({
+const getTodoById = async ({
   id,
 }: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
   const { data, details, message } = await todoFetch.getById(id);
 
   if (!data || Array.isArray(data)) {
-    return { ok: false, message: message || details || '' };
+    throw new Error('getTodoById에 실패했습니다. : ' + details);
   }
 
   return {
@@ -72,7 +72,7 @@ export const getTodoById = async ({
   };
 };
 
-export const updateTodoMutation = async ({
+const updateTodoMutation = async ({
   content,
   title,
   id,
@@ -84,8 +84,8 @@ export const updateTodoMutation = async ({
     { content, title }
   );
 
-  if (!data || Array.isArray(data)) {
-    return { ok: false, message: message || details || '' };
+  if (details || !data || Array.isArray(data)) {
+    throw new Error('update에 실패했습니다. : ' + details);
   }
 
   return {
@@ -94,14 +94,22 @@ export const updateTodoMutation = async ({
   };
 };
 
-export const deleteTodoMutation = async ({
+const deleteTodoMutation = async ({
   id,
 }: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
   const { data, details, message } = await todoFetch.delete(id);
 
   if (data || details || message) {
-    return { ok: false };
+    throw new Error('delete에 실패했습니다. : ' + details);
   }
 
   return { ok: true };
+};
+
+export default {
+  createTodoMutation,
+  getTodos,
+  getTodoById,
+  updateTodoMutation,
+  deleteTodoMutation,
 };

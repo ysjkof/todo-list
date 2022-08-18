@@ -1,9 +1,9 @@
 import TodoForm from '../components/organisms/TodoForm';
 import TodoTitleList from '../components/organisms/TodoTitleList';
 import TodoContent from '../components/molecules/TodoContent';
-import { toLocaleStringFromStringDate } from '../utils/todoUtils';
 import useTodo from '../hooks/useTodo';
 import Button from '../components/atom/Button';
+import { toLocaleStringFromStringDate } from '../services/todoServices';
 
 export default function TodoList() {
   const {
