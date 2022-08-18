@@ -1,3 +1,40 @@
+# 폴더 구조
+
+```
+├── public
+└── src
+   ├── api
+   ├── controller
+   ├── hooks
+   ├── services
+   ├── utils
+   └── types
+   |  └── dtos
+   ├── constants
+   ├── router
+   ├── styles
+   ├── components
+   |  ├── atom
+   |  ├── molecules
+   |  └── organisms
+   └── pages
+      └── auth
+```
+
+| 폴더           | 용도                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------- |
+| **api**        | 프로젝트에서 낮은 단계의 인스턴스나 모듈을 보관. fetcher와 fetch module                     |
+| **controller** | 데이터 요청을 하기 위해 endpoint를 갖고 처리를 하는 기능                                    |
+| **hooks**      | controller를 사용해 데이터를 받아와 처리하고 데이터와 연관된 state를 갖는다                 |
+| **services**   | controller와 hook에 들어가지 않는 관심사(auth, todo)에 연관된 기능                          |
+| **utils**      | 다른 폴더에 들어가기 적합하지 않은 특정 기능에 종속되지 않거나 전역적인 1~2줄의 간단한 함수 |
+| **types**      | 타입스크립트 interface, type, DTO 등                                                        |
+| **constants**  | 상수 모음. 정규표현식과 로컬스토리지 키 등                                                  |
+| **router**     | router                                                                                      |
+| **styles**     | CSS                                                                                         |
+| **components** | 리액트 컴포넌트                                                                             |
+| **pages**      | 라우터 마다 나타나는 화면                                                                   |
+
 # 프로젝트 실행 방법
 
 **서버 실행**
@@ -334,12 +371,3 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 - react(with Typescript)
 - react-router-dom
 - tailwindcss
-
-**폴더구조**
-
-- controller
-  데이터 요청을 하기 위해 endpoint를 가지고 처리를 하는 곳. VIEW와 바로 연결됨
-- services
-  특정 기능(auth, todo)에 종속되는 로직을 모아놓음
-- utils
-  특정 기능에 종속되지 않거나 1~2줄의 간단한 함수를 모음
