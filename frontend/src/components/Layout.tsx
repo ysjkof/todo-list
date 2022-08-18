@@ -1,12 +1,12 @@
 import { useContext, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { ToastContext } from '../App';
+import { ToastContext } from '../store';
 import GlobalNavigationBar from './organisms/GlobalNavigationBar';
 
 export default function Layout() {
-  const { message, setMessage, Toast } = useContext(ToastContext);
   const location = useLocation();
   const state = location.state as { alarm: string };
+  const { message, setMessage, Toast } = useContext(ToastContext);
 
   useEffect(() => {
     if (!message) return;
