@@ -2,6 +2,12 @@ import { getUserToken } from '../services/authServices';
 
 type Method = 'GET' | 'PUT' | 'POST' | 'DELETE';
 
+/**
+ * @param url http부터 시작하는 전체 url
+ * @param method 'GET' | 'PUT' | 'POST' | 'DELETE'
+ * @param body 선택적 매개변수
+ * @returns `Promise<T>`
+ */
 export async function fetcher<T>(
   url: string,
   method: Method,
