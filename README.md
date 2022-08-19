@@ -19,9 +19,9 @@
   - [2022. 08. 11.](#2022-08-11)
   - [2022. 08. 10.](#2022-08-10)
 
-# 구현 화면
+## 구현 화면
 
-# 프로젝트 실행 방법
+## 프로젝트 실행 방법
 
 **서버 실행**
 
@@ -37,9 +37,9 @@
 
 - package-lock.json과 node_modules을 삭제 후 `npm install`를 다시 해본다
 
-# 클라이언트 구현 요구 사항
+## 클라이언트 구현 요구 사항
 
-## Assignment 1 - Login / SignUp
+### Assignment 1 - Login / SignUp
 
 - /auth 경로에 로그인 / 회원가입 기능을 개발합니다
 
@@ -57,7 +57,7 @@
   - [x] 다음 번에 로그인 시 토큰이 존재한다면 루트 경로로 리다이렉트 시켜주세요
   - [x] 어떤 경우든 토큰이 유효하지 않다면 사용자에게 알리고 로그인 페이지로 리다이렉트 시켜주세요
 
-## Assignment 2 - Todo List
+### Assignment 2 - Todo List
 
 Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
@@ -76,7 +76,7 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 - 한 페이지 내에서 새로고침 없이 데이터가 정합성을 갖추도록 구현해주세요
   - [x] 수정되는 Todo의 내용이 목록에서도 실시간으로 반영되어야 합니다
 
-### 과제 참고 사항
+#### 과제 참고 사항
 
 1. 로컬 서버를 실행했을 때 생성되는 db/db.json이 DB 역할을 하게 됩니다. 해당 파일을 삭제하면 DB는 초기화 됩니다.
 
@@ -84,9 +84,9 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 3. 로그아웃은 클라이언트 단에서 localStorage에 저장된 token을 삭제하는 방식으로 간단히 구현해주세요.
 
-# 사용한 라이브러리
+## 사용한 라이브러리
 
-## vite.js
+### vite.js
 
 프로젝트 빌더 [https://vitejs-kr.github.io/](https://vitejs-kr.github.io/)
 
@@ -102,7 +102,7 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
   - 프로젝트 시작하는 속도가 분명히 느껴질만큼 빠르다!
   - 프로젝트 수정 갱신되는 게 분명히 느껴질만큼 빠르다!
 
-## TailwindCSS
+### TailwindCSS
 
 css 도구
 
@@ -114,16 +114,16 @@ css 도구
 
 물론 컴포넌트로 분리할때는 이름을 지어야겠지만 그 전 단계까지 빠르게 마크업을 할 수 있기 때문에 사용했습니다.
 
-## tanstack/react-query
+### tanstack/react-query
 
 서버 상태 관리
 
-# 폴더 구조
+## 폴더 구조
 
 ```
 ├── public
 └── src
-   ├── api // 프로젝트에서 낮은 단계의 인스턴스나 모듈을 보관. fetcher와 fetch module
+   ├── api
    ├── controller
    ├── hooks
    ├── services
@@ -155,9 +155,9 @@ css 도구
 | **components** | 리액트 컴포넌트                                                                             |
 | **pages**      | 라우터 마다 나타나는 화면                                                                   |
 
-# 고민한 점
+## 고민한 점
 
-## login과 signUp의 로직이 거의 비슷한데 분리할 것인가?
+### login과 signUp의 로직이 거의 비슷한데 분리할 것인가?
 
 **고민한 이유** :
 
@@ -172,13 +172,13 @@ css 도구
 - signUp의 확장 비용이 부담될 정도라면 애초에 새로만들 확률이 높다
 - 그래서 재사용성있게 하나로 합치기로 결정
 
-# 커밋 기록
+## 커밋 기록
 
-## 2022.8.18.
+### 2022.8.18.
 
 1. 에러 핸들링 추가 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/c4d107dc16cf5d65e7b1a001fb01ccf8cd93145e)
 
-## 2022.08.17.
+### 2022.08.17.
 
 1.  React-Query 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/e6f8aebcfe4c419f929cb1e403eb3153e8d34675)
 2.  대대적인 UI 개선
@@ -207,7 +207,7 @@ css 도구
 
       <p align="center"><img width="440" alt="login page" src="https://user-images.githubusercontent.com/77876601/185116380-4f31cefd-94ab-406a-8b39-d19e8aca63c4.png"></p>
 
-## 2022.08.15.
+### 2022.08.15.
 
 1. 로그인 상태 관리(useContext) 추가
 2. 루트 보호 방법 변경 useEffect -> ProtectRoute 컴포넌트 사용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/b0eb7f7785f8056fd704fb520a224958b5bfb693)
@@ -298,7 +298,7 @@ function ProtectRoute({
 </Routes>;
 ```
 
-## 2022.08.12.
+### 2022.08.12.
 
 1. 패치 모듈 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/340997bdcc33096024cd0b076584a7a29a855726)
 
@@ -375,7 +375,7 @@ export const TODO_ALERTS = {
 };
 ```
 
-## 2022. 08. 11.
+### 2022. 08. 11.
 
 1. login과 signUp의 비지니스 로직을 하나의 훅으로 만듦
 
@@ -391,7 +391,7 @@ export const TODO_ALERTS = {
   <img alt='auth hook' width="500" alt="use-auth" src="https://user-images.githubusercontent.com/77876601/184080708-1f7d4d4d-3fe8-4530-9a19-247b3df1c64e.png">
 </p>
 
-## 2022. 08. 10.
+### 2022. 08. 10.
 
 1. 타입 단언 제거
 2. 제네릭 추가
