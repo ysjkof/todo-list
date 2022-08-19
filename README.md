@@ -123,7 +123,7 @@ css 도구
 ```
 ├── public
 └── src
-   ├── api
+   ├── api // 프로젝트에서 낮은 단계의 인스턴스나 모듈을 보관. fetcher와 fetch module
    ├── controller
    ├── hooks
    ├── services
