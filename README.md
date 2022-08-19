@@ -128,6 +128,10 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 ### React, Typescript
 
+[https://reactjs.org](https://reactjs.org)
+
+[https://www.typescriptlang.org](https://www.typescriptlang.org)
+
 ### vite.js
 
 프로젝트 빌더 [https://vitejs-kr.github.io/](https://vitejs-kr.github.io/)
@@ -146,7 +150,7 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 ### TailwindCSS
 
-css 도구
+css 도구 [https://tailwindcss.com](https://tailwindcss.com)
 
 마크업 하는 속도가 빠릅니다. 왜냐하면,
 
@@ -156,9 +160,11 @@ css 도구
 
 물론 컴포넌트로 분리할때는 이름을 지어야겠지만 그 전 단계까지 빠르게 마크업을 할 수 있기 때문에 사용했습니다.
 
+마크업 하는 속도가 빠릅니다. 왜냐하면,
+
 ### tanstack/react-query
 
-서버 상태 관리
+서버 상태 관리 [https://tanstack.com/query/v4](https://tanstack.com/query/v4)
 
 ## 폴더 구조
 
