@@ -1,4 +1,5 @@
 - [구현 화면](#구현-화면)
+  - [로그인 화면](#로그인-화면)
 - [프로젝트 실행 방법](#프로젝트-실행-방법)
 - [클라이언트 구현 요구 사항](#클라이언트-구현-요구-사항)
   - [Assignment 1 - Login / SignUp](#assignment-1---login--signup)
@@ -21,18 +22,24 @@
 
 ## 구현 화면
 
-![redirect when fail auth route](https://user-images.githubusercontent.com/77876601/185608224-7e61e2f0-b7e8-4772-a250-040340701c6b.gif)
+### [로그인 화면](###Assignment-1-Login-/-SignUp)
 
-![login validation](https://user-images.githubusercontent.com/77876601/185608235-8de713c0-722d-4c26-b4b6-84986490b92a.gif)
+- 로그인 화면과 루트 보호
+  ![redirect when fail auth route](https://user-images.githubusercontent.com/77876601/185608224-7e61e2f0-b7e8-4772-a250-040340701c6b.gif)
+- 이메일과 비밀번호의 유효성을 확인
+  ![login validation](https://user-images.githubusercontent.com/77876601/185608235-8de713c0-722d-4c26-b4b6-84986490b92a.gif)
 
-![loading and suspense](https://user-images.githubusercontent.com/77876601/185608238-d9e1ef4a-b1e3-4c18-918e-22ecc8fc3ee7.gif)
+- React Suspense를 사용한 로딩 처리
+  ![loading and suspense](https://user-images.githubusercontent.com/77876601/185608238-d9e1ef4a-b1e3-4c18-918e-22ecc8fc3ee7.gif)
 
-![edit todo](https://user-images.githubusercontent.com/77876601/185608242-4aa680a2-0401-4fbf-ad4d-0af979b3013d.gif)
+- Todo 수정
+  ![edit todo](https://user-images.githubusercontent.com/77876601/185608242-4aa680a2-0401-4fbf-ad4d-0af979b3013d.gif)
 
-![create and delete todo](https://user-images.githubusercontent.com/77876601/185608255-4660300b-c1e7-4224-8acd-fbabe2fe3e97.gif)
+- Todo 수정과 삭제
+  ![create and delete todo](https://user-images.githubusercontent.com/77876601/185608255-4660300b-c1e7-4224-8acd-fbabe2fe3e97.gif)
 
-![click todo,  home and logout](https://user-images.githubusercontent.com/77876601/185608270-2ade0062-7d41-4e92-bc24-328f6e1a5c62.gif)
-
+- Todo, 홈버튼, 로그아웃 클릭
+  ![click todo,  home and logout](https://user-images.githubusercontent.com/77876601/185608270-2ade0062-7d41-4e92-bc24-328f6e1a5c62.gif)
 
 ## 프로젝트 실행 방법
 
