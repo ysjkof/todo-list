@@ -12,7 +12,7 @@ import {
   UpdateTodoOutputDto,
 } from '../types/dtos/todoDto';
 import { Todo } from '../types/todoType';
-import { createError } from '../utils/utils';
+import { createError, delay } from '../utils/utils';
 
 interface TodoFetchResponse {
   data?: Todo | Todo[];
@@ -31,7 +31,7 @@ const createTodoMutation = async ({
     title,
     content,
   });
-
+  await delay();
   if (details || !data || Array.isArray(data)) {
     throw createError(details);
   }
@@ -43,7 +43,7 @@ const createTodoMutation = async ({
 
 const getTodos = async (): Promise<TodosOutputDto> => {
   const { data, details } = await todoFetch.get();
-
+  await delay(1000);
   if (details || !data || !Array.isArray(data)) {
     throw createError(details);
   }
@@ -57,7 +57,7 @@ const getTodoById = async ({
   id,
 }: GetTodoByIdInputDto): Promise<GetTodoByIdOutputDto> => {
   const { data, details } = await todoFetch.getById(id);
-
+  await delay();
   if (details || !data || Array.isArray(data)) {
     throw createError(details);
   }
@@ -73,7 +73,7 @@ const updateTodoMutation = async ({
   id,
 }: UpdateTodoInputDto): Promise<UpdateTodoOutputDto> => {
   if (!id) throw createError('잘못된 접근입니다. Todo Id가 없습니다');
-
+  await delay();
   const { data, details } = await todoFetch.put<UpdateTodoInputDto>(id, {
     content,
     title,
@@ -92,7 +92,7 @@ const deleteTodoMutation = async ({
   id,
 }: DeleteTodoByIdInputDto): Promise<DeleteTodoByIdOutputDto> => {
   const { details } = await todoFetch.delete(id);
-
+  await delay();
   if (details) {
     throw createError(details);
   }

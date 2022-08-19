@@ -38,3 +38,13 @@ export const getEndPoint = (thisUrl: string) => {
 export const createError = (error: string | undefined) => {
   return new Error(error);
 };
+
+/**
+ * 비동기 테스트 기능으로 실행시 인자 값만큼 지연시간을 줍니다.
+ * @param milisecond 입력하지 않으면 기본값 500입니다.
+ */
+export const delay = (milisecond: number = 500) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milisecond);
+  });
+};
