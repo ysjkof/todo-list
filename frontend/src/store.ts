@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 import Toast from './components/atom/Toast';
 
 export const AuthContext = createContext({
