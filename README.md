@@ -14,6 +14,7 @@
 - [고민한 점](#고민한-점)
   - [login과 signUp의 로직이 거의 비슷한데 분리할 것인가?](#login과-signup의-로직이-거의-비슷한데-분리할-것인가)
 - [커밋 기록](#커밋-기록)
+  - [2022.8.19.](#2022819)
   - [2022.8.18.](#2022818)
   - [2022.08.17.](#20220817)
   - [2022.08.15.](#20220815)
@@ -208,6 +209,12 @@ css 도구
 
 ## 커밋 기록
 
+### 2022.8.19.
+
+1. 일부 함수에 JSDoc으로 주석 달기 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/9c5b648894b537f1aa25e4630663eb73ea9bd3bd)
+   - Typescript와 함수 이름으로 주석 필요성이 낮지만 학습 목적으로 사용해봄
+2. React와 React Query의 Suspense를 사용해 Todo 로딩 처리함 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/7cbbd8354ec5a79f24c1e17301093b9e599b232b)
+
 ### 2022.8.18.
 
 1. 에러 핸들링 추가 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/c4d107dc16cf5d65e7b1a001fb01ccf8cd93145e)
@@ -219,15 +226,7 @@ css 도구
 
     - TodoList UI변경 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/497e127b336390f78ab057820c1dc06f28d95f1d#diff-75482d2416fccd183f614663c892064345c993152bba383a06e284f9409de0f9)
 
-    <p align="center">
-    <img width="300" alt="todo create" src="https://user-images.githubusercontent.com/77876601/185116358-5a75d77f-35ba-462d-99fa-6f8f442731d5.png">
-    <img width="300" alt="todo edit" src="https://user-images.githubusercontent.com/77876601/185116362-cc6d00f0-6813-4cad-8c39-413acc4ea1cb.png">
-    <img width="300" alt="todo detail" src="https://user-images.githubusercontent.com/77876601/185116373-685f2cd6-070e-4e78-b3af-c20d958a82f4.png">
-    </p>
-
     - 브라우저 alert api -> 커스텀 Toast 컴포넌트 구현 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/44a3b16bef8496bffc988058fb80654d1a425ad3)
-
-    <p align='center'><img alt='toast component'  width='440' src='https://user-images.githubusercontent.com/77876601/185116271-95606a09-c310-43ba-897b-0f012d2da9d8.gif'></p>
 
     - Layout 컴포넌트에서 GlobalNavigationBar 분리
 
