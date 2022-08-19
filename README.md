@@ -1,26 +1,30 @@
-- [구현 화면](#구현-화면)
-  - [Login Page](#login-page)
-  - [Todo List](#todo-list)
-- [프로젝트 실행 방법](#프로젝트-실행-방법)
-- [클라이언트 구현 요구 사항](#클라이언트-구현-요구-사항)
-  - [Assignment 1 - Login / SignUp](#assignment-1---login--signup)
-  - [Assignment 2 - Todo List](#assignment-2---todo-list)
-    - [과제 참고 사항](#과제-참고-사항)
-- [사용한 라이브러리](#사용한-라이브러리)
-  - [vite.js](#vitejs)
-  - [TailwindCSS](#tailwindcss)
-  - [tanstack/react-query](#tanstackreact-query)
-- [폴더 구조](#폴더-구조)
-- [고민한 점](#고민한-점)
-  - [login과 signUp의 로직이 거의 비슷한데 분리할 것인가?](#login과-signup의-로직이-거의-비슷한데-분리할-것인가)
-- [커밋 기록](#커밋-기록)
-  - [2022. 8. 19.](#2022-8-19)
-  - [2022. 8. 18.](#2022-8-18)
-  - [2022. 08. 17.](#2022-08-17)
-  - [2022. 08. 15.](#2022-08-15)
-  - [2022. 08. 12.](#2022-08-12)
-  - [2022. 08. 11.](#2022-08-11)
-  - [2022. 08. 10.](#2022-08-10)
+# Todo Lists
+
+- [Todo Lists](#todo-lists)
+  - [구현 화면](#구현-화면)
+    - [Login Page](#login-page)
+    - [Todo List](#todo-list)
+  - [프로젝트 실행 방법](#프로젝트-실행-방법)
+  - [클라이언트 구현 요구 사항](#클라이언트-구현-요구-사항)
+    - [Assignment 1 - Login / SignUp](#assignment-1---login--signup)
+    - [Assignment 2 - Todo List](#assignment-2---todo-list)
+      - [과제 참고 사항](#과제-참고-사항)
+  - [사용한 라이브러리나 프레임워크](#사용한-라이브러리나-프레임워크)
+    - [React, Typescript](#react-typescript)
+    - [vite.js](#vitejs)
+    - [TailwindCSS](#tailwindcss)
+    - [tanstack/react-query](#tanstackreact-query)
+  - [폴더 구조](#폴더-구조)
+  - [고민한 점](#고민한-점)
+    - [login과 signUp의 로직이 거의 비슷한데 분리할 것인가?](#login과-signup의-로직이-거의-비슷한데-분리할-것인가)
+  - [커밋 기록](#커밋-기록)
+    - [2022. 8. 19.](#2022-8-19)
+    - [2022. 8. 18.](#2022-8-18)
+    - [2022. 08. 17.](#2022-08-17)
+    - [2022. 08. 15.](#2022-08-15)
+    - [2022. 08. 12.](#2022-08-12)
+    - [2022. 08. 11.](#2022-08-11)
+    - [2022. 08. 10.](#2022-08-10)
 
 ## 구현 화면
 
@@ -119,7 +123,9 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 3. 로그아웃은 클라이언트 단에서 localStorage에 저장된 token을 삭제하는 방식으로 간단히 구현해주세요.
 
-## 사용한 라이브러리
+## 사용한 라이브러리나 프레임워크
+
+### React, Typescript
 
 ### vite.js
 
@@ -156,14 +162,14 @@ css 도구
 ## 폴더 구조
 
 ```
-├── public
+/Users/iseongjin/gh/ysjkof-wanted-pre-onboarding-challenge-fe-1/frontend
 └── src
    ├── api
    ├── controller
    ├── hooks
    ├── services
    ├── utils
-   └── types
+   ├── types
    |  └── dtos
    ├── constants
    ├── router
@@ -173,7 +179,9 @@ css 도구
    |  ├── molecules
    |  └── organisms
    └── pages
-      └── auth
+      ├── auth
+      └── todo
+         └── organisms
 ```
 
 | 폴더           | 용도                                                                                        |
@@ -187,8 +195,8 @@ css 도구
 | **constants**  | 상수 모음. 정규표현식과 로컬스토리지 키 등                                                  |
 | **router**     | router                                                                                      |
 | **styles**     | CSS                                                                                         |
-| **components** | 리액트 컴포넌트                                                                             |
-| **pages**      | 라우터 마다 나타나는 화면                                                                   |
+| **components** | 아토믹 디자인을 참고함. 관심사와 분리가 쉬운 컴포넌트를 보관                                |
+| **pages**      | 아토믹 디자인을 참고함. 최종적으로 화면에 나타나는 페이지나 폴더 보관                       |
 
 ## 고민한 점
 
