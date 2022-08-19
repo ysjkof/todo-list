@@ -1,17 +1,75 @@
-- [프로젝트 실행 방법](#프로젝트-실행-방법)
-- [사용한 라이브러리](#사용한-라이브러리)
-- [클라이언트 구현 요구 사항](#클라이언트-구현-요구-사항)
-- [폴더 구조](#폴더-구조)
+# Todo Lists
 
-# 프로젝트 실행 방법
+- [Todo Lists](#todo-lists)
+  - [구현 화면](#구현-화면)
+    - [Login Page](#login-page)
+    - [Todo List](#todo-list)
+  - [프로젝트 실행 방법](#프로젝트-실행-방법)
+  - [클라이언트 구현 요구 사항](#클라이언트-구현-요구-사항)
+    - [Assignment 1 - Login / SignUp](#assignment-1---login--signup)
+    - [Assignment 2 - Todo List](#assignment-2---todo-list)
+      - [과제 참고 사항](#과제-참고-사항)
+  - [사용한 라이브러리나 프레임워크](#사용한-라이브러리나-프레임워크)
+    - [React, Typescript](#react-typescript)
+    - [vite.js](#vitejs)
+    - [TailwindCSS](#tailwindcss)
+    - [tanstack/react-query](#tanstackreact-query)
+  - [폴더 구조](#폴더-구조)
+  - [고민한 점](#고민한-점)
+    - [view, 데이터, 로직의 분리](#view-데이터-로직의-분리)
+      - [Todo에 suspense를 적용하는 문제](#todo에-suspense를-적용하는-문제)
+  - [커밋 기록](#커밋-기록)
+    - [2022. 8. 19.](#2022-8-19)
+    - [2022. 8. 18.](#2022-8-18)
+    - [2022. 08. 17.](#2022-08-17)
+    - [2022. 08. 15.](#2022-08-15)
+    - [2022. 08. 12.](#2022-08-12)
+    - [2022. 08. 11.](#2022-08-11)
+    - [2022. 08. 10.](#2022-08-10)
+
+## 구현 화면
+
+### Login Page
+
+[요구사항](#assignment-1---login--signup)
+
+- 로그인 화면과 루트 보호
+
+![redirect when fail auth route](https://user-images.githubusercontent.com/77876601/185608224-7e61e2f0-b7e8-4772-a250-040340701c6b.gif)
+
+- 이메일과 비밀번호의 유효성을 확인
+
+![login validation](https://user-images.githubusercontent.com/77876601/185608235-8de713c0-722d-4c26-b4b6-84986490b92a.gif)
+
+### Todo List
+
+[요구사항](#assignment-2---todo-list)
+
+- React Suspense를 사용한 로딩 처리
+
+![loading and suspense](https://user-images.githubusercontent.com/77876601/185608238-d9e1ef4a-b1e3-4c18-918e-22ecc8fc3ee7.gif)
+
+- Todo 수정
+
+![edit todo](https://user-images.githubusercontent.com/77876601/185608242-4aa680a2-0401-4fbf-ad4d-0af979b3013d.gif)
+
+- Todo 수정과 삭제
+
+![create and delete todo](https://user-images.githubusercontent.com/77876601/185608255-4660300b-c1e7-4224-8acd-fbabe2fe3e97.gif)
+
+- Todo, 홈버튼, 로그아웃 클릭
+
+![click todo,  home and logout](https://user-images.githubusercontent.com/77876601/185608270-2ade0062-7d41-4e92-bc24-328f6e1a5c62.gif)
+
+## 프로젝트 실행 방법
 
 **서버 실행**
 
-- 이 보관소의 backend폴더에서 README.md에 따라 서버를 실행한다. [원본 서버 보관소](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
+- backend폴더에서 README.md에 따라 서버를 실행한다. [원본 서버 보관소](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
 
 **프로젝트 실행**
 
-- 이 보관소의 frontend폴더에서 `npm install` 입력해 패키지 설치
+- frontend폴더에서 `npm install` 입력해 패키지 설치
 - 같은 경로에서 `npm run dev` 입력해 프로젝트 실행
 - 프로젝트가 실행되면 브라우저에서 `localhost:5173`으로 접속
 
@@ -19,9 +77,9 @@
 
 - package-lock.json과 node_modules을 삭제 후 `npm install`를 다시 해본다
 
-# 클라이언트 구현 요구 사항
+## 클라이언트 구현 요구 사항
 
-## Assignment 1 - Login / SignUp
+### Assignment 1 - Login / SignUp
 
 - /auth 경로에 로그인 / 회원가입 기능을 개발합니다
 
@@ -39,7 +97,7 @@
   - [x] 다음 번에 로그인 시 토큰이 존재한다면 루트 경로로 리다이렉트 시켜주세요
   - [x] 어떤 경우든 토큰이 유효하지 않다면 사용자에게 알리고 로그인 페이지로 리다이렉트 시켜주세요
 
-## Assignment 2 - Todo List
+### Assignment 2 - Todo List
 
 Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
@@ -58,7 +116,7 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 - 한 페이지 내에서 새로고침 없이 데이터가 정합성을 갖추도록 구현해주세요
   - [x] 수정되는 Todo의 내용이 목록에서도 실시간으로 반영되어야 합니다
 
-### 과제 참고 사항
+#### 과제 참고 사항
 
 1. 로컬 서버를 실행했을 때 생성되는 db/db.json이 DB 역할을 하게 됩니다. 해당 파일을 삭제하면 DB는 초기화 됩니다.
 
@@ -66,9 +124,11 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
 
 3. 로그아웃은 클라이언트 단에서 localStorage에 저장된 token을 삭제하는 방식으로 간단히 구현해주세요.
 
-# 사용한 라이브러리
+## 사용한 라이브러리나 프레임워크
 
-## vite.js
+### React, Typescript
+
+### vite.js
 
 프로젝트 빌더 [https://vitejs-kr.github.io/](https://vitejs-kr.github.io/)
 
@@ -84,7 +144,7 @@ Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
   - 프로젝트 시작하는 속도가 분명히 느껴질만큼 빠르다!
   - 프로젝트 수정 갱신되는 게 분명히 느껴질만큼 빠르다!
 
-## TailwindCSS
+### TailwindCSS
 
 css 도구
 
@@ -96,21 +156,21 @@ css 도구
 
 물론 컴포넌트로 분리할때는 이름을 지어야겠지만 그 전 단계까지 빠르게 마크업을 할 수 있기 때문에 사용했습니다.
 
-## tanstack/react-query
+### tanstack/react-query
 
 서버 상태 관리
 
-# 폴더 구조
+## 폴더 구조
 
 ```
-├── public
+/Users/iseongjin/gh/ysjkof-wanted-pre-onboarding-challenge-fe-1/frontend
 └── src
    ├── api
    ├── controller
    ├── hooks
    ├── services
    ├── utils
-   └── types
+   ├── types
    |  └── dtos
    ├── constants
    ├── router
@@ -120,7 +180,9 @@ css 도구
    |  ├── molecules
    |  └── organisms
    └── pages
-      └── auth
+      ├── auth
+      └── todo
+         └── organisms
 ```
 
 | 폴더           | 용도                                                                                        |
@@ -134,48 +196,49 @@ css 도구
 | **constants**  | 상수 모음. 정규표현식과 로컬스토리지 키 등                                                  |
 | **router**     | router                                                                                      |
 | **styles**     | CSS                                                                                         |
-| **components** | 리액트 컴포넌트                                                                             |
-| **pages**      | 라우터 마다 나타나는 화면                                                                   |
+| **components** | 아토믹 디자인을 참고함. 관심사와 분리가 쉬운 컴포넌트를 보관                                |
+| **pages**      | 아토믹 디자인을 참고함. 최종적으로 화면에 나타나는 페이지나 폴더 보관                       |
 
-# 고민한 점
+## 고민한 점
 
-## login과 signUp의 로직이 거의 비슷한데 분리할 것인가?
+### view, 데이터, 로직의 분리
 
-**고민한 이유** :
+view는 컴포넌트에, 데이터와 로직은 커스텀 훅에, 그외 로직은 services로 분리했다.
 
-- response를 받은 뒤 로직에 약간의 차이가 있다
-- 코드가 2줄만 다르고 나머지는 중복이다(재사용성 고려)
-- 나중에 signUp이 커진다면 나누는 작업이 필요(확장시 비용고려)
+useAuth의 경우 **login과 signUp**의 중복되는 코드를 **하나의 훅**으로 쓸 수 있어 재사용성이 좋았다.
 
-**결론** :
+반면 useTodo의 경우 **부모와 자식 각자 훅을 불러**오면 서로 **다른 인스턴스**가 되기 때문에 그렇게 사용할 수는 없고 부모에서 자식으로 props를 전달해야 했다.
 
-- 하나로 합친다
-- signUp이 커질 가능성이 낮다
-- signUp의 확장 비용이 부담될 정도라면 애초에 새로만들 확률이 높다
-- 그래서 재사용성있게 하나로 합치기로 결정
+**데이터**를 다루는 부분, **화면**에 나타나는 부분, **그외 로직**이 분리되서 한 번에 보는 코드의 양이 줄어 파악하기 낫고 변경사항이 있을 때 여러 곳을 손대지 않아도 되서 좋았다.
 
-# 날짜별 한 일
+#### Todo에 suspense를 적용하는 문제
 
-## 2022.8.18.
+- todo의 모든 데이터 요청이 훅에 있다보니 react query와 suspense를 사용할 때 TodoContent컴포넌트에서 에러가 났다.
+  - getTodoById를 TodoContent에서 불러오는 걸로 해결했다.
+    - **자식과 부모에서** 똑같은 훅(useTodo에서 getTodoById()하는 기능)을 **각자의 인스턴스**로 써서 에러가 난 것 같다.
+    - useTodo의 훅이 혼자 너무 크다는 생각이 있었는데 에러가 나니까 확실히 크다.
+    - 라이브러리의 기능을 빨리 파악해서 적당히 모으고 적당히 분리해야겠다.
+
+## 커밋 기록
+
+### 2022. 8. 19.
+
+1. 일부 함수에 JSDoc으로 주석 달기 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/9c5b648894b537f1aa25e4630663eb73ea9bd3bd)
+   - Typescript와 함수 이름으로 주석 필요성이 낮지만 학습 목적으로 사용해봄
+2. React와 React Query의 Suspense를 사용해 Todo 로딩 처리함 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/7cbbd8354ec5a79f24c1e17301093b9e599b232b)
+
+### 2022. 8. 18.
 
 1. 에러 핸들링 추가 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/c4d107dc16cf5d65e7b1a001fb01ccf8cd93145e)
 
-## 2022.08.17.
+### 2022. 08. 17.
 
 1.  React-Query 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/e6f8aebcfe4c419f929cb1e403eb3153e8d34675)
 2.  대대적인 UI 개선
 
     - TodoList UI변경 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/497e127b336390f78ab057820c1dc06f28d95f1d#diff-75482d2416fccd183f614663c892064345c993152bba383a06e284f9409de0f9)
 
-    <p align="center">
-    <img width="300" alt="todo create" src="https://user-images.githubusercontent.com/77876601/185116358-5a75d77f-35ba-462d-99fa-6f8f442731d5.png">
-    <img width="300" alt="todo edit" src="https://user-images.githubusercontent.com/77876601/185116362-cc6d00f0-6813-4cad-8c39-413acc4ea1cb.png">
-    <img width="300" alt="todo detail" src="https://user-images.githubusercontent.com/77876601/185116373-685f2cd6-070e-4e78-b3af-c20d958a82f4.png">
-    </p>
-
     - 브라우저 alert api -> 커스텀 Toast 컴포넌트 구현 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/44a3b16bef8496bffc988058fb80654d1a425ad3)
-
-    <p align='center'><img alt='toast component'  width='440' src='https://user-images.githubusercontent.com/77876601/185116271-95606a09-c310-43ba-897b-0f012d2da9d8.gif'></p>
 
     - Layout 컴포넌트에서 GlobalNavigationBar 분리
 
@@ -189,7 +252,7 @@ css 도구
 
       <p align="center"><img width="440" alt="login page" src="https://user-images.githubusercontent.com/77876601/185116380-4f31cefd-94ab-406a-8b39-d19e8aca63c4.png"></p>
 
-## 2022.08.15.
+### 2022. 08. 15.
 
 1. 로그인 상태 관리(useContext) 추가
 2. 루트 보호 방법 변경 useEffect -> ProtectRoute 컴포넌트 사용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/b0eb7f7785f8056fd704fb520a224958b5bfb693)
@@ -280,7 +343,7 @@ function ProtectRoute({
 </Routes>;
 ```
 
-## 2022.08.12.
+### 2022. 08. 12.
 
 1. 패치 모듈 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/340997bdcc33096024cd0b076584a7a29a855726)
 
@@ -357,7 +420,7 @@ export const TODO_ALERTS = {
 };
 ```
 
-## 2022. 08. 11.
+### 2022. 08. 11.
 
 1. login과 signUp의 비지니스 로직을 하나의 훅으로 만듦
 
@@ -373,7 +436,7 @@ export const TODO_ALERTS = {
   <img alt='auth hook' width="500" alt="use-auth" src="https://user-images.githubusercontent.com/77876601/184080708-1f7d4d4d-3fe8-4530-9a19-247b3df1c64e.png">
 </p>
 
-## 2022. 08. 10.
+### 2022. 08. 10.
 
 1. 타입 단언 제거
 2. 제네릭 추가
