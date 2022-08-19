@@ -21,6 +21,19 @@
 
 ## 구현 화면
 
+![redirect when fail auth route](https://user-images.githubusercontent.com/77876601/185608224-7e61e2f0-b7e8-4772-a250-040340701c6b.gif)
+
+![login validation](https://user-images.githubusercontent.com/77876601/185608235-8de713c0-722d-4c26-b4b6-84986490b92a.gif)
+
+![loading and suspense](https://user-images.githubusercontent.com/77876601/185608238-d9e1ef4a-b1e3-4c18-918e-22ecc8fc3ee7.gif)
+
+![edit todo](https://user-images.githubusercontent.com/77876601/185608242-4aa680a2-0401-4fbf-ad4d-0af979b3013d.gif)
+
+![create and delete todo](https://user-images.githubusercontent.com/77876601/185608255-4660300b-c1e7-4224-8acd-fbabe2fe3e97.gif)
+
+![click todo,  home and logout](https://user-images.githubusercontent.com/77876601/185608270-2ade0062-7d41-4e92-bc24-328f6e1a5c62.gif)
+
+
 ## 프로젝트 실행 방법
 
 **서버 실행**
