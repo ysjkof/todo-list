@@ -6,7 +6,9 @@ export interface TodosOutputDto extends CoreOutputDto {
 }
 
 // CRUD DTO
-export interface CreateTodoInputDto extends Pick<Todo, 'title' | 'content'> {}
+export interface CreateTodoInputDto
+  extends Pick<Todo, 'title'>,
+    Partial<Pick<Todo, 'content'>> {}
 
 export interface CreateTodoOutputDto extends CoreOutputDto {
   todo: Todo;

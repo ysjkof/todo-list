@@ -33,13 +33,12 @@ export default function TodoForm({
 
   const invokeSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!inputRef.current?.value || !textareaRef.current?.value)
-      throw new Error('제목과 내용을 입력하세요');
+    if (!inputRef.current?.value) throw new Error('제목을 입력하세요');
 
     submitCallback({
       ...(todoToBeModified && { id: todoToBeModified.id }),
       title: inputRef.current.value,
-      content: textareaRef.current.value,
+      content: textareaRef.current?.value,
     });
   };
 
