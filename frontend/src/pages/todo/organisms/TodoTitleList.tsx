@@ -1,13 +1,13 @@
-import { cls } from '../../utils/utils';
-import Button from '../atom/Button';
+import { cls } from '../../../utils/utils';
+import Button from '../../../components/atom/Button';
 
 interface TodoTitleListProps {
   id: string;
   title: string;
   isModified: boolean;
   isSelect: boolean;
-  showTotoDetail: () => void;
-  toggleUpdateInput: () => void;
+  showTodoDetail: () => void;
+  toggleEditOrView: () => void;
   deleteTodo: () => void;
 }
 
@@ -15,8 +15,8 @@ export default function TodoTitleList({
   title,
   isModified,
   isSelect,
-  showTotoDetail,
-  toggleUpdateInput,
+  showTodoDetail,
+  toggleEditOrView,
   deleteTodo,
 }: TodoTitleListProps) {
   return (
@@ -28,11 +28,11 @@ export default function TodoTitleList({
     >
       <span
         className="overflow-hidden text-ellipsis whitespace-nowrap"
-        onClick={showTotoDetail}
+        onClick={showTodoDetail}
       >
         {title}
       </span>
-      <Button onClick={toggleUpdateInput} disable={isModified}>
+      <Button onClick={toggleEditOrView} disable={isModified}>
         {isModified ? '취소' : '수정'}
       </Button>
       <Button onClick={deleteTodo}>지우기</Button>

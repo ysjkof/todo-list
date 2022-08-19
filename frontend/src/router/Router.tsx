@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Login from '../pages/auth/Login';
 import SignUp from '../pages/auth/SignUp';
-import TodoList from '../pages/TodoList';
+import TodoList from '../pages/todo';
 import { AuthContext } from '../store';
 import ProtectRoute from './ProtectRoute';
 

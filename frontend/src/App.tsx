@@ -16,6 +16,7 @@ function App() {
       onError(err) {
         setMessage(`${err}`);
       },
+      suspense: true,
     },
     mutations: {
       retry: 0,

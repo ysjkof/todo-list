@@ -2,29 +2,29 @@ import { FormEvent, useEffect, useRef } from 'react';
 import {
   CreateTodoInputDto,
   UpdateTodoInputDto,
-} from '../../types/dtos/todoDto';
-import { Todo } from '../../types/todoType';
-import Button from '../atom/Button';
+} from '../../../types/dtos/todoDto';
+import { Todo } from '../../../types/todoType';
+import Button from '../../../components/atom/Button';
 
 type SubmitCallbackInputs = UpdateTodoInputDto | CreateTodoInputDto;
 
 interface TodoFormProps {
   actionName: string;
   submitCallback: (inputs: SubmitCallbackInputs) => Promise<void>;
-  todoToBeModified?: Todo | null;
+  toBeModify?: Todo | null;
 }
 export default function TodoForm({
   actionName,
   submitCallback,
-  todoToBeModified,
+  toBeModify,
 }: TodoFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   if (inputRef.current && textareaRef.current) {
-    if (todoToBeModified) {
-      inputRef.current.value = todoToBeModified.title;
-      textareaRef.current.value = todoToBeModified.content;
+    if (toBeModify) {
+      inputRef.current.value = toBeModify.title;
+      textareaRef.current.value = toBeModify.content;
     } else {
       inputRef.current.value = '';
       textareaRef.current.value = '';
@@ -36,16 +36,16 @@ export default function TodoForm({
     if (!inputRef.current?.value) throw new Error('제목을 입력하세요');
 
     submitCallback({
-      ...(todoToBeModified && { id: todoToBeModified.id }),
+      ...(toBeModify && { id: toBeModify.id }),
       title: inputRef.current.value,
       content: textareaRef.current?.value,
     });
   };
 
   useEffect(() => {
-    if (todoToBeModified && inputRef.current && textareaRef.current) {
-      inputRef.current.value = todoToBeModified.title;
-      textareaRef.current.value = todoToBeModified.content;
+    if (toBeModify && inputRef.current && textareaRef.current) {
+      inputRef.current.value = toBeModify.title;
+      textareaRef.current.value = toBeModify.content;
     }
   }, []);
 
