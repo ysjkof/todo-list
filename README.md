@@ -22,7 +22,7 @@
 
 ## 구현 화면
 
-### [로그인 화면](###Assignment-1-Login-/-SignUp)
+### [로그인 화면](###Assignment-1---Login-/-SignUp)
 
 - 로그인 화면과 루트 보호
   ![redirect when fail auth route](https://user-images.githubusercontent.com/77876601/185608224-7e61e2f0-b7e8-4772-a250-040340701c6b.gif)
