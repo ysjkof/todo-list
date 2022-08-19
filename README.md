@@ -14,11 +14,11 @@
 - [고민한 점](#고민한-점)
   - [login과 signUp의 로직이 거의 비슷한데 분리할 것인가?](#login과-signup의-로직이-거의-비슷한데-분리할-것인가)
 - [커밋 기록](#커밋-기록)
-  - [2022.8.19.](#2022819)
-  - [2022.8.18.](#2022818)
-  - [2022.08.17.](#20220817)
-  - [2022.08.15.](#20220815)
-  - [2022.08.12.](#20220812)
+  - [2022. 8. 19.](#2022-8-19)
+  - [2022. 8. 18.](#2022-8-18)
+  - [2022. 08. 17.](#2022-08-17)
+  - [2022. 08. 15.](#2022-08-15)
+  - [2022. 08. 12.](#2022-08-12)
   - [2022. 08. 11.](#2022-08-11)
   - [2022. 08. 10.](#2022-08-10)
 
@@ -209,17 +209,17 @@ css 도구
 
 ## 커밋 기록
 
-### 2022.8.19.
+### 2022. 8. 19.
 
 1. 일부 함수에 JSDoc으로 주석 달기 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/9c5b648894b537f1aa25e4630663eb73ea9bd3bd)
    - Typescript와 함수 이름으로 주석 필요성이 낮지만 학습 목적으로 사용해봄
 2. React와 React Query의 Suspense를 사용해 Todo 로딩 처리함 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/7cbbd8354ec5a79f24c1e17301093b9e599b232b)
 
-### 2022.8.18.
+### 2022. 8. 18.
 
 1. 에러 핸들링 추가 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/c4d107dc16cf5d65e7b1a001fb01ccf8cd93145e)
 
-### 2022.08.17.
+### 2022. 08. 17.
 
 1.  React-Query 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/e6f8aebcfe4c419f929cb1e403eb3153e8d34675)
 2.  대대적인 UI 개선
@@ -240,7 +240,7 @@ css 도구
 
       <p align="center"><img width="440" alt="login page" src="https://user-images.githubusercontent.com/77876601/185116380-4f31cefd-94ab-406a-8b39-d19e8aca63c4.png"></p>
 
-### 2022.08.15.
+### 2022. 08. 15.
 
 1. 로그인 상태 관리(useContext) 추가
 2. 루트 보호 방법 변경 useEffect -> ProtectRoute 컴포넌트 사용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/b0eb7f7785f8056fd704fb520a224958b5bfb693)
@@ -331,7 +331,7 @@ function ProtectRoute({
 </Routes>;
 ```
 
-### 2022.08.12.
+### 2022. 08. 12.
 
 1. 패치 모듈 적용 [커밋보기](https://github.com/ysjkof/ysjkof-wanted-pre-onboarding-challenge-fe-1/commit/340997bdcc33096024cd0b076584a7a29a855726)
 
