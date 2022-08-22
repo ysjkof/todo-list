@@ -69,7 +69,7 @@
 
 **프로젝트 실행**
 
-- frontend폴더에서 `npm install` 입력해 패키지 설치
+- frontend폴더에서 `npm install` 입력해 패키지 설치(node v16.16.0)
 - 같은 경로에서 `npm run dev` 입력해 프로젝트 실행
 - 프로젝트가 실행되면 브라우저에서 `localhost:5173`으로 접속
 
