@@ -65,7 +65,9 @@
 
 **서버 실행**
 
-- backend폴더에서 README.md에 따라 서버를 실행한다. [원본 서버 보관소](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
+- backend폴더에서 README.md에 따라 서버를 실행한다.[api 실행](https://github.com/ysjkof/todo-list/tree/main/backend#2-1-api-실행)
+
+[원본 서버 보관소](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)
 
 **프로젝트 실행**
 
