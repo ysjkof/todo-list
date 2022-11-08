@@ -2,6 +2,7 @@ import { fetcher } from './fetcher';
 
 type FetchInstanceType = typeof fetcher;
 type Id = string | number;
+type Input<I> = { [k in keyof I]: string };
 
 class FetchModule<T> {
   constructor(
@@ -12,7 +13,7 @@ class FetchModule<T> {
     this.baseUrl;
   }
 
-  async post<I>(endpoint: string, input: I) {
+  async post<I>(endpoint: string, input: Input<I>) {
     const response = await this.fetchInstance<T>(
       `${this.baseUrl}/${endpoint}`,
       'POST',
@@ -34,7 +35,7 @@ class FetchModule<T> {
     return response;
   }
 
-  async put<O>(id: Id, input: O) {
+  async put<O>(id: Id, input: Input<O>) {
     const response = await this.fetchInstance<T>(
       `${this.baseUrl}/${id}`,
       'PUT',
